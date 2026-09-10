@@ -1,0 +1,12 @@
+{
+  "project": "QuoteCheck",
+  "version": 1,
+  "active_checkpoint": "CP1",
+  "checkpoint_status": "ACTIVE",
+  "forward_work_authorized": true,
+  "active_work_item": null,
+  "mutation_owner": "PM",
+  "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
+  "last_verified_main_sha": "2554c2bcee7343ffb1b49b2dbeb1ee4c5678ad43",
+  "human_gate": null
+}

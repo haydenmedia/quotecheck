@@ -1,0 +1,17 @@
+# Checkpoints
+
+- CP0 Autonomous project OS — COMPLETE
+- CP1 Product definition and golden journey — ACTIVE
+- CP2 Ingestion and canonical extraction — PENDING
+- CP3 Grounded reasoning and domain context — PENDING
+- CP4 Comparison/report experience — PENDING
+- CP5 Free preview and one-time unlock — PENDING
+- CP6 Payments, persistence and ownership — PENDING
+- CP7 Evaluation quality system — PENDING
+- CP8 Security, privacy and reliability — PENDING
+- CP9 Private beta instrumentation — PENDING
+- CP10 Shareable/PDF report — PENDING
+- CP11 PWA/native packaging decision — PENDING
+- CP12 Launch/acquisition — PENDING
+
+Commercial milestone: a stranger can upload 2–3 quotes, receive a useful free preview, unlock the complete analysis, and receive a polished grounded report without fabricated findings.
