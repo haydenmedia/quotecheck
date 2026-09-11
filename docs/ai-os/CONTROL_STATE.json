@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 40,
+  "version": 41,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,16 +8,16 @@
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "CHANGES_REQUESTED",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 16,
     "head_sha": "ebdda393179480c9d6d73aa2bea4ed47d8790917",
     "ci_run": 34632979888,
-    "reason": "Builder implemented versioned deterministic trust fixtures/evaluator on PR #16. Exact-head CI passed install, lint, typecheck, 50 deterministic tests including the CP7 trust suite, and production build. Trust eval summary: 11/11 fixtures matched expected outcomes with machine-readable per-case results and concise CI summary. No paid model evaluation or YELLOW/RED action was performed."
+    "reason": "Independent QA found CP7 trust-evaluator coverage gaps at exact PR #16 head. The evaluator accepts fabricated/unsupported claim text when a finding carries an unrelated but canonical evidence ref, because grounding checks only verify evidence-ref existence rather than support for the asserted fact. It also treats any generic confidence limitation containing 'uncertain' as sufficient to surface ambiguous/unreadable extraction for a quote, allowing the actual uncertain field/evidence to remain hidden. This violates AC3/AC4 source-grounding and hidden-uncertainty requirements despite green CI. Builder must add deterministic regression fixtures/tests reproducing both gaps and tighten evaluation so unsupported claim/evidence mismatch and non-specific uncertainty preservation fail while grounded cases still pass."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
   "last_completed": {"id": "CP6-01", "issue": 12, "pr": 13, "qa_verdict": "PASS", "merged_sha": "387b94a17270d3b660534f80deaa846bb818ca3f"},
