@@ -1,21 +1,21 @@
 {
   "project": "QuoteCheck",
-  "version": 20,
+  "version": 21,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "VERIFICATION_FAILED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
     "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
     "ci_run": 34583963798,
-    "qa_verdict": null,
+    "qa_verdict": "FAIL_ESCALATED",
     "qa_failure_history": [
       {
         "cycle": 1,
@@ -28,16 +28,26 @@
         "head_sha": "1cfe1338f38df49dec9dada4be62856272619939",
         "root_issue": "ambiguous/unreadable warranty, timeline, and payment-term certainty is flattened to Not stated in QuoteSummary/presentation",
         "affected_criteria": [3, 5, 7, 10]
+      },
+      {
+        "cycle": 3,
+        "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
+        "root_issue": "ambiguous/unreadable total certainty and evidence are collapsed to null and presented identically to genuine not_stated totals",
+        "affected_criteria": [3, 5, 7, 10]
       }
     ],
-    "builder_repair": {
-      "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
-      "ci_run": 34583963798,
-      "summary": "QuoteSummary now preserves value, certainty, and evidence for warranty, timeline, and payment terms; presentation distinguishes stated, ambiguous, unreadable, and genuine not_stated states; deterministic reasoning and presentation fixtures cover all states.",
-      "verification": ["npm install PASS", "lint PASS", "typecheck PASS", "tests PASS", "production build PASS"]
+    "qa_escalation": {
+      "reason": "Three repeated failure cycles share the same systemic root class: report summary/presentation contracts discard canonical extraction uncertainty field-by-field.",
+      "required_pm_action": "Define and authorize a systemic report-summary invariant and bounded repair ensuring user-facing canonical comparison fields preserve stated/not_stated/ambiguous/unreadable certainty and source evidence rather than patching fields individually.",
+      "verified": [
+        "PR #9 exact head f7d25c1acd5027626c6ef80387b5c785b7c812ff",
+        "CI run 34583963798 success at exact head",
+        "cycle-2 warranty/timeline/payment-term repair verified",
+        "remaining total uncertainty defect reproduced by code/test inspection"
+      ]
     }
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "PM",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
   "last_completed": {
