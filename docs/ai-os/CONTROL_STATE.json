@@ -1,19 +1,21 @@
 {
   "project": "QuoteCheck",
-  "version": 3,
+  "version": 4,
   "active_checkpoint": "CP1",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 1,
     "id": "CP1-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "pr": 2,
     "head_sha": "87ff7e4708462c265b9c82cb79edb2a40f276720",
     "ci_run": 34546302344,
-    "ci_conclusion": "success"
+    "ci_conclusion": "success",
+    "qa_verdict": "PASS",
+    "qa_review_id": 5174143474
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
