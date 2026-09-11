@@ -1,33 +1,29 @@
 {
   "project": "QuoteCheck",
-  "version": 33,
-  "active_checkpoint": "CP5",
+  "version": 34,
+  "active_checkpoint": "CP6",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 10,
-    "id": "CP5-01",
-    "title": "Useful free preview and deterministic unlock gate — merge reconciliation",
-    "status": "QA_PASSED",
-    "owner": "PM",
+    "issue": 12,
+    "id": "CP6-01",
+    "title": "Durable report ownership and payment boundary contracts",
+    "status": "READY",
+    "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP5-01 independently QA-passed at 8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
-    "pr": 11,
-    "qa_approved_head": "8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
-    "reconciled_head": "dd613f8b7f18e8ab48452cb82f0d7b93222c4161",
-    "verification": {
-      "ci_run": 34609686186,
-      "conclusion": "success",
-      "steps": ["npm install", "lint", "typecheck", "tests", "production build"],
-      "reconciliation_scope": "six CP5 product/test files are blob-identical to the previously QA-approved head",
-      "qa_verdict": "PASS",
-      "qa_reason": "Reconciled head is mergeable; scoped CP5 files preserve the previously approved implementation exactly; deterministic preview/unlock/trust tests are unchanged; exact-head CI passed all required checks."
-    },
-    "reason": "Independent QA re-verified reconciled PR #11 head dd613f8b7f18e8ab48452cb82f0d7b93222c4161 and PASSed reconciliation AC1-6. PM owns merge/reconciliation next step."
+    "depends_on": "CP5-01 independently QA-passed and merged via PR #11",
+    "pr": null,
+    "reason": "Establish provider-neutral ownership, persistence and one-time payment boundaries with deterministic mock adapters before any live provider/storage action."
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "ea87894f5e884b8292876c062b947590369427f6",
-  "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
+  "last_verified_main_sha": "014930c72f65431de2652c2c492674e843822347",
+  "last_completed": {"id": "CP5-01", "issue": 10, "pr": 11, "qa_verdict": "PASS", "merged_sha": "014930c72f65431de2652c2c492674e843822347"},
+  "save_game": {
+    "sha": "014930c72f65431de2652c2c492674e843822347",
+    "verified_behavior": "CP5 useful free preview and deterministic demo unlock preserve the already-produced grounded report; exact-head QA and CI passed before merge.",
+    "risks": "CP6 introduces ownership/persistence/payment boundaries; live provider configuration, production storage, secrets and production behavior remain prohibited without owner approval.",
+    "rollback": "Return product behavior to merged CP5 SHA 014930c72f65431de2652c2c492674e843822347."
+  },
   "human_gate": null
 }
