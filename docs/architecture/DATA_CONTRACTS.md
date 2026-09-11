@@ -3,30 +3,20 @@
 ## Canonical Quote
 A quote record contains: id; source input ids; vendor identity as stated; quote date/expiry; project description; line items; subtotal/tax/fees/total; allowances; explicitly included items; explicitly excluded items; warranty; timeline; payment terms; conditions; uncertainties; extraction warnings; source evidence.
 
-Every scalar extracted value is represented as a `SourcedValue<T>` with:
-
-- `value`: the extracted source value or `null` when unknown/unreadable;
-- `certainty`: `stated`, `ambiguous`, `unreadable`, or `not_stated`;
-- `evidence`: one or more references to the source input, excerpt, confidence, and locator when available.
-
-Evidence locators support page, line, and future character spans. Unknown/unreadable values remain unknown; they are never guessed.
-
-### Trust distinctions
-
-- `not_stated` means the source did not state the field. It is not an exclusion.
-- `unreadable` means source content exists but cannot be reliably read. It is not absence.
-- `ambiguous` preserves uncertainty rather than upgrading wording to certainty.
-- explicit exclusions are stored separately from absent fields.
-- arithmetic checks preserve original source amounts and emit `ARITHMETIC_MISMATCH` warnings rather than silently correcting totals.
+Every scalar extracted value is represented as a `SourcedValue<T>` with `value`, `certainty` (`stated`, `ambiguous`, `unreadable`, `not_stated`) and source `evidence`. Unknown/unreadable values remain unknown; they are never guessed. Explicit exclusions remain separate from absent fields. Arithmetic checks preserve original source amounts and emit `ARITHMETIC_MISMATCH` warnings rather than silently correcting totals.
 
 ## Deterministic ingestion input
+`TextIngestionInput` supports `pasted_text` and `extracted_text_fixture`. Future PDF/image/multimodal extraction must implement the provider-neutral `ExtractionProvider` contract and return the same canonical `ExtractionResult`.
 
-`TextIngestionInput` supports `pasted_text` and `extracted_text_fixture`. The deterministic parser recognizes labelled text and the fixture line-item form only. It is not OCR and is not intended to infer arbitrary prose. Future PDF/image/multimodal extraction must implement the provider-neutral `ExtractionProvider` contract and return the same canonical `ExtractionResult`.
+## Reasoning request
+`ReasoningRequest` contains canonical `quotes`, the selected `category`, and a versioned `ReasoningContext` domain pack (`id`, `version`, `category`, `label`, contextual considerations/questions/trust notes). Provider/model identity is intentionally absent from this product contract.
 
 ## Finding
-`id`, `type`, `severity`, `title`, `plain_language_explanation`, `affected_quote_ids`, `evidence_refs`, `confidence`, `questions_to_ask`.
+`id`, `type`, `severity`, `title`, `plainLanguageExplanation`, `affectedQuoteIds`, `evidenceRefs`, `confidence`, `questionsToAsk`.
 
 Allowed finding types: `explicit_fact`, `difference`, `not_stated`, `potential_risk`, `inference`.
 
+Any material finding that depends on a quoted fact must identify affected quote IDs and carry evidence refs resolving to the supplied source material. `not_stated` may legitimately have no evidence ref because it asserts absence from the supplied canonical data; it must not be converted into an exclusion or claimed charge. Potential risks and inferences remain qualified.
+
 ## Report
-Quote summaries; normalized comparison dimensions; findings; vendor-specific questions; overall gut check; confidence/limitations; prompt/model/version metadata. Report rendering and future PDF export must consume the same report object.
+Quote summaries; findings; sections; overall gut check; confidence/limitations; `noMaterialConcern`. Report rendering and future PDF export consume the same report object. Empty risk sections are valid when evidence does not justify a risk finding.
