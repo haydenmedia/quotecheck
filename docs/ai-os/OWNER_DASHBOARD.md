@@ -1,29 +1,29 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP3-01 — Deterministic grounded reasoning engine + domain packs** is READY for Builder on Issue #6.
+**CP3-01 — Deterministic grounded reasoning engine + domain packs** is back with Builder on Issue #6 / PR #7 after Independent QA found one trust-contract defect.
 
-The next implementation establishes the reasoning boundary between canonical extracted quotes and the report: grounded comparisons, five finding types, source evidence, contextual domain packs, and a valid no-material-concern outcome. No live/paid model calls are authorized in this item.
+Builder must preserve unknown/ambiguous/unreadable quote totals as unknown through the report model and rendering, rather than coercing them to a factual `$0`, and add regression coverage for `not_stated` and `unreadable` totals. This is GREEN corrective work; forward work remains authorized.
 
 ## Just finished
 **CP2-01 — Canonical deterministic quote ingestion** passed Independent QA and merged as PR #4 at `bfbb40edb9488cb04b2f85c65436137016ebc93b`.
 
-Verified CP2 capabilities include sourced canonical values, uncertainty preservation, explicit exclusion vs not-stated separation, arithmetic mismatch warnings, deterministic fixtures/tests, and a provider-neutral extraction seam.
+CP3-01 implementation reached QA with green exact-head CI, but QA correctly rejected the current head `b858c803a85aab983692e6ac3e2826755dc3a91e` because its report summary can convert a non-stated/ambiguous/unreadable total into concrete zero.
 
 ## Broken
-Nothing currently known to block forward GREEN work.
+PR #7 has a bounded trust defect: unknown quote totals can surface as `$0`. This does not block other infrastructure, but CP3 cannot pass until corrected and independently re-verified.
 
 ## Human action required
 None.
 
 ## Next
-Builder implements CP3-01 on a scoped branch/PR. Independent QA then verifies exact-head CI plus grounding/trust invariants. If CP3-01 passes, PM will reconcile/merge and define the next bounded reasoning/report integration item.
+Builder fixes only the QA defect on PR #7, adds deterministic regression tests covering `not_stated` and `unreadable` totals plus downstream rendering, and obtains fresh exact-head lint/typecheck/test/build evidence. QA then independently re-reviews the new head. PM will merge/reconcile only after QA PASS.
 
 ## Checkpoint progress
 - CP0 project OS: complete
 - CP1 golden journey scaffold: complete
 - CP2 ingestion/canonical extraction foundation: complete
-- CP3 grounded reasoning/domain context: active — first implementation item READY
+- CP3 grounded reasoning/domain context: active — CP3-01 CHANGES_REQUESTED
 - CP4–CP12: not started
 
 ## Commercial milestone
