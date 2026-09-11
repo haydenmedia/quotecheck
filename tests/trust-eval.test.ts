@@ -8,7 +8,7 @@ describe("CP7 deterministic trust evaluation harness", () => {
     console.log(`TRUST_EVAL_JSON=${JSON.stringify(suite)}`);
     console.log(`TRUST_EVAL_SUMMARY=${suite.summary}`);
     expect(suite.fixtureVersion).toBe(1);
-    expect(suite.caseCount).toBeGreaterThanOrEqual(12);
+    expect(suite.caseCount).toBeGreaterThanOrEqual(18);
     expect(suite.matchedCount).toBe(suite.caseCount);
     expect(suite.passed).toBe(true);
   });
@@ -30,19 +30,22 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("uncertainty-hidden-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
   });
 
-  it("requires a risk-bearing condition, not merely same-field evidence", () => {
-    const source = trustEvalFixturesV1.find(test => test.id === "false-positive-risk-rejected")!;
-    const neutralTotal = structuredClone(source);
-    neutralTotal.id = "neutral-total-risk-regression";
-    neutralTotal.report.findings[0].evidenceRefs = neutralTotal.quotes[0].money.total.evidence;
-    neutralTotal.report.findings[0].plainLanguageExplanation = "The quoted total may be inaccurate.";
-    neutralTotal.expectedFailureCodes = ["FALSE_POSITIVE_RISK"];
-    const neutralResult = evaluateTrustCase(neutralTotal);
-    expect(neutralResult.actual).toBe("fail");
-    expect(neutralResult.failures.map(f => f.code)).toContain("FALSE_POSITIVE_RISK");
+  it("requires structured risk provenance rather than same-topic or same-field wording", () => {
+    const suite = evaluateTrustSuite(trustEvalFixturesV1);
+    const byId = new Map(suite.results.map(result => [result.caseId, result]));
+    for (const id of ["neutral-same-field-risk-rejected", "borrowed-unrelated-risk-rejected", "unrelated-conditional-same-topic-rejected"]) {
+      expect(byId.get(id)?.actual).toBe("fail");
+      expect(byId.get(id)?.failures.map(f => f.code)).toContain("FALSE_POSITIVE_RISK");
+    }
+  });
 
-    const groundedArithmetic = trustEvalFixturesV1.find(test => test.id === "legitimate-material-concern")!;
-    expect(evaluateTrustCase(groundedArithmetic).actual).toBe("pass");
+  it("accepts only condition-compatible canonical risk sources", () => {
+    const suite = evaluateTrustSuite(trustEvalFixturesV1);
+    const byId = new Map(suite.results.map(result => [result.caseId, result]));
+    for (const id of ["legitimate-material-concern", "compatible-exclusion-risk", "compatible-allowance-risk", "compatible-uncertainty-risk", "compatible-scheduling-condition-risk"]) {
+      expect(byId.get(id)?.actual).toBe("pass");
+      expect(byId.get(id)?.failures).toEqual([]);
+    }
   });
 
   it("rejects a fabricated potential risk that borrows unrelated canonical evidence", () => {
@@ -64,7 +67,6 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("not-stated-versus-excluded")?.actual).toBe("pass");
     expect(byId.get("absence-is-not-charge")?.failures.map(f => f.code)).toContain("ABSENCE_AS_CHARGE");
     expect(byId.get("false-positive-risk-rejected")?.failures.map(f => f.code)).toContain("FALSE_POSITIVE_RISK");
-    expect(byId.get("legitimate-material-concern")?.actual).toBe("pass");
     expect(byId.get("grounded-no-material-problem")?.actual).toBe("pass");
     expect(byId.get("uncertainty-preserved")?.actual).toBe("pass");
   });
