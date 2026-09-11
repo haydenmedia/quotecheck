@@ -1,23 +1,23 @@
 {
   "project": "QuoteCheck",
-  "version": 46,
+  "version": 47,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
-  "forward_work_authorized": false,
+  "forward_work_authorized": true,
   "active_work_item": {
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
     "status": "VERIFICATION_FAILED",
-    "owner": "PM",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 17,
     "head_sha": "37b4e26b497c8d9711d6c59d58286cdcfc760a20",
     "ci_run": 34648883434,
-    "reason": "Independent QA cycle 3 found the same source-grounding root issue remains: claimSupportedByEvidence accepts a potential-risk assertion when neutral canonical evidence merely shares the same subject anchor. Example: canonical evidence 'Total $1000.00' incorrectly supports 'The quoted total may be inaccurate.' because anchor overlap is treated as substantive support for the asserted risk condition. This fails AC2/AC4 despite exact-head CI run 34648883434 passing install, lint, typecheck, deterministic tests/evals, and production build. This is the third QA failure cycle on the source-grounding root issue, so forward work is paused and escalated to PM per AGENT_PROTOCOL rather than authorizing another blind repair cycle. Required next step: PM must define/authorize a bounded repair approach that distinguishes neutral field/value evidence from evidence that actually establishes the asserted risk condition, with a deterministic same-field/non-probative FALSE_POSITIVE_RISK regression while preserving the legitimate arithmetic-warning case."
+    "reason": "PM resolved the cycle-3 escalation with one bounded repair authorization. Replace lexical/topic-overlap sufficiency for potential_risk grounding with condition-aware deterministic support: neutral same-field/value evidence is non-probative; support must establish a risk-bearing condition such as arithmetic inconsistency, contradictory evidence, explicit conditional/extra-charge language, or relevant preserved uncertainty under existing contracts. Required regressions: neutral 'Total $1000.00' must not support 'total may be inaccurate'; legitimate subtotal+tax versus total arithmetic mismatch must remain supported; unrelated-evidence fabricated-risk regression must remain failing. Preserve evidence-reference and numeric checks. No fixture weakening, paid/live eval, production behavior change, or scope expansion. If these boundaries cannot be satisfied without fixture-text special casing, return to PM rather than continue heuristic thrash. Exact-head full CI required before QA handoff."
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
   "last_completed": {"id": "CP6-01", "issue": 12, "pr": 13, "qa_verdict": "PASS", "merged_sha": "387b94a17270d3b660534f80deaa846bb818ca3f"},
