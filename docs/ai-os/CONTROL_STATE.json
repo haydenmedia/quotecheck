@@ -1,21 +1,21 @@
 {
   "project": "QuoteCheck",
-  "version": 23,
+  "version": 24,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
     "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
     "ci_run": 34589184847,
-    "qa_verdict": null,
+    "qa_verdict": "PASS",
     "repair_authorization": {
       "type": "SYSTEMIC_UNCERTAINTY_PRESERVATION",
       "scope": "all canonical fields currently surfaced by CP4 report comparison",
@@ -32,6 +32,14 @@
       "tests": "PASS",
       "build": "PASS",
       "scope": "systemic ReportSummaryValue<T> preservation for vendor, total, scope inclusions/exclusions, warranty, timeline and payment terms with deterministic four-certainty-state regression coverage"
+    },
+    "qa_verification": {
+      "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
+      "ci_run": 34589184847,
+      "verdict": "PASS",
+      "acceptance_criteria": "1-12 PASS",
+      "systemic_invariant": "PASS: surfaced canonical fields preserve value, certainty and evidence; explicit exclusions remain distinct from omissions",
+      "paid_model_eval": "NOT_RUN_NOT_REQUIRED"
     },
     "qa_failure_history": [
       {"cycle": 1, "head_sha": "2a7a609f67435b197f69efc24c204266d767255e", "root_issue": "scope extraction uncertainty collapsed into not_stated presentation"},
