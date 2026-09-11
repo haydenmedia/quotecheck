@@ -8,7 +8,7 @@ describe("CP7 deterministic trust evaluation harness", () => {
     console.log(`TRUST_EVAL_JSON=${JSON.stringify(suite)}`);
     console.log(`TRUST_EVAL_SUMMARY=${suite.summary}`);
     expect(suite.fixtureVersion).toBe(1);
-    expect(suite.caseCount).toBeGreaterThanOrEqual(10);
+    expect(suite.caseCount).toBeGreaterThanOrEqual(12);
     expect(suite.matchedCount).toBe(suite.caseCount);
     expect(suite.passed).toBe(true);
   });
@@ -20,6 +20,14 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(detected.has("CONTRADICTORY_EVIDENCE")).toBe(true);
     expect(detected.has("ARITHMETIC_CORRUPTION")).toBe(true);
     expect(detected.has("HIDDEN_UNCERTAINTY")).toBe(true);
+  });
+
+  it("rejects unrelated canonical evidence and generic uncertainty masking", () => {
+    const suite = evaluateTrustSuite(trustEvalFixturesV1);
+    const byId = new Map(suite.results.map(result => [result.caseId, result]));
+    expect(byId.get("borrowed-unrelated-evidence-hard-fail")?.failures.map(f => f.code)).toContain("UNSUPPORTED_FACT");
+    expect(byId.get("generic-uncertainty-limitation-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
+    expect(byId.get("uncertainty-hidden-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
   });
 
   it("covers trust semantics beyond hard failures", () => {
