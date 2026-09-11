@@ -30,6 +30,22 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("uncertainty-hidden-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
   });
 
+  it("requires a risk-bearing condition, not merely same-field evidence", () => {
+    const source = trustEvalFixturesV1.find(test => test.id === "false-positive-risk-rejected")!;
+
+    const neutralTotal = structuredClone(source);
+    neutralTotal.id = "neutral-total-risk-regression";
+    neutralTotal.report.findings[0].evidenceRefs = neutralTotal.quotes[0].money.total.evidence;
+    neutralTotal.report.findings[0].plainLanguageExplanation = "The quoted total may be inaccurate.";
+    neutralTotal.expectedFailureCodes = ["FALSE_POSITIVE_RISK"];
+    const neutralResult = evaluateTrustCase(neutralTotal);
+    expect(neutralResult.actual).toBe("fail");
+    expect(neutralResult.failures.map(f => f.code)).toContain("FALSE_POSITIVE_RISK");
+
+    const groundedArithmetic = trustEvalFixturesV1.find(test => test.id === "legitimate-material-concern")!;
+    expect(evaluateTrustCase(groundedArithmetic).actual).toBe("pass");
+  });
+
   it("rejects a fabricated potential risk that borrows unrelated canonical evidence", () => {
     const source = trustEvalFixturesV1.find(test => test.id === "false-positive-risk-rejected")!;
     const borrowedEvidence = source.quotes[0].money.total.evidence;
