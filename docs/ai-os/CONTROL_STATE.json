@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 43,
+  "version": 44,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,14 +8,14 @@
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
-    "status": "CHANGES_REQUESTED",
+    "status": "VERIFICATION_FAILED",
     "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
-    "pr": 16,
-    "head_sha": "d37b1b2cd9e8fb644c1de228d0eb965ea63080b5",
-    "ci_run": 34638683474,
-    "reason": "Independent QA found a remaining AC2/AC4 trust-grounding defect: potential_risk findings only require a non-empty evidenceRefs array and are not checked to ensure the cited canonical evidence actually supports the asserted risk, so a fabricated risk can borrow unrelated valid evidence and pass. Required regression: unrelated canonical evidence must not legitimize a potential-risk claim, while the legitimate grounded material-concern fixture remains passing. PR #16 is also currently mergeable=false and diverged from current main (8 ahead / 5 behind), so Builder must reconcile the scoped CP7 changes onto current canonical main and rerun exact-head install, lint, typecheck, deterministic tests/evals, and production build before QA handoff. Exact-head CI run 34638683474 was green at d37b1b2cd9e8fb644c1de228d0eb965ea63080b5, making the primary defect a quality-coverage failure rather than a build failure."
+    "pr": 17,
+    "head_sha": "12f1b5d6979dc00a9dc6bd62664ba6a9eb671ca5",
+    "ci_run": 34643865300,
+    "reason": "Builder correctly replaced conflicting PR #16 with mergeable PR #17 from current main and added the required fabricated potential-risk/unrelated-evidence regression. Exact-head CI run 34643865300 failed deterministically: 50 tests passed, 2 failed because the tightened support matcher also rejects the legitimate-material-concern fixture. TRUST_EVAL_JSON reports 12/13 matched; legitimate-material-concern expected pass but received FALSE_POSITIVE_RISK. Builder must repair the matcher so unrelated evidence remains rejected while the canonical arithmetic-warning evidence 'Subtotal 1000 + tax 100; total 1050' validly supports 'The quoted arithmetic needs clarification.' Then rerun exact-head install, lint, typecheck, all deterministic tests/evals, and production build. Do not weaken/remove the fabricated-risk regression or legitimate concern fixture."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
