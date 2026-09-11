@@ -1,22 +1,24 @@
 {
   "project": "QuoteCheck",
-  "version": 14,
+  "version": 15,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "CHANGES_REQUESTED",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
     "head_sha": "467a1c4a9d9a73bbea716e1eb7b90bf419faecc0",
-    "ci_run": 34569730034
+    "ci_run": 34569730034,
+    "qa_verdict": "CHANGES_REQUESTED",
+    "qa_failure": "AC3: quote-by-quote comparison omits scope despite canonical included/excluded scope data being available; add trust-safe per-quote scope presentation and regression coverage."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
   "last_completed": {
