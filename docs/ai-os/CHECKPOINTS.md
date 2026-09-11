@@ -5,8 +5,8 @@
 - CP2 Ingestion and canonical extraction — COMPLETE
 - CP3 Grounded reasoning and domain context — COMPLETE
 - CP4 Comparison/report experience — COMPLETE
-- CP5 Free preview and one-time unlock — ACTIVE
-- CP6 Payments, persistence and ownership — PENDING
+- CP5 Free preview and one-time unlock — COMPLETE
+- CP6 Payments, persistence and ownership — ACTIVE
 - CP7 Evaluation quality system — PENDING
 - CP8 Security, privacy and reliability — PENDING
 - CP9 Private beta instrumentation — PENDING
