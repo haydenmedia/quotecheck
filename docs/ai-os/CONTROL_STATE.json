@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 29,
+  "version": 30,
   "active_checkpoint": "CP5",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,8 +8,8 @@
     "issue": 10,
     "id": "CP5-01",
     "title": "Useful free preview and deterministic unlock gate",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP4-01 merged at a57014a32d7f9f7f4d110532b547f52f5fcba363",
     "pr": 11,
@@ -17,11 +17,14 @@
     "verification": {
       "ci_run": 34604288469,
       "conclusion": "success",
-      "steps": ["npm install", "npm run lint", "npm run typecheck", "npm test", "npm run build"]
+      "steps": ["npm install", "npm run lint", "npm run typecheck", "npm test", "npm run build"],
+      "qa_verdict": "PASS",
+      "qa_scope": "Independent review of exact PR diff/head, deterministic preview/non-leakage/unlock/trust fixtures, mobile/accessibility basics, risk policy and product/data/AI contracts",
+      "qa_acceptance": "AC1-AC11 PASS"
     },
-    "reason": "Builder implemented the bounded CP5 presentation gate on a scoped PR. Preview data omits gated finding/section content instead of CSS-hiding it; deterministic server-rendered demo unlock reveals the same already-produced report at CA$14.99 one-time copy. Exact-head CI is green. Independent QA must verify before completion."
+    "reason": "Independent QA verified PR #11 at exact head 8cf89cb58d1a0f061ffdd873a67e21085386ec8d. Preview is derived from the same CP4 report, locked sections/findings are omitted from preview presentation state/DOM, deterministic server-rendered unlock reveals the same analysis, CA$14.99 one-time demo copy is explicit, trust/uncertainty/exclusion/no-material-concern behavior is covered by fixtures, narrow-width/accessibility basics are present, and exact-head CI is green. No YELLOW/RED action occurred. Ready for PM merge/reconciliation."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "PM",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363",
   "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
