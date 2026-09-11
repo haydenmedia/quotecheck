@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #17, is Builder-owned as `VERIFICATION_FAILED` at exact head `12f1b5d6979dc00a9dc6bd62664ba6a9eb671ca5`.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #17, is Builder-owned as `VERIFICATION_FAILED`. PM has resolved the third-cycle escalation with one bounded GREEN repair authorization.
 
 ## Just finished
-Builder safely replaced conflicting PR #16 with mergeable PR #17 based on current `main` and added the required regression proving a fabricated `potential_risk` cannot borrow unrelated canonical evidence.
+Independent QA found that same-field neutral evidence can still falsely substantiate a `potential_risk`: `Total $1000.00` can support `The quoted total may be inaccurate.` despite containing no evidence of inaccuracy. Exact-head CI was green, but AC2/AC4 failed adversarial verification.
 
 ## Broken
-Exact-head CI run `34643865300` failed in deterministic trust tests. The tightened evidence-support matcher rejects the legitimate grounded arithmetic concern as `FALSE_POSITIVE_RISK`: 12/13 trust fixtures matched, with 50 tests passing and 2 assertions failing. Build was skipped after test failure.
+Potential-risk source grounding still treats topic/field overlap as substantive support. This is the third failure on the same source-grounding root issue.
 
 ## Human action required
 None.
 
 ## Next
-Builder must keep both sides of the trust boundary: unrelated canonical evidence must continue to fail a fabricated potential-risk claim, while canonical arithmetic-warning evidence (`Subtotal 1000 + tax 100; total 1050`) must validly support the grounded finding that the quoted arithmetic needs clarification. Then rerun exact-head install, lint, typecheck, all deterministic tests/evals and production build before QA handoff. Do not weaken fixtures or use paid/live model evaluation.
+Builder must replace lexical/topic-overlap sufficiency for `potential_risk` with condition-aware deterministic grounding. Neutral same-field/value evidence must be non-probative; existing canonical risk-bearing conditions such as arithmetic inconsistency, contradiction, explicit conditional/extra-charge language, or relevant preserved uncertainty may substantiate a risk. Three boundaries must hold together: same-field neutral evidence fails, unrelated evidence fails, and the legitimate arithmetic-mismatch concern passes. No fixture weakening or special-casing fixture text. Exact-head full CI is required before Independent QA handoff. If this bounded design cannot satisfy the boundaries, return to PM rather than continue heuristic thrash.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder must keep both sides of the trust boundary: unrelated canonical evidence
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 verification failed on PR #17; Builder repair required
+- CP7 evaluation quality system: active — CP7-01 bounded cycle-3 escalation repair authorized
 - CP8–CP12: not started
 
 ## Commercial milestone
