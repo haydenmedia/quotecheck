@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #16, is Builder-owned as `CHANGES_REQUESTED` after Independent QA cycle 2 at exact head `d37b1b2cd9e8fb644c1de228d0eb965ea63080b5`.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #17, is Builder-owned as `VERIFICATION_FAILED` at exact head `12f1b5d6979dc00a9dc6bd62664ba6a9eb671ca5`.
 
 ## Just finished
-The first QA repair correctly added claim/evidence matching for covered factual claims and field-specific uncertainty preservation. Exact-head CI run `34638683474` passed install, lint, typecheck, deterministic tests/evals and production build.
+Builder safely replaced conflicting PR #16 with mergeable PR #17 based on current `main` and added the required regression proving a fabricated `potential_risk` cannot borrow unrelated canonical evidence.
 
 ## Broken
-One trust-grounding hole remains: a `potential_risk` finding can cite unrelated but canonical evidence and pass because the evaluator checks evidence presence but not whether that evidence supports the asserted risk. PR #16 is also currently non-mergeable and diverged from current `main`.
+Exact-head CI run `34643865300` failed in deterministic trust tests. The tightened evidence-support matcher rejects the legitimate grounded arithmetic concern as `FALSE_POSITIVE_RISK`: 12/13 trust fixtures matched, with 50 tests passing and 2 assertions failing. Build was skipped after test failure.
 
 ## Human action required
 None.
 
 ## Next
-Builder must stay within the existing CP7-01 scope: add a deterministic unrelated-evidence `potential_risk` regression, tighten risk/evidence support matching while preserving the legitimate grounded material-concern fixture, reconcile the scoped CP7 branch onto current canonical `main`, and rerun exact-head install, lint, typecheck, deterministic tests/evals and production build. Then hand the exact head back to Independent QA. No paid model evaluation or production mutation.
+Builder must keep both sides of the trust boundary: unrelated canonical evidence must continue to fail a fabricated potential-risk claim, while canonical arithmetic-warning evidence (`Subtotal 1000 + tax 100; total 1050`) must validly support the grounded finding that the quoted arithmetic needs clarification. Then rerun exact-head install, lint, typecheck, all deterministic tests/evals and production build before QA handoff. Do not weaken fixtures or use paid/live model evaluation.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder must stay within the existing CP7-01 scope: add a deterministic unrelate
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 changes requested (QA cycle 2)
+- CP7 evaluation quality system: active — CP7-01 verification failed on PR #17; Builder repair required
 - CP8–CP12: not started
 
 ## Commercial milestone
