@@ -1,21 +1,21 @@
 {
   "project": "QuoteCheck",
-  "version": 19,
+  "version": 20,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "CHANGES_REQUESTED",
-    "owner": "Builder",
+    "status": "AWAITING_REVIEW",
+    "owner": "QA",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
-    "head_sha": "1cfe1338f38df49dec9dada4be62856272619939",
-    "ci_run": 34579132552,
-    "qa_verdict": "FAIL",
+    "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
+    "ci_run": 34583963798,
+    "qa_verdict": null,
     "qa_failure_history": [
       {
         "cycle": 1,
@@ -30,13 +30,14 @@
         "affected_criteria": [3, 5, 7, 10]
       }
     ],
-    "qa_defect": {
-      "expected": "Ambiguous and unreadable canonical fields must remain visibly uncertain with source evidence through report comparison/presentation; genuine omission alone may render as Not stated.",
-      "actual": "Reasoning maps warranty/timeline/paymentTerms through statedText(...) ?? 'Not stated', while QuoteSummary stores plain strings, so ambiguous/unreadable values become indistinguishable from genuine omission in the quote-by-quote comparison.",
-      "required_repair": "Preserve certainty and evidence for warranty, timeline, and payment terms through QuoteSummary and presentation; render ambiguous/unreadable states distinctly; add deterministic regression fixtures/tests for each state while retaining true not_stated behavior and existing findings/evidence grounding."
+    "builder_repair": {
+      "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
+      "ci_run": 34583963798,
+      "summary": "QuoteSummary now preserves value, certainty, and evidence for warranty, timeline, and payment terms; presentation distinguishes stated, ambiguous, unreadable, and genuine not_stated states; deterministic reasoning and presentation fixtures cover all states.",
+      "verification": ["npm install PASS", "lint PASS", "typecheck PASS", "tests PASS", "production build PASS"]
     }
   },
-  "mutation_owner": "Builder",
+  "mutation_owner": "QA",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
   "last_completed": {
