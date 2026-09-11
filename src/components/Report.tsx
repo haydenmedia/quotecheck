@@ -32,7 +32,15 @@ function TrustValue({ value }: { value: ValueView }) {
   );
 }
 
-export function Report({ unlocked = false }: { unlocked?: boolean }) {
+export function Report({
+  unlocked = false,
+  reportSessionId,
+  accessMessage = null,
+}: {
+  unlocked?: boolean;
+  reportSessionId: string;
+  accessMessage?: string | null;
+}) {
   const surface = reportSurface(demoReport, unlocked);
   const headline = surface.headline;
 
@@ -46,6 +54,8 @@ export function Report({ unlocked = false }: { unlocked?: boolean }) {
         </div>
         <span className="pill">Renovation</span>
       </header>
+
+      {accessMessage && <p className="access-message" role="status">{accessMessage}</p>}
 
       <div className="access-banner" aria-label={unlocked ? "Full report unlocked" : "Free preview"}>
         <strong>{unlocked ? "Full report unlocked" : "Free preview"}</strong>
@@ -119,17 +129,20 @@ export function Report({ unlocked = false }: { unlocked?: boolean }) {
               <li>One report, one payment. No subscription.</li>
             </ul>
           </div>
-          <a className="unlock-button" href="?report=full#full-report" aria-label={`Unlock the full QuoteCheck report for ${demoUnlockCopy.price} one-time`}>
-            Unlock full report — {demoUnlockCopy.price} {demoUnlockCopy.cadence}
-          </a>
-          <small>Demo unlock only — no payment is collected or connected.</small>
+          <form action="/api/demo-unlock" method="post">
+            <input type="hidden" name="reportSessionId" value={reportSessionId} />
+            <button className="unlock-button" type="submit" aria-label={`Unlock the full QuoteCheck report for ${demoUnlockCopy.price} one-time`}>
+              Unlock full report — {demoUnlockCopy.price} {demoUnlockCopy.cadence}
+            </button>
+          </form>
+          <small>Deterministic demo checkout only — no payment is collected or connected.</small>
         </aside>
       ) : (
         <aside className="unlocked-card" id="full-report" aria-labelledby="unlocked-title">
           <p className="eyebrow">Demo access</p>
           <h3 id="unlocked-title">Full report unlocked</h3>
           <p>This is the same completed analysis shown in the preview, with the remaining report sections now presented.</p>
-          <a href="?report=preview#report">Return to free preview</a>
+          <a href="#report">Review report from the top</a>
         </aside>
       )}
 
