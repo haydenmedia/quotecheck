@@ -1,15 +1,15 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP4-01 — Grounded mobile report experience** is `CHANGES_REQUESTED` and Builder-owned on Issue #8 / PR #9. Independent QA found one bounded AC3 defect at head `467a1c4a9d9a73bbea716e1eb7b90bf419faecc0`: the quote-by-quote comparison omits scope even though canonical included/excluded scope data exists.
+**CP4-01 — Grounded mobile report experience** is `CHANGES_REQUESTED` and Builder-owned on Issue #8 / PR #9. Independent QA found a bounded trust defect at head `2a7a609f67435b197f69efc24c204266d767255e`: ambiguous/unreadable inclusion or exclusion scope is dropped and then presented as `Not stated`, collapsing extraction uncertainty into genuine omission.
 
 ## Just finished
-Independent QA completed the first CP4-01 review. Exact-head CI run `34569730034` was green, but QA correctly withheld PASS because scope comparison is missing.
+Independent QA completed the second CP4-01 review. The prior missing-scope defect was repaired and exact-head CI run `34574011067` was green, but QA correctly withheld PASS because material scope uncertainty is not preserved through reasoning/report presentation.
 
 Previously, **CP3-01 — Deterministic grounded reasoning engine + domain packs** passed Independent QA and merged as PR #7 at `b4f6027978ee1b687f5b6012731b4031057a965b`.
 
 ## Broken
-CP4-01 AC3 only: quote cards show price/total, timing, warranty and payment terms but omit canonical scope. Builder must add a trust-safe per-quote scope summary, preserve explicit exclusion versus omission / `Not stated`, and add deterministic regression coverage.
+CP4-01 AC3/AC6/AC7/AC10: ambiguous or unreadable included/excluded scope can disappear and render as `Not stated`. Builder must preserve those uncertainty states visibly and with source evidence where available, while true omission remains `Not stated` and stated exclusions remain explicitly excluded. Deterministic ambiguous/unreadable inclusion and exclusion regression coverage is required.
 
 ## Human action required
 None.
