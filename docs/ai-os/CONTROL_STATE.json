@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 32,
+  "version": 33,
   "active_checkpoint": "CP5",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,8 +8,8 @@
     "issue": 10,
     "id": "CP5-01",
     "title": "Useful free preview and deterministic unlock gate — merge reconciliation",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP5-01 independently QA-passed at 8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
     "pr": 11,
@@ -19,11 +19,13 @@
       "ci_run": 34609686186,
       "conclusion": "success",
       "steps": ["npm install", "lint", "typecheck", "tests", "production build"],
-      "reconciliation_scope": "only six previously QA-approved CP5 product/test files reapplied from current main"
+      "reconciliation_scope": "six CP5 product/test files are blob-identical to the previously QA-approved head",
+      "qa_verdict": "PASS",
+      "qa_reason": "Reconciled head is mergeable; scoped CP5 files preserve the previously approved implementation exactly; deterministic preview/unlock/trust tests are unchanged; exact-head CI passed all required checks."
     },
-    "reason": "Builder reconciled PR #11 from current main and reapplied only the six previously QA-approved CP5 files. PR is mergeable and exact-head CI passed. Independent QA must re-verify the changed head before merge."
+    "reason": "Independent QA re-verified reconciled PR #11 head dd613f8b7f18e8ab48452cb82f0d7b93222c4161 and PASSed reconciliation AC1-6. PM owns merge/reconciliation next step."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "PM",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "ea87894f5e884b8292876c062b947590369427f6",
   "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
