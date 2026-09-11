@@ -1,24 +1,26 @@
 {
   "project": "QuoteCheck",
-  "version": 4,
-  "active_checkpoint": "CP1",
+  "version": 5,
+  "active_checkpoint": "CP2",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 1,
-    "id": "CP1-01",
-    "status": "QA_PASSED",
-    "owner": "PM",
+    "issue": 3,
+    "id": "CP2-01",
+    "status": "READY",
+    "owner": "Builder",
     "risk": "GREEN",
-    "pr": 2,
-    "head_sha": "87ff7e4708462c265b9c82cb79edb2a40f276720",
-    "ci_run": 34546302344,
-    "ci_conclusion": "success",
-    "qa_verdict": "PASS",
-    "qa_review_id": 5174143474
+    "depends_on": "CP1-01",
+    "base_sha": "14a0f8c5d6fd19b5a812cb1852bd8faac26e84ce"
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "9b3410d84f5b368c901f618338e3bad0fbcb2365",
+  "last_verified_main_sha": "14a0f8c5d6fd19b5a812cb1852bd8faac26e84ce",
+  "last_completed": {
+    "id": "CP1-01",
+    "pr": 2,
+    "qa_verdict": "PASS",
+    "merged_sha": "14a0f8c5d6fd19b5a812cb1852bd8faac26e84ce"
+  },
   "human_gate": null
 }
