@@ -2,10 +2,12 @@
 
 Active checkpoint: **CP7 — Evaluation quality system**.
 
-Active work item: **CP7-01 — Deterministic trust evaluation harness**, Issue #14, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #16, status `CHANGES_REQUESTED`, owner `Builder`, risk `GREEN`.
 
-CP6-01 independently QA-passed at exact PR #13 head `5025691a5c946fba7a61e221ef7484b13b4343da` after the session-identity repair and merged to `main` at `387b94a17270d3b660534f80deaa846bb818ca3f`. Issue #12 is closed. That merged SHA is the current verified save-game/rollback point.
+Independent QA reviewed exact PR #16 head `ebdda393179480c9d6d73aa2bea4ed47d8790917`. Exact-head CI run `34632979888` passed install, lint, typecheck, 50 deterministic tests and production build, but AC3/AC4 failed on two evaluator coverage defects: (1) a fabricated/unsupported factual claim can borrow an unrelated but canonical evidence ref and pass because evidence existence is checked without deterministic support matching; (2) ambiguous/unreadable extraction can be hidden behind a generic confidence limitation containing `uncertain` rather than preserving the actual uncertain field/evidence.
 
-CP7-01 is intentionally bounded to deterministic quality infrastructure: versioned fixture/mock cases representing canonical extraction evidence/uncertainty and reasoning/report outputs; hard-failure detection for fabricated facts/charges, contradictory evidence, material arithmetic corruption and hidden extraction uncertainty; grounding/taxonomy checks; false-positive resistance; explicit `not stated` versus `excluded`; valid no-material-concern outcomes; machine-readable per-case output plus concise CI summary; and CI integration alongside existing deterministic tests.
+Builder handback is bounded to deterministic regression fixtures/tests reproducing both defects and evaluator tightening that rejects unsupported claim/evidence mismatch for covered structured cases and requires field/evidence-specific surfaced uncertainty (or equivalent deterministic representation). Existing grounded cases, valid no-material-concern behavior, and CP2–CP6 deterministic tests/product behavior must remain passing.
 
-Forward work remains authorized. No human gate is active. No paid/live model evaluation is authorized; any future bounded paid eval is YELLOW and requires explicit PM evidence defining budget and fixture set. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, subscriptions, procurement/CRM/marketplace expansion or other RED action is authorized.
+This is QA failure cycle **1** for the current CP7 root issues; the three-cycle escalation threshold has not been reached. Forward work remains authorized. No human gate is active. No paid/live model evaluation is authorized; future bounded paid eval remains YELLOW and requires explicit PM evidence defining budget and fixture set. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, subscriptions, procurement/CRM/marketplace expansion or other RED action is authorized.
+
+CP6 merged SHA `387b94a17270d3b660534f80deaa846bb818ca3f` remains the verified save-game/rollback point.
