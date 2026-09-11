@@ -1,14 +1,14 @@
 {
   "project": "QuoteCheck",
-  "version": 11,
+  "version": 12,
   "active_checkpoint": "CP3",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 6,
     "id": "CP3-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP2-01",
     "base_sha": "bfbb40edb9488cb04b2f85c65436137016ebc93b",
@@ -16,11 +16,11 @@
     "head_sha": "3a00096519fbe5871ed5b8ad002a3664800d7045",
     "ci_run": 34565814336,
     "ci_status": "PASS",
-    "qa_verdict": null,
-    "qa_reason": null,
+    "qa_verdict": "PASS",
+    "qa_reason": "Independent QA verified exact-head CI, trust contracts, source-grounding behavior, nullable unknown totals, explicit exclusion versus omission, uncertainty preservation, arithmetic-warning propagation, all five finding types, and the no-material-concern path. No hard-failure trust violation found.",
     "builder_repair": "Unknown/non-stated/unreadable totals now remain null in QuoteSummary; Report renderer uses trust-safe formatting and displays Not stated instead of $0; regression tests cover not_stated and unreadable totals."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "PM",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "bfbb40edb9488cb04b2f85c65436137016ebc93b",
   "last_completed": {
