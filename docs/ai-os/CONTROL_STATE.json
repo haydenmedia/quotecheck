@@ -1,55 +1,38 @@
 {
   "project": "QuoteCheck",
-  "version": 24,
+  "version": 25,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
-    "id": "CP4-01",
-    "status": "QA_PASSED",
-    "owner": "PM",
+    "id": "CP4-01-MERGE-RECONCILE",
+    "status": "READY",
+    "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP3-01",
-    "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
+    "depends_on": "CP4-01 QA PASS",
     "pr": 9,
-    "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
-    "ci_run": 34589184847,
-    "qa_verdict": "PASS",
-    "repair_authorization": {
-      "type": "SYSTEMIC_UNCERTAINTY_PRESERVATION",
-      "scope": "all canonical fields currently surfaced by CP4 report comparison",
-      "invariant": "preserve value, certainty (stated/not_stated/ambiguous/unreadable), source evidence when present, and explicit-exclusion semantics through report summary and presentation",
-      "tests": "deterministic field-family regression matrix across all four certainty states; correct any tests encoding lossy uncertainty",
-      "reason": "PM resolution of QA cycle-3 escalation; one bounded systemic repair instead of further field-by-field patches"
-    },
-    "builder_verification": {
-      "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
-      "ci_run": 34589184847,
-      "install": "PASS",
-      "lint": "PASS",
-      "typecheck": "PASS",
-      "tests": "PASS",
-      "build": "PASS",
-      "scope": "systemic ReportSummaryValue<T> preservation for vendor, total, scope inclusions/exclusions, warranty, timeline and payment terms with deterministic four-certainty-state regression coverage"
-    },
-    "qa_verification": {
+    "approved_head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
+    "approved_ci_run": 34589184847,
+    "main_sha_observed": "65bdeb2f9535c1da519cef7334ac0d0663b4df8c",
+    "reason": "PR #9 is QA-passed but GitHub reports it non-mergeable after QA/control metadata advanced main.",
+    "acceptance_criteria": [
+      "Reconcile PR #9 with current main without changing CP4 product behaviour or weakening tests.",
+      "Preserve the QA-approved systemic uncertainty invariant and all CP4-01 acceptance criteria.",
+      "Resolve conflicts narrowly, especially canonical PM/QA metadata; do not overwrite newer main control-state evidence with stale branch metadata.",
+      "Run full deterministic CI on the reconciled exact PR head and record install/lint/typecheck/tests/build evidence.",
+      "Hand back to Independent QA because the exact head changes during reconciliation; do not self-approve or merge."
+    ],
+    "qa_verification_prior": {
       "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
       "ci_run": 34589184847,
       "verdict": "PASS",
-      "acceptance_criteria": "1-12 PASS",
-      "systemic_invariant": "PASS: surfaced canonical fields preserve value, certainty and evidence; explicit exclusions remain distinct from omissions",
-      "paid_model_eval": "NOT_RUN_NOT_REQUIRED"
-    },
-    "qa_failure_history": [
-      {"cycle": 1, "head_sha": "2a7a609f67435b197f69efc24c204266d767255e", "root_issue": "scope extraction uncertainty collapsed into not_stated presentation"},
-      {"cycle": 2, "head_sha": "1cfe1338f38df49dec9dada4be62856272619939", "root_issue": "term uncertainty flattened to Not stated"},
-      {"cycle": 3, "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff", "root_issue": "total uncertainty/evidence collapsed to null/Not stated"}
-    ]
+      "acceptance_criteria": "1-12 PASS"
+    }
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
+  "last_verified_main_sha": "65bdeb2f9535c1da519cef7334ac0d0663b4df8c",
   "last_completed": {"id": "CP3-01", "issue": 6, "pr": 7, "qa_verdict": "PASS", "merged_sha": "b4f6027978ee1b687f5b6012731b4031057a965b"},
   "human_gate": null
 }
