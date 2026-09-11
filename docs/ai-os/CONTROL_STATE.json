@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 35,
+  "version": 36,
   "active_checkpoint": "CP6",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,16 +8,16 @@
     "issue": 12,
     "id": "CP6-01",
     "title": "Durable report ownership and payment boundary contracts",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "CHANGES_REQUESTED",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP5-01 independently QA-passed and merged via PR #11",
     "pr": 13,
     "head_sha": "a67072c10a8c4cab06f2745d0a5852c922a8c287",
     "ci_run": 34615954354,
-    "reason": "Builder implemented provider-neutral ownership/persistence/payment boundaries with deterministic mock adapters and server-derived entitlement; exact-head CI passed. Independent QA must verify before merge."
+    "reason": "Independent QA found a session-identity defect: an unknown requested session renders a locked recovery message but the Report unlock form is still bound to DEMO_REPORT_SESSION_ID, allowing the user to unlock/redirect into another valid session. Bind unlock to the viewed session or omit/disable it when missing, and add deterministic UI/route coverage proving unknown sessions cannot acquire another session's entitlement."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "014930c72f65431de2652c2c492674e843822347",
   "last_completed": {"id": "CP5-01", "issue": 10, "pr": 11, "qa_verdict": "PASS", "merged_sha": "014930c72f65431de2652c2c492674e843822347"},
