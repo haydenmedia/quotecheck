@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { trustEvalFixturesV1 } from "../src/evals/fixtures/v1";
-import { evaluateTrustSuite } from "../src/evals/trust-evaluator";
+import { evaluateTrustCase, evaluateTrustSuite } from "../src/evals/trust-evaluator";
 
 describe("CP7 deterministic trust evaluation harness", () => {
   it("matches every versioned trust fixture outcome", () => {
@@ -28,6 +28,19 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("borrowed-unrelated-evidence-hard-fail")?.failures.map(f => f.code)).toContain("UNSUPPORTED_FACT");
     expect(byId.get("generic-uncertainty-limitation-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
     expect(byId.get("uncertainty-hidden-hard-fail")?.failures.map(f => f.code)).toContain("HIDDEN_UNCERTAINTY");
+  });
+
+  it("rejects a fabricated potential risk that borrows unrelated canonical evidence", () => {
+    const source = trustEvalFixturesV1.find(test => test.id === "false-positive-risk-rejected")!;
+    const borrowedEvidence = source.quotes[0].money.total.evidence;
+    const fabricated = structuredClone(source);
+    fabricated.id = "borrowed-unrelated-risk-regression";
+    fabricated.report.findings[0].evidenceRefs = borrowedEvidence;
+    fabricated.report.findings[0].plainLanguageExplanation = "Disposal may trigger an additional fee.";
+    fabricated.expectedFailureCodes = ["FALSE_POSITIVE_RISK"];
+    const result = evaluateTrustCase(fabricated);
+    expect(result.actual).toBe("fail");
+    expect(result.failures.map(f => f.code)).toContain("FALSE_POSITIVE_RISK");
   });
 
   it("covers trust semantics beyond hard failures", () => {
