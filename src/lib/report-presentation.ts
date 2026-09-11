@@ -2,6 +2,12 @@ import type { Certainty, Finding, QuoteReport, QuoteSummary, ReportSummaryValue,
 import { findingLabels, summarizeGutCheck, trustSafeFindingText } from "./trust";
 import { formatQuoteTotal } from "./reasoning";
 
+export const demoUnlockCopy = {
+  price: "CA$14.99",
+  cadence: "one-time",
+  livePayment: false,
+} as const;
+
 export const scopeStatusLabels: Record<ScopeStatus, string> = {
   included: "Explicitly included",
   excluded: "Explicitly excluded",
@@ -75,4 +81,31 @@ export function reportHeadline(report: QuoteReport): { tone: "calm" | "attention
 
 export function visibleSections(report: QuoteReport, unlocked = false) {
   return report.sections.map((section) => ({ ...section, isLocked: Boolean(section.locked && !unlocked) }));
+}
+
+/**
+ * Builds the only report-shaped value the UI is allowed to render.
+ * In preview mode, locked section metadata and findings are omitted entirely rather
+ * than hidden with CSS. This keeps paid findings out of the preview DOM and out of
+ * presentation state while preserving the exact same underlying report for unlock.
+ */
+export function reportSurface(report: QuoteReport, unlocked = false) {
+  const allowedSections = report.sections.filter((section) => unlocked || !section.locked);
+
+  return {
+    access: unlocked ? ("full" as const) : ("preview" as const),
+    category: report.category,
+    headline: reportHeadline(report),
+    quotes: report.quotes.map(presentQuoteSummary),
+    sections: allowedSections.map((section) => ({
+      id: section.id,
+      title: section.title,
+      findings: section.findingIds
+        .map((id) => report.findings.find((finding) => finding.id === id))
+        .filter((finding): finding is Finding => Boolean(finding))
+        .map(presentFinding),
+    })),
+    confidenceLimitations: [...report.confidenceLimitations],
+    noMaterialConcern: report.noMaterialConcern,
+  };
 }
