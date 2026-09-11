@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{categories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
         <button className="analyze" type="button">Analyze sample quotes</button>
       </section>
-      <Report unlocked={unlocked} reportSessionId={DEMO_REPORT_SESSION_ID} accessMessage={accessMessage} />
+      <Report unlocked={unlocked} reportSessionId={requestedSession} accessMessage={accessMessage} />
     </main>
   );
 }
