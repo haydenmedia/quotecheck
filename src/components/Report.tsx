@@ -1,7 +1,6 @@
 import { demoReport } from "@/fixtures/report";
+import { formatQuoteTotal } from "@/lib/reasoning";
 import { findingLabels, summarizeGutCheck, trustSafeFindingText } from "@/lib/trust";
-
-const money = new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
 
 export function Report() {
   const report = demoReport;
@@ -14,7 +13,7 @@ export function Report() {
       <div className="quote-grid">
         {report.quotes.map((quote) => (
           <article className="quote-card" key={quote.id}>
-            <p className="muted">{quote.vendor}</p><strong>{money.format(quote.total)}</strong>
+            <p className="muted">{quote.vendor}</p><strong>{formatQuoteTotal(quote.total)}</strong>
             <dl><div><dt>Timeline</dt><dd>{quote.timeline}</dd></div><div><dt>Warranty</dt><dd>{quote.warranty}</dd></div><div><dt>Payment</dt><dd>{quote.paymentTerms}</dd></div></dl>
           </article>
         ))}
