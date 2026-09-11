@@ -1,31 +1,36 @@
 {
   "project": "QuoteCheck",
-  "version": 17,
+  "version": 18,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "CHANGES_REQUESTED",
-    "owner": "Builder",
+    "status": "AWAITING_REVIEW",
+    "owner": "QA",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
-    "head_sha": "2a7a609f67435b197f69efc24c204266d767255e",
-    "ci_run": 34574011067,
-    "qa_verdict": "FAIL",
-    "qa_failure": {
-      "cycle": 1,
-      "root_issue": "scope extraction uncertainty is collapsed into not_stated presentation",
-      "affected_criteria": [3, 6, 7, 10],
-      "expected": "Ambiguous or unreadable inclusion/exclusion scope remains visibly uncertain and grounded; true omission remains Not stated; stated exclusions remain explicitly excluded.",
-      "actual": "statedTextList drops non-stated scope entries and presentScopeValues converts the resulting empty list to Not stated, hiding ambiguous/unreadable scope uncertainty.",
-      "required_fix": "Preserve material ambiguous/unreadable scope uncertainty through reasoning/report presentation, add deterministic fixtures and regression tests for ambiguous/unreadable inclusions and exclusions, and rerun exact-head full CI."
+    "head_sha": "1cfe1338f38df49dec9dada4be62856272619939",
+    "ci_run": 34579132552,
+    "qa_verdict": null,
+    "qa_failure_history": [
+      {
+        "cycle": 1,
+        "head_sha": "2a7a609f67435b197f69efc24c204266d767255e",
+        "root_issue": "scope extraction uncertainty was collapsed into not_stated presentation",
+        "affected_criteria": [3, 6, 7, 10]
+      }
+    ],
+    "builder_repair": {
+      "summary": "Preserve ambiguous/unreadable inclusion and exclusion certainty plus source evidence through reasoning and report presentation while keeping true omission as Not stated and stated exclusions explicit.",
+      "fixture": "scopeUncertaintyFixtureV1",
+      "verification": "CI run 34579132552 passed npm install, lint, typecheck, tests, and production build at exact head 1cfe1338f38df49dec9dada4be62856272619939."
     }
   },
-  "mutation_owner": "Builder",
+  "mutation_owner": "QA",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
   "last_completed": {
