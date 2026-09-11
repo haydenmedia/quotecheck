@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { trustEvalFixturesV1 } from "@/evals/fixtures/v1";
-import { evaluateTrustSuite } from "@/evals/trust-evaluator";
+import { trustEvalFixturesV1 } from "../src/evals/fixtures/v1";
+import { evaluateTrustSuite } from "../src/evals/trust-evaluator";
 
 describe("CP7 deterministic trust evaluation harness", () => {
   it("matches every versioned trust fixture outcome", () => {
