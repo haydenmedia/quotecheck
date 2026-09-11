@@ -11,6 +11,10 @@ function makeFinding(partial: Omit<Finding, "confidence" | "questionsToAsk"> & {
   return { ...partial, confidence: partial.confidence ?? 0.95, questionsToAsk: partial.questionsToAsk ?? [] };
 }
 
+export function formatQuoteTotal(total: number | null): string {
+  return total === null ? "Not stated" : `$${total.toFixed(2)}`;
+}
+
 export class DeterministicReasoningProvider implements ReasoningProvider {
   async analyze(input: ReasoningRequest): Promise<QuoteReport> { return analyzeQuotes(input); }
 }
@@ -53,7 +57,7 @@ export function analyzeQuotes(input: { quotes: CanonicalQuote[]; category: Reaso
   const noMaterialConcern = material.length === 0;
   return {
     category,
-    quotes: quotes.map(q => ({ id:q.id, vendor:statedText(q.vendor) ?? "Vendor not stated", total:statedNumber(q.money.total) ?? 0, warranty:statedText(q.warranty) ?? "Not stated", timeline:statedText(q.timeline) ?? "Not stated", paymentTerms:statedText(q.paymentTerms) ?? "Not stated" })),
+    quotes: quotes.map(q => ({ id:q.id, vendor:statedText(q.vendor) ?? "Vendor not stated", total:statedNumber(q.money.total), warranty:statedText(q.warranty) ?? "Not stated", timeline:statedText(q.timeline) ?? "Not stated", paymentTerms:statedText(q.paymentTerms) ?? "Not stated" })),
     findings,
     sections:[
       { id:"standout", title:"What stands out", findingIds:findings.filter(f => f.type === "difference" || f.type === "explicit_fact").map(f => f.id) },
