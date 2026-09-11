@@ -2,7 +2,14 @@ import { Report } from "@/components/Report";
 
 const categories = ["General", "Automotive", "Renovation", "Trades / Home Services"];
 
-export default function Home() {
+type HomeProps = {
+  searchParams: Promise<{ report?: string | string[] }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const unlocked = params.report === "full";
+
   return (
     <main>
       <header className="hero">
@@ -20,7 +27,7 @@ export default function Home() {
         <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{categories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
         <button className="analyze" type="button">Analyze sample quotes</button>
       </section>
-      <Report />
+      <Report unlocked={unlocked} />
     </main>
   );
 }
