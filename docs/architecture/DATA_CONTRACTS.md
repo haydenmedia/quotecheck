@@ -20,3 +20,5 @@ Any material finding that depends on a quoted fact must identify affected quote 
 
 ## Report
 Quote summaries; findings; sections; overall gut check; confidence/limitations; `noMaterialConcern`. Report rendering and future PDF export consume the same report object. Empty risk sections are valid when evidence does not justify a risk finding.
+
+`QuoteSummary.total` is `number | null`. Only a source total with `certainty: stated` may become a numeric report total. `not_stated`, `ambiguous`, and `unreadable` totals remain `null`; presentation code renders that state as `Not stated` rather than manufacturing `$0.00`.
