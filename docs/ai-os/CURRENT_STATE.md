@@ -1,13 +1,13 @@
 # Current State
 
-Active checkpoint: **CP5 — Free preview and one-time unlock**.
+Active checkpoint: **CP6 — Payments, persistence and ownership**.
 
-Active work item: **CP5-01 — Useful free preview and deterministic unlock gate**, Issue #10, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP6-01 — Durable report ownership and payment boundary contracts**, Issue #12, status `READY`, owner `Builder`, risk `GREEN`.
 
-CP4-01 passed Independent QA and merged via PR #9 at `a57014a32d7f9f7f4d110532b547f52f5fcba363`. The merged report contract preserves canonical value, certainty and source evidence across materially surfaced field families, including explicit-exclusion versus omission semantics.
+CP5-01 passed Independent QA and merged via PR #11 at `014930c72f65431de2652c2c492674e843822347`. The merged product keeps one complete grounded analysis path, exposes a bounded useful free preview, and gates remaining presentation behind one-time CA$14.99 demo unlock semantics.
 
-CP5-01 now establishes the commercial presentation boundary without introducing real payment infrastructure. The complete grounded analysis remains the single analysis path; the free state exposes a bounded useful preview, and deterministic local/demo unlock reveals the remaining presentation for a clearly stated one-time CA$14.99 price. Locked content must not be hidden in DOM/accessibility text or obvious alternate presentation paths.
+Before entering CP6, PM recorded that merged CP5 SHA as the rollback/save-game point. CP6-01 is intentionally limited to provider-neutral ownership, persistence and one-time payment contracts with deterministic in-memory/mock adapters. Unlock authorization must move away from query/client-only state and derive from persisted server-side entitlement state, while the unlocked experience must reveal the exact already-produced report rather than rerunning analysis.
 
-Required Builder evidence: scoped PR; deterministic tests for useful preview, gated-content non-leakage, unlock transition, one-time pricing copy, no-material-concern behavior, and uncertainty/exclusion preservation; mobile/accessibility basics; exact-head install/lint/typecheck/tests/build PASS. Then ownership passes to Independent QA.
+Required Builder evidence: scoped PR; deterministic tests for successful entitlement, cancel/failure, idempotent repeated confirmation, missing/unknown session, preview non-leakage, exact-report preservation and one-time CA$14.99 semantics; mobile/accessibility basics; exact-head install/lint/typecheck/tests/build PASS. Then ownership passes to Independent QA.
 
-Forward work remains authorized. No human gate is active. No Stripe/live payment, production deployment, persistence/auth, paid model evaluation, procurement/CRM/marketplace/subscription expansion is authorized by this work item.
+Forward work remains authorized. No human gate is active. No live Stripe/payment-provider action, production DB/storage mutation, secrets, production deployment, paid model evaluation, subscriptions, procurement/CRM/marketplace scope is authorized by CP6-01.
