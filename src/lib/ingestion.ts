@@ -4,6 +4,7 @@ import type {
   EvidenceRef,
   ExtractionProvider,
   ExtractionResult,
+  ExtractionWarning,
   QuoteLineItem,
   SourcedValue,
   TextIngestionInput,
@@ -144,26 +145,31 @@ function asMoney(value: SourcedValue<string | number>): SourcedValue<number> {
   return { ...value, value: typeof value.value === "number" ? value.value : null };
 }
 
-function arithmeticWarnings(quote: CanonicalQuote) {
+function arithmeticWarnings(quote: CanonicalQuote): ExtractionWarning[] {
   const { subtotal, tax, fees, total } = quote.money;
   if ([subtotal, tax, fees, total].some((field) => field.value === null || field.certainty !== "stated")) return [];
   const expected = (subtotal.value ?? 0) + (tax.value ?? 0) + (fees.value ?? 0);
   const actual = total.value ?? 0;
   if (Math.abs(expected - actual) <= 0.01) return [];
   return [{
-    code: "ARITHMETIC_MISMATCH" as const,
+    code: "ARITHMETIC_MISMATCH",
     message: `Source values do not add up: subtotal + tax + fees = ${expected.toFixed(2)}, while stated total = ${actual.toFixed(2)}. Source values were preserved unchanged.`,
     evidence: [...subtotal.evidence, ...tax.evidence, ...fees.evidence, ...total.evidence],
   }];
 }
 
-function uncertaintyWarnings(quote: CanonicalQuote) {
+function uncertaintyWarnings(quote: CanonicalQuote): ExtractionWarning[] {
   const watched = [quote.vendor, quote.projectDescription, quote.warranty, quote.timeline, quote.paymentTerms];
-  return watched.flatMap((field) => {
-    if (field.certainty === "ambiguous") return [{ code: "AMBIGUOUS_FIELD" as const, message: "A source field is explicitly ambiguous and was not upgraded to certainty.", evidence: field.evidence }];
-    if (field.certainty === "unreadable") return [{ code: "UNREADABLE_FIELD" as const, message: "A source field is unreadable and remains unknown.", evidence: field.evidence }];
-    return [];
+  const warnings: ExtractionWarning[] = [];
+  watched.forEach((field) => {
+    if (field.certainty === "ambiguous") {
+      warnings.push({ code: "AMBIGUOUS_FIELD", message: "A source field is explicitly ambiguous and was not upgraded to certainty.", evidence: field.evidence });
+    }
+    if (field.certainty === "unreadable") {
+      warnings.push({ code: "UNREADABLE_FIELD", message: "A source field is unreadable and remains unknown.", evidence: field.evidence });
+    }
   });
+  return warnings;
 }
 
 export function ingestTextQuote(input: TextIngestionInput): ExtractionResult {
