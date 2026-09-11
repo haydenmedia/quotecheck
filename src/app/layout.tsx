@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import "./cp5.css";
 
 export const metadata: Metadata = { title: "QuoteCheck", description: "Compare quotes without guessing what matters." };
 
