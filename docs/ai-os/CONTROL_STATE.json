@@ -1,27 +1,37 @@
 {
   "project": "QuoteCheck",
-  "version": 22,
+  "version": 23,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "CHANGES_REQUESTED",
-    "owner": "Builder",
+    "status": "AWAITING_REVIEW",
+    "owner": "QA",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
-    "head_sha": "f7d25c1acd5027626c6ef80387b5c785b7c812ff",
-    "ci_run": 34583963798,
-    "qa_verdict": "FAIL_ESCALATED",
+    "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
+    "ci_run": 34589184847,
+    "qa_verdict": null,
     "repair_authorization": {
       "type": "SYSTEMIC_UNCERTAINTY_PRESERVATION",
       "scope": "all canonical fields currently surfaced by CP4 report comparison",
       "invariant": "preserve value, certainty (stated/not_stated/ambiguous/unreadable), source evidence when present, and explicit-exclusion semantics through report summary and presentation",
       "tests": "deterministic field-family regression matrix across all four certainty states; correct any tests encoding lossy uncertainty",
       "reason": "PM resolution of QA cycle-3 escalation; one bounded systemic repair instead of further field-by-field patches"
+    },
+    "builder_verification": {
+      "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
+      "ci_run": 34589184847,
+      "install": "PASS",
+      "lint": "PASS",
+      "typecheck": "PASS",
+      "tests": "PASS",
+      "build": "PASS",
+      "scope": "systemic ReportSummaryValue<T> preservation for vendor, total, scope inclusions/exclusions, warranty, timeline and payment terms with deterministic four-certainty-state regression coverage"
     },
     "qa_failure_history": [
       {"cycle": 1, "head_sha": "2a7a609f67435b197f69efc24c204266d767255e", "root_issue": "scope extraction uncertainty collapsed into not_stated presentation"},
