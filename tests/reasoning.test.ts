@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ingestionFixtures } from "../src/fixtures/ingestion";
 import { ingestTextQuote } from "../src/lib/ingestion";
 import { DOMAIN_PACKS, getDomainPack } from "../src/lib/domain-packs";
-import { DeterministicReasoningProvider } from "../src/lib/reasoning";
+import { DeterministicReasoningProvider, formatQuoteTotal } from "../src/lib/reasoning";
 import type { QuoteCategory } from "../src/lib/types";
 
 const quote = (key: keyof typeof ingestionFixtures) => ingestTextQuote(ingestionFixtures[key]).quote;
@@ -39,6 +39,44 @@ describe("grounded deterministic reasoning", () => {
     const uncertain = report.findings.filter((finding) => finding.type === "inference");
     expect(uncertain.length).toBeGreaterThan(0);
     expect(uncertain.every((finding) => /no stronger claim is justified|uncertainty needs clarification/i.test(finding.plainLanguageExplanation + " " + finding.title))).toBe(true);
+  });
+
+  it("preserves a not-stated total as unknown instead of manufacturing zero", async () => {
+    const source = quote("clean");
+    const missingTotal = {
+      ...source,
+      id: "quote-total-not-stated",
+      money: {
+        ...source.money,
+        total: { value: null, certainty: "not_stated" as const, evidence: [] },
+      },
+    };
+    const provider = new DeterministicReasoningProvider();
+    const report = await provider.analyze({ quotes: [missingTotal], category: "general", domain: getDomainPack("general") });
+    expect(report.quotes[0].total).toBeNull();
+    expect(formatQuoteTotal(report.quotes[0].total)).toBe("Not stated");
+    expect(formatQuoteTotal(report.quotes[0].total)).not.toBe("$0.00");
+  });
+
+  it("preserves an unreadable total as unknown instead of manufacturing zero", async () => {
+    const source = quote("clean");
+    const unreadableTotal = {
+      ...source,
+      id: "quote-total-unreadable",
+      money: {
+        ...source.money,
+        total: {
+          value: null,
+          certainty: "unreadable" as const,
+          evidence: [{ quoteId: "quote-total-unreadable", sourceInputId: "scan-1", sourceLabel: "Scan page 2", excerpt: "Total: [unreadable]", confidence: 0.2 }],
+        },
+      },
+    };
+    const provider = new DeterministicReasoningProvider();
+    const report = await provider.analyze({ quotes: [unreadableTotal], category: "general", domain: getDomainPack("general") });
+    expect(report.quotes[0].total).toBeNull();
+    expect(formatQuoteTotal(report.quotes[0].total)).toBe("Not stated");
+    expect(report.findings.some((finding) => /states a total of \$0\.00/i.test(finding.title))).toBe(false);
   });
 
   it("propagates arithmetic warnings as qualified potential risk with source evidence", async () => {
