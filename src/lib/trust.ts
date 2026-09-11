@@ -11,7 +11,8 @@ export const findingLabels = {
 export function trustSafeFindingText(finding: Finding): string {
   if (finding.type !== "not_stated") return finding.plainLanguageExplanation;
   const text = finding.plainLanguageExplanation.trim();
-  if (/\b(will|is|are)\s+(cost|charge|fee|extra|additional)\b/i.test(text)) {
+  const assertsExtraCharge = /\b(?:is|are|will be)\b.{0,24}\b(?:extra|additional)\s+(?:charge|fee|cost)\b/i.test(text);
+  if (assertsExtraCharge) {
     return "This quote does not state this item clearly. That is a question to clarify, not proof of an additional charge.";
   }
   return text;
