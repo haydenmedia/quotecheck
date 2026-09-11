@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 37,
+  "version": 38,
   "active_checkpoint": "CP6",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,16 +8,16 @@
     "issue": 12,
     "id": "CP6-01",
     "title": "Durable report ownership and payment boundary contracts",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "QA_PASSED",
+    "owner": "PM",
     "risk": "GREEN",
     "depends_on": "CP5-01 independently QA-passed and merged via PR #11",
     "pr": 13,
     "head_sha": "5025691a5c946fba7a61e221ef7484b13b4343da",
     "ci_run": 34621495377,
-    "reason": "Builder repaired the QA session-identity defect by binding the report unlock form to the viewed requestedSession instead of DEMO_REPORT_SESSION_ID. Deterministic regression coverage now verifies presentation binding and that the route guards unknown posted sessions before checkout. Exact-head CI passed install, lint, typecheck, deterministic tests and production build. Ready for independent QA re-verification."
+    "reason": "Independent QA re-verified the repaired exact PR head. The viewed report session is now preserved into the unlock form; unknown posted sessions are rejected before checkout; persisted server-side entitlement remains the sole unlock authority. Deterministic CP6 and preserved CP5 preview tests cover success, cancellation/failure/unknown states, idempotency, missing sessions, non-leakage, exact-report preservation, CA$14.99 one-time semantics, uncertainty/exclusion preservation and valid no-material-concern behavior. Exact-head CI passed install, lint, typecheck, tests and production build. AC1-AC12 PASS; ready for PM merge/reconciliation."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "PM",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "014930c72f65431de2652c2c492674e843822347",
   "last_completed": {"id": "CP5-01", "issue": 10, "pr": 11, "qa_verdict": "PASS", "merged_sha": "014930c72f65431de2652c2c492674e843822347"},
