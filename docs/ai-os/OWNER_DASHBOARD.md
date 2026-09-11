@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP6-01 — Durable report ownership and payment boundary contracts**, Issue #12, is READY for Builder. Scope is deliberately GREEN: provider-neutral contracts, deterministic persistence/payment mocks, server-derived entitlement state, and tests. No live Stripe or production storage.
+**CP6-01 — Durable report ownership and payment boundary contracts**, Issue #12 / PR #13, is back with Builder after Independent QA requested changes. The active defect is narrowly scoped: an unknown requested report session renders a locked recovery message but the unlock form is bound to the valid demo session, so it can transition into another report instead of remaining locked.
 
 ## Just finished
-CP5-01 passed Independent QA after reconciliation and PR #11 merged at `014930c72f65431de2652c2c492674e843822347`. The useful free preview and one-time CA$14.99 presentation gate are now on `main`.
+Independent QA verified PR #13 head `a67072c10a8c4cab06f2745d0a5852c922a8c287` and returned `CHANGES_REQUESTED`. Exact-head CI was green; the failure is a functional session-identity/authorization coverage gap, not a build failure.
 
 ## Broken
-Nothing currently known.
+Unknown/missing report-session presentation does not preserve session identity through the unlock form. This blocks AC8 and affects AC5 authorization integrity.
 
 ## Human action required
 None.
 
 ## Next
-Builder implements CP6-01 on a scoped PR, proves the ownership/unlock lifecycle deterministically, and hands the exact head to Independent QA. Live payment/storage integration remains a later explicit gate.
+Builder must bind unlock to the viewed valid session or omit/disable unlock when that session does not exist, then add deterministic UI/route regression coverage proving an unknown session cannot acquire or redirect into another session's entitlement. Re-run exact-head install/lint/typecheck/tests/build and hand the new PR head to Independent QA. No scope expansion.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -22,7 +22,7 @@ Builder implements CP6-01 on a scoped PR, proves the ownership/unlock lifecycle 
 - CP3 grounded reasoning/domain context: complete
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
-- CP6 payments/persistence/ownership: active — contract/mock foundation
+- CP6 payments/persistence/ownership: active — CP6-01 changes requested
 - CP7–CP12: not started
 
 ## Commercial milestone
