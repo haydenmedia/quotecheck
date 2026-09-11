@@ -1,4 +1,4 @@
-import type { CanonicalQuote, EvidenceRef, Finding, QuoteReport, ReasoningContext, ReasoningProvider, ReasoningRequest } from "@/lib/types";
+import type { CanonicalQuote, EvidenceRef, Finding, QuoteReport, ReasoningContext, ReasoningProvider, ReasoningRequest, ReportSummaryValue } from "@/lib/types";
 
 function statedText(value: { value: string | null; certainty: string }): string | null {
   return value.certainty === "stated" && value.value ? value.value : null;
@@ -6,13 +6,22 @@ function statedText(value: { value: string | null; certainty: string }): string 
 function statedNumber(value: { value: number | null; certainty: string }): number | null {
   return value.certainty === "stated" && typeof value.value === "number" ? value.value : null;
 }
+function summaryValue<T>(value: ReportSummaryValue<T>): ReportSummaryValue<T> {
+  return { value: value.value, certainty: value.certainty, evidence: value.evidence };
+}
+function summaryValues<T>(values: ReportSummaryValue<T>[]): ReportSummaryValue<T>[] {
+  return values.map(summaryValue);
+}
 function unique<T>(items: T[]): T[] { return [...new Set(items)]; }
 function makeFinding(partial: Omit<Finding, "confidence" | "questionsToAsk"> & { confidence?: number; questionsToAsk?: string[] }): Finding {
   return { ...partial, confidence: partial.confidence ?? 0.95, questionsToAsk: partial.questionsToAsk ?? [] };
 }
 
-export function formatQuoteTotal(total: number | null): string {
-  return total === null ? "Not stated" : `$${total.toFixed(2)}`;
+export function formatQuoteTotal(total: ReportSummaryValue<number>): string {
+  if (total.certainty === "stated" && typeof total.value === "number") return `$${total.value.toFixed(2)}`;
+  if (total.certainty === "ambiguous") return total.value === null ? "Source total is ambiguous" : `Ambiguous: $${total.value.toFixed(2)}`;
+  if (total.certainty === "unreadable") return "Could not reliably read the total";
+  return "Not stated";
 }
 
 export class DeterministicReasoningProvider implements ReasoningProvider {
@@ -57,7 +66,16 @@ export function analyzeQuotes(input: { quotes: CanonicalQuote[]; category: Reaso
   const noMaterialConcern = material.length === 0;
   return {
     category,
-    quotes: quotes.map(q => ({ id:q.id, vendor:statedText(q.vendor) ?? "Vendor not stated", total:statedNumber(q.money.total), warranty:statedText(q.warranty) ?? "Not stated", timeline:statedText(q.timeline) ?? "Not stated", paymentTerms:statedText(q.paymentTerms) ?? "Not stated" })),
+    quotes: quotes.map(q => ({
+      id:q.id,
+      vendor:summaryValue(q.vendor),
+      total:summaryValue(q.money.total),
+      scopeIncluded:summaryValues(q.inclusions),
+      scopeExcluded:summaryValues(q.exclusions),
+      warranty:summaryValue(q.warranty),
+      timeline:summaryValue(q.timeline),
+      paymentTerms:summaryValue(q.paymentTerms)
+    })),
     findings,
     sections:[
       { id:"standout", title:"What stands out", findingIds:findings.filter(f => f.type === "difference" || f.type === "explicit_fact").map(f => f.id) },
