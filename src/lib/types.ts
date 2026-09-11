@@ -11,7 +11,7 @@ export interface ExtractionWarning { code: "ARITHMETIC_MISMATCH" | "AMBIGUOUS_FI
 export interface CanonicalQuote { id: string; sourceInputIds: string[]; vendor: SourcedValue<string>; quoteDate: SourcedValue<string>; expiryDate: SourcedValue<string>; projectDescription: SourcedValue<string>; lineItems: QuoteLineItem[]; money: QuoteMoneySummary; allowances: SourcedValue<string>[]; inclusions: SourcedValue<string>[]; exclusions: SourcedValue<string>[]; warranty: SourcedValue<string>; timeline: SourcedValue<string>; paymentTerms: SourcedValue<string>; conditions: SourcedValue<string>[]; uncertainties: SourcedValue<string>[]; warnings: ExtractionWarning[]; }
 export interface TextIngestionInput { id: string; label: string; kind: "pasted_text" | "extracted_text_fixture"; text: string; page?: number; }
 export interface ExtractionResult { quote: CanonicalQuote; rawText: string; sourceInputId: string; }
-export interface QuoteSummary { id: string; vendor: string; total: number; warranty: string; timeline: string; paymentTerms: string; }
+export interface QuoteSummary { id: string; vendor: string; total: number | null; warranty: string; timeline: string; paymentTerms: string; }
 export interface Finding { id: string; type: FindingType; severity: Severity; title: string; plainLanguageExplanation: string; affectedQuoteIds: string[]; evidenceRefs: EvidenceRef[]; confidence: number; questionsToAsk: string[]; }
 export interface ReportSection { id: string; title: string; findingIds: string[]; locked?: boolean; }
 export interface QuoteReport { category: QuoteCategory; quotes: QuoteSummary[]; findings: Finding[]; sections: ReportSection[]; overallGutCheck: string; confidenceLimitations: string[]; noMaterialConcern: boolean; }
