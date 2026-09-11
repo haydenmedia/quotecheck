@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 31,
+  "version": 32,
   "active_checkpoint": "CP5",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,23 +8,24 @@
     "issue": 10,
     "id": "CP5-01",
     "title": "Useful free preview and deterministic unlock gate — merge reconciliation",
-    "status": "READY",
-    "owner": "Builder",
+    "status": "AWAITING_REVIEW",
+    "owner": "QA",
     "risk": "GREEN",
     "depends_on": "CP5-01 independently QA-passed at 8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
     "pr": 11,
     "qa_approved_head": "8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
+    "reconciled_head": "dd613f8b7f18e8ab48452cb82f0d7b93222c4161",
     "verification": {
-      "ci_run": 34604288469,
+      "ci_run": 34609686186,
       "conclusion": "success",
-      "qa_verdict": "PASS",
-      "qa_acceptance": "AC1-AC11 PASS"
+      "steps": ["npm install", "lint", "typecheck", "tests", "production build"],
+      "reconciliation_scope": "only six previously QA-approved CP5 product/test files reapplied from current main"
     },
-    "reason": "PR #11 passed Independent QA but is not mergeable against current main because newer canonical PM/QA state commits landed after its base. Builder must reconcile only the six QA-approved CP5 product/test files onto current main, preserve newer docs/ai-os metadata, run exact-head CI, and return the changed head to QA."
+    "reason": "Builder reconciled PR #11 from current main and reapplied only the six previously QA-approved CP5 files. PR is mergeable and exact-head CI passed. Independent QA must re-verify the changed head before merge."
   },
-  "mutation_owner": "Builder",
+  "mutation_owner": "QA",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "8ab8c8b2a3fce79731e2014c52668f7777d6fca4",
+  "last_verified_main_sha": "ea87894f5e884b8292876c062b947590369427f6",
   "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
   "human_gate": null
 }
