@@ -1,23 +1,25 @@
 {
   "project": "QuoteCheck",
-  "version": 9,
+  "version": 10,
   "active_checkpoint": "CP3",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 6,
     "id": "CP3-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "CHANGES_REQUESTED",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP2-01",
     "base_sha": "bfbb40edb9488cb04b2f85c65436137016ebc93b",
     "pr": 7,
     "head_sha": "b858c803a85aab983692e6ac3e2826755dc3a91e",
     "ci_run": 34561921790,
-    "ci_status": "PASS"
+    "ci_status": "PASS",
+    "qa_verdict": "FAIL",
+    "qa_reason": "QuoteReport summary converts non-stated/ambiguous/unreadable total to concrete 0; preserve unknown total and add regression coverage."
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "bfbb40edb9488cb04b2f85c65436137016ebc93b",
   "last_completed": {
