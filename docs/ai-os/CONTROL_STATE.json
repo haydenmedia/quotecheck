@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 28,
+  "version": 29,
   "active_checkpoint": "CP5",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,14 +8,20 @@
     "issue": 10,
     "id": "CP5-01",
     "title": "Useful free preview and deterministic unlock gate",
-    "status": "READY",
-    "owner": "Builder",
+    "status": "AWAITING_REVIEW",
+    "owner": "QA",
     "risk": "GREEN",
     "depends_on": "CP4-01 merged at a57014a32d7f9f7f4d110532b547f52f5fcba363",
-    "pr": null,
-    "reason": "CP4 independently passed QA and merged. CP5-01 is the highest-value bounded next item: preserve the full grounded analysis, expose a useful free preview, and gate only remaining report presentation behind a deterministic one-time CA$14.99 demo unlock. No live payment integration is authorized."
+    "pr": 11,
+    "head_sha": "8cf89cb58d1a0f061ffdd873a67e21085386ec8d",
+    "verification": {
+      "ci_run": 34604288469,
+      "conclusion": "success",
+      "steps": ["npm install", "npm run lint", "npm run typecheck", "npm test", "npm run build"]
+    },
+    "reason": "Builder implemented the bounded CP5 presentation gate on a scoped PR. Preview data omits gated finding/section content instead of CSS-hiding it; deterministic server-rendered demo unlock reveals the same already-produced report at CA$14.99 one-time copy. Exact-head CI is green. Independent QA must verify before completion."
   },
-  "mutation_owner": "Builder",
+  "mutation_owner": "QA",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363",
   "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
