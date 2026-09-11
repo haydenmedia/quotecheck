@@ -1,28 +1,28 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP4-01 — Grounded mobile report experience** is READY for Builder on Issue #8. The task is to turn the verified canonical Report into a polished mobile-first comparison/report UI using deterministic fixtures while preserving the CP2/CP3 trust contracts.
+**CP4-01 — Grounded mobile report experience** is `CHANGES_REQUESTED` and Builder-owned on Issue #8 / PR #9. Independent QA found one bounded AC3 defect at head `467a1c4a9d9a73bbea716e1eb7b90bf419faecc0`: the quote-by-quote comparison omits scope even though canonical included/excluded scope data exists.
 
 ## Just finished
-**CP3-01 — Deterministic grounded reasoning engine + domain packs** passed Independent QA after its unknown-total repair and merged as PR #7 at `b4f6027978ee1b687f5b6012731b4031057a965b`.
+Independent QA completed the first CP4-01 review. Exact-head CI run `34569730034` was green, but QA correctly withheld PASS because scope comparison is missing.
 
-Verified behaviour includes source-grounded findings, nullable unknown totals rendered as `Not stated`, explicit exclusion vs omission, uncertainty preservation, arithmetic/source warning propagation, all five finding types, four versioned domain context packs, and a valid no-material-concern path.
+Previously, **CP3-01 — Deterministic grounded reasoning engine + domain packs** passed Independent QA and merged as PR #7 at `b4f6027978ee1b687f5b6012731b4031057a965b`.
 
 ## Broken
-Nothing currently known in the active checkpoint.
+CP4-01 AC3 only: quote cards show price/total, timing, warranty and payment terms but omit canonical scope. Builder must add a trust-safe per-quote scope summary, preserve explicit exclusion versus omission / `Not stated`, and add deterministic regression coverage.
 
 ## Human action required
 None.
 
 ## Next
-Builder implements Issue #8 on a scoped PR, adds deterministic UI/trust regression coverage, and obtains exact-head lint/typecheck/test/build evidence. Independent QA then verifies mobile usability, accessibility basics, trust-safe presentation and regression safety before PM merges.
+Builder repairs PR #9 on its scoped branch, reruns lint/typecheck/tests/build at the exact new head, records evidence, and returns the work item to Independent QA. QA then re-verifies the complete CP4 acceptance set; PM merges only after independent PASS.
 
 ## Checkpoint progress
 - CP0 project OS: complete
 - CP1 golden journey scaffold: complete
 - CP2 ingestion/canonical extraction foundation: complete
 - CP3 grounded reasoning/domain context: complete
-- CP4 comparison/report experience: active — CP4-01 READY
+- CP4 comparison/report experience: active — CP4-01 CHANGES_REQUESTED
 - CP5–CP12: not started
 
 ## Commercial milestone
