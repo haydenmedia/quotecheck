@@ -17,7 +17,6 @@ describe("CP7 deterministic trust evaluation harness", () => {
   it("exercises every required hard-failure class", () => {
     const suite = evaluateTrustSuite(trustEvalFixturesV1);
     const detected = new Set(suite.results.flatMap(result => result.failures.map(failure => failure.code)));
-    expect(detected).toEqual(expect.objectContaining ? detected : detected);
     expect(detected.has("UNSUPPORTED_FACT")).toBe(true);
     expect(detected.has("CONTRADICTORY_EVIDENCE")).toBe(true);
     expect(detected.has("ARITHMETIC_CORRUPTION")).toBe(true);
