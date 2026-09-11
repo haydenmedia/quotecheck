@@ -1,58 +1,23 @@
 {
   "project": "QuoteCheck",
-  "version": 27,
-  "active_checkpoint": "CP4",
+  "version": 28,
+  "active_checkpoint": "CP5",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 8,
-    "id": "CP4-01-MERGE-RECONCILE",
-    "status": "QA_PASSED",
-    "owner": "PM",
+    "issue": 10,
+    "id": "CP5-01",
+    "title": "Useful free preview and deterministic unlock gate",
+    "status": "READY",
+    "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP4-01 QA PASS",
-    "pr": 9,
-    "prior_qa_head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
-    "prior_qa_ci_run": 34589184847,
-    "reconciled_head_sha": "3eb9eb7a58b8f9bb7535ddb5d2223f436546efea",
-    "reconciled_ci_run": 34594175986,
-    "main_base_sha": "8b62c5f7b9c787e99e915aa5ddcf7110a5bf2783",
-    "mergeable_after_reconciliation": true,
-    "reason": "Independent QA re-verified the reconciled exact head. All nine CP4 product/test blobs are identical to the previously QA-approved head, deterministic exact-head CI is green, the systemic uncertainty invariant remains intact, and reconciliation did not reintroduce stale control metadata. Ready for PM merge/reconciliation completion.",
-    "acceptance_criteria": [
-      "Reconcile PR #9 with current main without changing CP4 product behaviour or weakening tests.",
-      "Preserve the QA-approved systemic uncertainty invariant and all CP4-01 acceptance criteria.",
-      "Resolve conflicts narrowly, especially canonical PM/QA metadata; do not overwrite newer main control-state evidence with stale branch metadata.",
-      "Run full deterministic CI on the reconciled exact PR head and record install/lint/typecheck/tests/build evidence.",
-      "Hand back to Independent QA because the exact head changes during reconciliation; do not self-approve or merge."
-    ],
-    "verification": {
-      "head_sha": "3eb9eb7a58b8f9bb7535ddb5d2223f436546efea",
-      "ci_run": 34594175986,
-      "install": "PASS",
-      "lint": "PASS",
-      "typecheck": "PASS",
-      "tests": "PASS",
-      "build": "PASS"
-    },
-    "qa_verification_prior": {
-      "head_sha": "7d5aa71297813234b0767e3f9b22bd44860bcd9c",
-      "ci_run": 34589184847,
-      "verdict": "PASS",
-      "acceptance_criteria": "1-12 PASS"
-    },
-    "qa_verification_reconciled": {
-      "head_sha": "3eb9eb7a58b8f9bb7535ddb5d2223f436546efea",
-      "ci_run": 34594175986,
-      "verdict": "PASS",
-      "reconciliation_acceptance_criteria": "1-5 PASS",
-      "cp4_acceptance_criteria": "1-12 preserved from prior QA PASS",
-      "blob_identity_check": "PASS — all nine PR product/test files match prior QA-approved head"
-    }
+    "depends_on": "CP4-01 merged at a57014a32d7f9f7f4d110532b547f52f5fcba363",
+    "pr": null,
+    "reason": "CP4 independently passed QA and merged. CP5-01 is the highest-value bounded next item: preserve the full grounded analysis, expose a useful free preview, and gate only remaining report presentation behind a deterministic one-time CA$14.99 demo unlock. No live payment integration is authorized."
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "65bdeb2f9535c1da519cef7334ac0d0663b4df8c",
-  "last_completed": {"id": "CP3-01", "issue": 6, "pr": 7, "qa_verdict": "PASS", "merged_sha": "b4f6027978ee1b687f5b6012731b4031057a965b"},
+  "last_verified_main_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363",
+  "last_completed": {"id": "CP4-01", "issue": 8, "pr": 9, "qa_verdict": "PASS", "merged_sha": "a57014a32d7f9f7f4d110532b547f52f5fcba363"},
   "human_gate": null
 }
