@@ -4,8 +4,8 @@
 - CP1 Product definition and golden journey — COMPLETE
 - CP2 Ingestion and canonical extraction — COMPLETE
 - CP3 Grounded reasoning and domain context — COMPLETE
-- CP4 Comparison/report experience — ACTIVE
-- CP5 Free preview and one-time unlock — PENDING
+- CP4 Comparison/report experience — COMPLETE
+- CP5 Free preview and one-time unlock — ACTIVE
 - CP6 Payments, persistence and ownership — PENDING
 - CP7 Evaluation quality system — PENDING
 - CP8 Security, privacy and reliability — PENDING
