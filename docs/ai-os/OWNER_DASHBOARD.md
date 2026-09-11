@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14, is READY for Builder. The bounded GREEN slice adds versioned fixtures and a deterministic evaluator that continuously checks extraction/reasoning/report trust invariants in CI without paid model calls.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #16, is back with Builder as `CHANGES_REQUESTED`. Independent QA found two trust-evaluator gaps at head `ebdda393179480c9d6d73aa2bea4ed47d8790917`: unrelated canonical evidence can incorrectly ground a fabricated factual claim, and a generic confidence limitation can incorrectly mask field-specific extraction uncertainty.
 
 ## Just finished
-**CP6-01 — Durable report ownership and payment boundary contracts** independently QA-passed at PR #13 head `5025691a5c946fba7a61e221ef7484b13b4343da` and merged to `main` at `387b94a17270d3b660534f80deaa846bb818ca3f`. Issue #12 is closed.
+Independent QA completed the first CP7-01 review. AC1, AC2 and AC5–AC12 have supporting evidence; AC3/AC4 failed on source-grounding and uncertainty-preservation coverage. Exact-head CI run `34632979888` was green, so this is a deterministic quality-harness defect rather than a build failure.
 
 ## Broken
-Nothing currently known to block CP7-01.
+CP7-01 cannot pass QA until the evaluator deterministically rejects claim/evidence mismatch for the covered structured cases and requires field/evidence-specific preservation of ambiguous/unreadable extraction.
 
 ## Human action required
 None.
 
 ## Next
-Builder implements Issue #14 on a scoped branch/PR: versioned deterministic trust fixtures, hard-failure checks for fabrication/contradictory evidence/material arithmetic corruption/hidden uncertainty, grounding/taxonomy checks, valid no-material-concern coverage, machine-readable + human-readable results, and CI integration. No paid model evaluation or production mutation.
+Builder repairs PR #16 only within the QA handback: add regression fixtures/tests for both failure modes, tighten source grounding and uncertainty preservation, preserve existing grounded/pass cases and CP2–CP6 behavior, then provide exact-head CI/eval evidence for Independent QA. No paid model evaluation or production mutation.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder implements Issue #14 on a scoped branch/PR: versioned deterministic trus
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 ready
+- CP7 evaluation quality system: active — CP7-01 changes requested (QA cycle 1)
 - CP8–CP12: not started
 
 ## Commercial milestone
