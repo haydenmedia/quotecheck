@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ingestionFixtures } from "@/fixtures/ingestion";
-import { ingestTextQuote } from "@/lib/ingestion";
-import { DOMAIN_PACKS, getDomainPack } from "@/lib/domain-packs";
-import { DeterministicReasoningProvider } from "@/lib/reasoning";
-import type { QuoteCategory } from "@/lib/types";
+import { ingestionFixtures } from "../src/fixtures/ingestion";
+import { ingestTextQuote } from "../src/lib/ingestion";
+import { DOMAIN_PACKS, getDomainPack } from "../src/lib/domain-packs";
+import { DeterministicReasoningProvider } from "../src/lib/reasoning";
+import type { QuoteCategory } from "../src/lib/types";
 
 const quote = (key: keyof typeof ingestionFixtures) => ingestTextQuote(ingestionFixtures[key]).quote;
 const run = async (keys: (keyof typeof ingestionFixtures)[], category: QuoteCategory = "general") => {
