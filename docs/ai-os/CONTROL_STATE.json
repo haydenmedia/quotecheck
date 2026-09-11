@@ -1,36 +1,42 @@
 {
   "project": "QuoteCheck",
-  "version": 18,
+  "version": 19,
   "active_checkpoint": "CP4",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
     "issue": 8,
     "id": "CP4-01",
-    "status": "AWAITING_REVIEW",
-    "owner": "QA",
+    "status": "CHANGES_REQUESTED",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP3-01",
     "base_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
     "pr": 9,
     "head_sha": "1cfe1338f38df49dec9dada4be62856272619939",
     "ci_run": 34579132552,
-    "qa_verdict": null,
+    "qa_verdict": "FAIL",
     "qa_failure_history": [
       {
         "cycle": 1,
         "head_sha": "2a7a609f67435b197f69efc24c204266d767255e",
         "root_issue": "scope extraction uncertainty was collapsed into not_stated presentation",
         "affected_criteria": [3, 6, 7, 10]
+      },
+      {
+        "cycle": 2,
+        "head_sha": "1cfe1338f38df49dec9dada4be62856272619939",
+        "root_issue": "ambiguous/unreadable warranty, timeline, and payment-term certainty is flattened to Not stated in QuoteSummary/presentation",
+        "affected_criteria": [3, 5, 7, 10]
       }
     ],
-    "builder_repair": {
-      "summary": "Preserve ambiguous/unreadable inclusion and exclusion certainty plus source evidence through reasoning and report presentation while keeping true omission as Not stated and stated exclusions explicit.",
-      "fixture": "scopeUncertaintyFixtureV1",
-      "verification": "CI run 34579132552 passed npm install, lint, typecheck, tests, and production build at exact head 1cfe1338f38df49dec9dada4be62856272619939."
+    "qa_defect": {
+      "expected": "Ambiguous and unreadable canonical fields must remain visibly uncertain with source evidence through report comparison/presentation; genuine omission alone may render as Not stated.",
+      "actual": "Reasoning maps warranty/timeline/paymentTerms through statedText(...) ?? 'Not stated', while QuoteSummary stores plain strings, so ambiguous/unreadable values become indistinguishable from genuine omission in the quote-by-quote comparison.",
+      "required_repair": "Preserve certainty and evidence for warranty, timeline, and payment terms through QuoteSummary and presentation; render ambiguous/unreadable states distinctly; add deterministic regression fixtures/tests for each state while retaining true not_stated behavior and existing findings/evidence grounding."
     }
   },
-  "mutation_owner": "QA",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "b4f6027978ee1b687f5b6012731b4031057a965b",
   "last_completed": {
