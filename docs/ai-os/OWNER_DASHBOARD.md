@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned as `VERIFICATION_FAILED`. PM has resolved the fourth-cycle escalation with one bounded GREEN structured-provenance redesign authorization.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned as `VERIFICATION_FAILED`. PM has authorized one bounded GREEN completion of the grounding contract across all AC4 finding types.
 
 ## Just finished
-Independent QA proved the cycle-3 repair still accepts unrelated conditional wording: `Total $1000.00 subject to scheduling availability` can incorrectly ground `The quoted total may be inaccurate.` Exact-head CI was green, but AC2/AC4 failed adversarial verification.
+Independent QA confirmed the structured `potential_risk` work is no longer the only gap: ordinary `inference` can pass without supporting provenance, and `not_stated` can contradict a field explicitly present in canonical quote data. Exact-head CI was green, but semantic coverage remained incomplete.
 
 ## Broken
-Potential-risk grounding still relies on lexical/topic overlap plus generic risk-bearing language, so the condition described by evidence can differ from the condition asserted by the finding.
+The evaluator does not yet enforce equivalent source-grounding semantics for `inference` and canonical absence validation for `not_stated`.
 
 ## Human action required
 None.
 
 ## Next
-Builder must replace lexical sufficiency with canonical provenance plus condition compatibility. Arithmetic risk must trace to arithmetic-warning provenance; exclusions, allowances, uncertainty and explicit conditions must trace to their corresponding canonical nodes. Scheduling evidence may ground a scheduling concern but must not ground price/arithmetic inaccuracy. Mandatory regressions must jointly cover unrelated conditional same-topic evidence, neutral same-field evidence, unrelated borrowed evidence, legitimate arithmetic mismatch, compatible exclusion/allowance/uncertainty/scheduling concerns, and a grounded no-material-concern outcome. No fixture-text special cases, paid/live evals, or further heuristic patching. Exact-head full CI is required before Independent QA handoff.
+Builder must extend structured canonical grounding without another lexical heuristic: stated warranty + contradictory `not_stated` must fail; genuine absence + correct `not_stated` must pass; unsupported inference without canonical provenance must fail; grounded inference must pass. Existing potential-risk, uncertainty, arithmetic, invented-charge, exclusion/allowance/condition and no-material-concern regressions must remain intact. If the production contract cannot support this cleanly, return to PM. Exact-head full deterministic CI/build is required before Independent QA handoff.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder must replace lexical sufficiency with canonical provenance plus conditio
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 structured-provenance repair authorized
+- CP7 evaluation quality system: active — CP7-01 bounded grounding completion authorized
 - CP8–CP12: not started
 
 ## Commercial milestone
