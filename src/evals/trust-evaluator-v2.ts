@@ -52,7 +52,7 @@ function structuralInferenceFailure(test: TrustEvalCase, finding: Finding, quote
     return { code: "UNSUPPORTED_INFERENCE", message: "Inference findings require a closed structured proposition.", caseId: test.id, findingId: finding.id };
   }
   const rendered = renderInferenceProposition(proposition);
-  if (finding.title !== rendered.title || finding.plainLanguageExplanation !== rendered.explanation) {
+  if (!rendered || finding.title !== rendered.title || finding.plainLanguageExplanation !== rendered.explanation) {
     return { code: "UNSUPPORTED_INFERENCE", message: "Inference prose must exactly match deterministic renderer output.", caseId: test.id, findingId: finding.id };
   }
   if (!propositionGrounded(proposition, finding, quotes)) {
@@ -65,7 +65,12 @@ export function evaluateTrustCase(test: TrustEvalCase): TrustEvalResult {
   const baseline = evaluateBaselineCase(test);
   const quotes = new Map(test.quotes.map(quote => [quote.id, quote]));
   const structuralFailures = test.report.findings.map(finding => structuralInferenceFailure(test, finding, quotes)).filter((failure): failure is TrustEvalFailure => Boolean(failure));
-  const failures = [...baseline.failures];
+
+  // CP7 structural inference propositions are the sole authorization path for inference findings.
+  // The baseline evaluator still supplies every non-inference trust check, but its legacy
+  // inferenceBasis-based UNSUPPORTED_INFERENCE result is compatibility-only and must not
+  // require or authorize an inference here.
+  const failures = baseline.failures.filter(failure => failure.code !== "UNSUPPORTED_INFERENCE");
   for (const failure of structuralFailures) {
     if (!failures.some(existing => existing.code === failure.code && existing.findingId === failure.findingId && existing.message === failure.message)) failures.push(failure);
   }
