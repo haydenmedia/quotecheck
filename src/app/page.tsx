@@ -1,24 +1,19 @@
 import { Report } from "@/components/Report";
 import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
+import { publicAccessMessage } from "@/lib/data-lifecycle";
 
 const categories = ["General", "Automotive", "Renovation", "Trades / Home Services"];
 
 type HomeProps = {
-  searchParams: Promise<{ session?: string | string[]; access?: string | string[] }>;
+  searchParams: Promise<{ access?: string | string[] }>;
 };
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
-  const requestedSession = typeof params.session === "string" ? params.session : DEMO_REPORT_SESSION_ID;
-  const record = requestedSession === DEMO_REPORT_SESSION_ID
-    ? await demoReportStore.get(requestedSession)
-    : null;
+  const record = await demoReportStore.get(DEMO_REPORT_SESSION_ID);
   const unlocked = record?.access === "unlocked";
-  const accessMessage = !record
-    ? "That report session could not be found. Your report remains locked; return to the preview and try again."
-    : record.paymentState === "cancelled" || record.paymentState === "failed" || record.paymentState === "unknown"
-      ? "Unlock was not completed. Nothing was charged by this demo and your report remains safely available in preview."
-      : null;
+  const access = typeof params.access === "string" ? params.access : null;
+  const accessMessage = publicAccessMessage(access);
 
   return (
     <main>
@@ -37,7 +32,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{categories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
         <button className="analyze" type="button">Analyze sample quotes</button>
       </section>
-      <Report unlocked={unlocked} reportSessionId={requestedSession} accessMessage={accessMessage} />
+      <Report unlocked={unlocked} accessMessage={accessMessage} />
     </main>
   );
 }

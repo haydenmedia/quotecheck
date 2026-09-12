@@ -58,21 +58,24 @@ describe("CP6 durable report ownership and payment boundaries", () => {
     expect(afterUnknown?.paymentState).toBe("unknown");
   });
 
-  it("binds presentation unlock identity to the viewed session instead of the demo fallback", () => {
+  it("keeps the demo report identity server-scoped instead of exposing it through page query state", () => {
     const pageSource = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
+    const reportSource = readFileSync(new URL("../src/components/Report.tsx", import.meta.url), "utf8");
 
-    expect(pageSource).toContain("reportSessionId={requestedSession}");
-    expect(pageSource).not.toContain("reportSessionId={DEMO_REPORT_SESSION_ID}");
+    expect(pageSource).toContain("demoReportStore.get(DEMO_REPORT_SESSION_ID)");
+    expect(pageSource).not.toContain("params.session");
+    expect(reportSource).not.toContain('name="reportSessionId"');
+    expect(reportSource).not.toContain("reportSessionId:");
   });
 
-  it("guards unknown posted sessions before checkout can begin", () => {
+  it("uses the server-scoped demo session for checkout without accepting a posted session id", () => {
     const routeSource = readFileSync(new URL("../src/app/api/demo-unlock/route.ts", import.meta.url), "utf8");
-    const guard = routeSource.indexOf("if (reportSessionId !== DEMO_REPORT_SESSION_ID)");
-    const checkout = routeSource.indexOf("beginOneTimeCheckout(demoReportStore");
 
-    expect(guard).toBeGreaterThanOrEqual(0);
-    expect(checkout).toBeGreaterThan(guard);
-    expect(routeSource).toContain('destination.searchParams.set("access", "unknown-session")');
+    expect(routeSource).toContain("DEMO_REPORT_SESSION_ID");
+    expect(routeSource).toContain("beginOneTimeCheckout(");
+    expect(routeSource).not.toContain("request.formData()");
+    expect(routeSource).not.toContain('form.get("reportSessionId")');
+    expect(routeSource).not.toContain('searchParams.set("session"');
   });
 
   it("unlocks idempotently and preserves the exact already-produced report", async () => {
