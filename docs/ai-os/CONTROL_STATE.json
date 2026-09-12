@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 69,
-  "active_checkpoint": "CP11",
+  "version": 70,
+  "active_checkpoint": "CP12",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 33,
-    "id": "CP11-01",
-    "title": "PWA installability baseline + native packaging decision",
+    "issue": 35,
+    "id": "CP12-01",
+    "title": "Launch-readiness surface + acquisition foundation",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP10-01 independently QA-passed and merged",
+    "depends_on": "CP11-01 independently QA-passed and merged",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP10-01 independently QA-passed at PR #32 head 945a14b3344e1abf2819b1f8d3969119a1d652d3 with exact-head CI 34708248839 and merged to main at 5f29e731b03a9330518e295ca5ed46593ccb6a9d. CP11-01 is the next bounded GREEN slice: standards-based PWA installability baseline plus an evidence-backed native packaging decision; no native project, service-worker data caching, deployment, or external build service is authorized."
+    "reason": "CP11-01 independently QA-passed at PR #34 head e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556 with exact-head CI 34714040845 and squash-merged to main at 92177906b45fb402d0a95903241d659c2fad97c2. CP12-01 is the next bounded GREEN slice: make the first-visit/product education surface launch-ready, add a deterministic example path and acquisition measurement hypotheses, while preserving trust/access semantics and performing no deployment, customer outreach, ads, live payment/storage/provider mutation, or other YELLOW/RED action."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "5f29e731b03a9330518e295ca5ed46593ccb6a9d",
-  "last_completed": {"id":"CP10-01","issue":30,"pr":32,"qa_verdict":"PASS","qa_head_sha":"945a14b3344e1abf2819b1f8d3969119a1d652d3","ci_run":34708248839,"merged_sha":"5f29e731b03a9330518e295ca5ed46593ccb6a9d"},
+  "last_verified_main_sha": "92177906b45fb402d0a95903241d659c2fad97c2",
+  "last_completed": {"id":"CP11-01","issue":33,"pr":34,"qa_verdict":"PASS","qa_head_sha":"e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556","ci_run":34714040845,"merged_sha":"92177906b45fb402d0a95903241d659c2fad97c2"},
   "save_game": {
-    "sha": "5f29e731b03a9330518e295ca5ed46593ccb6a9d",
-    "verified_behavior": "CP0-CP10 complete; the mobile-first golden journey, grounded report, CA$14.99 access boundary, deterministic trust suite, privacy hardening, local beta instrumentation, and one-model web/print report presentation are independently QA-passed with exact-head CI.",
-    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP11 must not create a second native product brain, claim unimplemented offline behavior, or cache private quote/report/payment/session data.",
-    "rollback": "Return to CP10-complete SHA 5f29e731b03a9330518e295ca5ed46593ccb6a9d if CP11 introduces installability, trust, access, or privacy regressions."
+    "sha": "92177906b45fb402d0a95903241d659c2fad97c2",
+    "verified_behavior": "CP0-CP11 complete; mobile-first golden journey, grounded analysis/report, CA$14.99 access boundary, trust/eval/privacy hardening, local beta instrumentation, browser print/PDF, and minimal PWA installability are independently QA-passed with exact-head CI.",
+    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP12 must not turn launch preparation into unsupported marketing claims, production mutation, paid acquisition, customer communication, or scope expansion.",
+    "rollback": "Return to CP11-complete SHA 92177906b45fb402d0a95903241d659c2fad97c2 if CP12 introduces journey, trust, access, privacy, or presentation regressions."
   },
   "human_gate": null
 }
