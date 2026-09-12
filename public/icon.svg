@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">QuoteCheck</title>
+  <rect width="512" height="512" rx="112" fill="#13221a"/>
+  <path d="M144 144h224v164c0 55-45 100-100 100h-24c-55 0-100-45-100-100V144Z" fill="#f7f4ee"/>
+  <path d="M198 245l42 42 78-91" fill="none" stroke="#13221a" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M202 340h108" fill="none" stroke="#13221a" stroke-width="24" stroke-linecap="round"/>
+</svg>
