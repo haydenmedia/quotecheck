@@ -1,9 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { trustEvalFixturesV1 } from "../src/evals/fixtures/v1";
 import { trustEvalGroundingFixturesV1 } from "../src/evals/fixtures/v1-grounding";
-import { evaluateTrustCase, evaluateTrustSuite } from "../src/evals/trust-evaluator";
+import { evaluateTrustCase, evaluateTrustSuite } from "../src/evals/trust-evaluator-v2";
 
-const trustFixturesV1 = [...trustEvalFixturesV1, ...trustEvalGroundingFixturesV1];
+const migratedLegacyFixtures = trustEvalFixturesV1.map(test => {
+  const migrated = structuredClone(test);
+  for (const finding of migrated.report.findings) {
+    if (finding.type !== "inference" || finding.inferenceProposition) continue;
+    const basis = finding.inferenceBasis?.[0];
+    if (
+      basis?.kind === "uncertainty" &&
+      basis.subject === "warranty" &&
+      basis.interpretation === "needs_clarification" &&
+      finding.title === "warranty-uncertain" &&
+      finding.plainLanguageExplanation === "Warranty text is ambiguous and should be confirmed."
+    ) {
+      finding.inferenceProposition = { kind: "warranty_needs_clarification", evidenceRefs: basis.evidenceRefs };
+    }
+  }
+  return migrated;
+});
+
+const trustFixturesV1 = [...migratedLegacyFixtures, ...trustEvalGroundingFixturesV1];
 
 describe("CP7 deterministic trust evaluation harness", () => {
   it("matches every versioned trust fixture outcome", () => {
@@ -83,14 +101,14 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("grounded-inference-accepted")?.actual).toBe("pass");
   });
 
-  it("verifies inference proposition compatibility, not just provenance existence", () => {
+  it("enforces closed inference propositions, deterministic rendering, and same-subject provenance", () => {
     const suite = evaluateTrustSuite(trustFixturesV1);
     const byId = new Map(suite.results.map(result => [result.caseId, result]));
-    expect(byId.get("condition-vendor-qualitative-rejected")?.actual).toBe("fail");
-    expect(byId.get("condition-vendor-qualitative-rejected")?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
+    for (const id of ["condition-vendor-qualitative-rejected", "condition-cross-subject-rejected", "descriptor-prose-drift-rejected", "unrelated-uncertainty-vendor-inference-rejected"]) {
+      expect(byId.get(id)?.actual).toBe("fail");
+      expect(byId.get(id)?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
+    }
     expect(byId.get("condition-scheduling-inference-accepted")?.actual).toBe("pass");
-    expect(byId.get("unrelated-uncertainty-vendor-inference-rejected")?.actual).toBe("fail");
-    expect(byId.get("unrelated-uncertainty-vendor-inference-rejected")?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
     expect(byId.get("field-compatible-uncertainty-inference-accepted")?.actual).toBe("pass");
   });
 });
