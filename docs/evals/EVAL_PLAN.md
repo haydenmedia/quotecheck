@@ -8,7 +8,7 @@ Track at minimum:
 - source-grounding correctness
 - unsupported factual assertions
 - unsupported inference assertions, including same-topic but non-probative evidence
-- typed inference provenance against canonical uncertainty, condition, or warning evidence
+- structured inference proposition fidelity against canonical uncertainty, condition, or warning evidence
 - important missed findings
 - false-positive risk findings
 - `not stated` versus `excluded` accuracy
@@ -17,6 +17,6 @@ Track at minimum:
 
 Hard failures include fabricated quote content, invented charges presented as facts, contradictory evidence references, material arithmetic corruption, or hiding material extraction uncertainty.
 
-Inference regressions must include both a same-topic/non-probative case that fails and a genuinely grounded structured-basis case that passes. Topic-word overlap alone is never sufficient provenance for an inference.
+Inference regressions must verify both provenance and proposition compatibility. At minimum: scheduling condition -> vendor unreliable FAIL; scheduling condition -> compatible timeline contingency PASS; unrelated field uncertainty -> qualitative vendor inference FAIL; matching field uncertainty -> clarification inference PASS. Deterministic evaluation uses structured subject/interpretation metadata and exact canonical evidence rather than lexical/topic heuristics.
 
 Prompt/model changes run against the same versioned evaluation set before promotion. CI remains fixture/mock driven.
