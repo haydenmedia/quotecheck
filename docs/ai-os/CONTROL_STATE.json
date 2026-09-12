@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 63,
+  "version": 64,
   "active_checkpoint": "CP8",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 19,
-    "id": "CP8-01",
-    "title": "Upload and analysis safety boundaries",
-    "status": "VERIFICATION_FAILED",
+    "issue": 21,
+    "id": "CP8-02",
+    "title": "Dependency vulnerability remediation",
+    "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP7-01 independently QA-passed and merged",
-    "pr": 20,
-    "head_sha": "39710a48d3a5d04d9b2bbe927f3dd2bda120d517",
-    "ci_run": 34688273915,
-    "failure_cycle": 2,
-    "reason": "Independent QA failed the repaired PR head despite green exact-head CI. The malformed top-level input defect is fixed. Remaining bounded repair: runtime extraction evidence validation must resolve against the actual normalized source input, not merely validate evidence shape. Source identity and excerpt/locator must bind to supplied quote content so fabricated confident facts/evidence cannot reach reasoning. Add deterministic regressions for fabricated confident facts/evidence and preserve valid stated/ambiguous/unreadable evidence, existing CP8 coverage, reportSessionId/ownership/payment boundaries, and all CP2-CP7 trust fixtures. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new exact head to Independent QA. This is failure cycle 2 on the CP8-01 grounding family; after a third repeated failure on the same root issue, stop and escalate rather than patch-loop. No paid/live eval or YELLOW/RED action authorized."
+    "depends_on": "CP8-01 independently QA-passed and merged",
+    "pr": null,
+    "head_sha": null,
+    "ci_run": null,
+    "failure_cycle": 0,
+    "reason": "CP8-01 independently QA-passed at b38056560a2b31d513142721fb2999504adc9191 with exact-head CI 34690753181 and was squash-merged to main at 798b3912feff7e5affe843cb467cbfda76e71172. Next highest-value bounded CP8 item is dependency vulnerability remediation: reproduce current audit findings, minimally upgrade vulnerable dependencies (notably pinned Next.js 15.2.4), preserve product/contracts, and hand exact-head audit/CI evidence to Independent QA. No paid/live eval or YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "1a2d416199ed90125f77f875464a2ad8656a406c",
-  "last_completed": {"id": "CP7-01", "issue": 14, "pr": 18, "qa_verdict": "PASS", "qa_head_sha": "e2dd3df4e14b254a1bca7965c26a3cc17464e85f", "ci_run": 34680701634, "merged_sha": "1a2d416199ed90125f77f875464a2ad8656a406c"},
+  "last_verified_main_sha": "798b3912feff7e5affe843cb467cbfda76e71172",
+  "last_completed": {"id": "CP8-01", "issue": 19, "pr": 20, "qa_verdict": "PASS", "qa_head_sha": "b38056560a2b31d513142721fb2999504adc9191", "ci_run": 34690753181, "merged_sha": "798b3912feff7e5affe843cb467cbfda76e71172"},
   "save_game": {
-    "sha": "1a2d416199ed90125f77f875464a2ad8656a406c",
-    "verified_behavior": "CP0-CP7 merged; CP7 deterministic trust evaluation independently QA-passed.",
-    "risks": "CP8-01 PR #20 is not approved: extraction evidence can be structurally valid yet fabricated because runtime validation does not resolve it against the actual normalized source input.",
-    "rollback": "Keep merged main at CP7 SHA 1a2d416199ed90125f77f875464a2ad8656a406c until CP8-01 independently passes."
+    "sha": "798b3912feff7e5affe843cb467cbfda76e71172",
+    "verified_behavior": "CP0-CP7 plus CP8-01 merged; upload/analysis boundary independently QA-passed with runtime source-grounding validation and green exact-head CI.",
+    "risks": "Dependency audit has reported critical/high findings and pinned Next.js 15.2.4 is known vulnerable; exact advisories must be reproduced by Builder before remediation.",
+    "rollback": "Return to merged CP8-01 SHA 798b3912feff7e5affe843cb467cbfda76e71172 if dependency remediation causes regressions."
   },
   "human_gate": null
 }
