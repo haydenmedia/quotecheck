@@ -1,8 +1,9 @@
 import { demoReport } from "@/fixtures/report";
-import { demoUnlockCopy, reportSurface } from "@/lib/report-presentation";
+import { demoUnlockCopy, reportPresentationModel } from "@/lib/report-presentation";
+import { ReportPrintActions } from "./ReportPrintActions";
 
-type ScopeView = ReturnType<typeof reportSurface>["quotes"][number]["scopeIncludedDetails"];
-type ValueView = ReturnType<typeof reportSurface>["quotes"][number]["warrantyDetail"];
+type ScopeView = ReturnType<typeof reportPresentationModel>["quotes"][number]["scopeIncludedDetails"];
+type ValueView = ReturnType<typeof reportPresentationModel>["quotes"][number]["warrantyDetail"];
 
 function ScopeValues({ values }: { values: ScopeView }) {
   return (
@@ -39,26 +40,40 @@ export function Report({
   unlocked?: boolean;
   accessMessage?: string | null;
 }) {
-  const surface = reportSurface(demoReport, unlocked);
+  const surface = reportPresentationModel(demoReport, unlocked);
   const headline = surface.headline;
 
   return (
-    <section className="report-shell" id="report" aria-labelledby="report-title">
+    <section className={`report-shell ${unlocked ? "report-unlocked" : "report-preview"}`} id="report" aria-labelledby="report-title">
+      {unlocked && (
+        <div className="print-report-branding" aria-hidden="true">
+          <strong>{surface.shareFraming.title}</strong>
+          <span>{surface.category} quote comparison</span>
+        </div>
+      )}
+
       <header className="report-header">
         <div>
           <p className="eyebrow">Your QuoteCheck report</p>
           <h2 id="report-title">Three quotes, one clearer decision</h2>
           <p className="report-intro">Start with the gut check, then compare the details. Every factual callout stays tied to what the quotes actually say.</p>
         </div>
-        <span className="pill">Renovation</span>
+        <span className="pill">{surface.category}</span>
       </header>
 
-      {accessMessage && <p className="access-message" role="status">{accessMessage}</p>}
+      {accessMessage && <p className="access-message no-print" role="status">{accessMessage}</p>}
 
-      <div className="access-banner" aria-label={unlocked ? "Full report unlocked" : "Free preview"}>
+      <div className="access-banner no-print" aria-label={unlocked ? "Full report unlocked" : "Free preview"}>
         <strong>{unlocked ? "Full report unlocked" : "Free preview"}</strong>
         <span>{unlocked ? "You are viewing the complete analysis." : "Your full analysis is already complete. This preview shows the gut check, quote basics and key findings."}</span>
       </div>
+
+      {unlocked && <ReportPrintActions />}
+
+      <aside className="share-framing" aria-label="QuoteCheck report framing">
+        <strong>{surface.shareFraming.title}</strong>
+        <p>{surface.shareFraming.disclaimer}</p>
+      </aside>
 
       <section className={`report-headline ${headline.tone}`} aria-labelledby="gut-check-title">
         <div className="headline-kicker">Overall gut check</div>
@@ -116,7 +131,7 @@ export function Report({
       </section>
 
       {!unlocked ? (
-        <aside className="unlock-card" aria-labelledby="unlock-title">
+        <aside className="unlock-card no-print" aria-labelledby="unlock-title">
           <div>
             <p className="eyebrow">Complete analysis ready</p>
             <h3 id="unlock-title">Unlock the rest of this report</h3>
@@ -135,7 +150,7 @@ export function Report({
           <small>Deterministic demo checkout only — no payment is collected or connected.</small>
         </aside>
       ) : (
-        <aside className="unlocked-card" id="full-report" aria-labelledby="unlocked-title">
+        <aside className="unlocked-card no-print" id="full-report" aria-labelledby="unlocked-title">
           <p className="eyebrow">Demo access</p>
           <h3 id="unlocked-title">Full report unlocked</h3>
           <p>This is the same completed analysis shown in the preview, with the remaining report sections now presented.</p>
@@ -148,6 +163,8 @@ export function Report({
         <ul>{surface.confidenceLimitations.map((item) => <li key={item}>{item}</li>)}</ul>
         <p className="source-note"><strong>Source status:</strong> Deterministic fixture data. No live extraction or model call is used in this checkpoint.</p>
       </aside>
+
+      {unlocked && <footer className="print-disclaimer"><strong>QuoteCheck second opinion.</strong> {surface.shareFraming.disclaimer}</footer>}
     </section>
   );
 }
