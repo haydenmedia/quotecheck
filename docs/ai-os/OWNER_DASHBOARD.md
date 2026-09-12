@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned and `READY` under PM architecture reset v60. Forward work is authorized only for the bounded inference-grounding structural redesign.
+**CP8-01 — Upload and analysis safety boundaries**, Issue #19, is Builder-owned and `READY`. This is the first bounded GREEN security/privacy/reliability slice: validate user-controlled quote inputs before analysis and make downstream failures safe and recoverable without changing providers, payments, production storage, or deployment.
 
 ## Just finished
-PM accepted Independent QA's repeated AC4 escalation at PR #18 head `0714e6f94aa4ce61c85a4b8db21c559cf6a61fb5` (CI `34672901390` green) and replaced the patch-loop approach with a contract-level decision: inference proposition identity must be canonical and machine-verifiable by construction.
+**CP7-01 — Deterministic trust evaluation harness** independently QA-passed PR #18 exact head `e2dd3df4e14b254a1bca7965c26a3cc17464e85f` with exact-head CI run `34680701634` successful, then merged to main at `1a2d416199ed90125f77f875464a2ad8656a406c`. CP7 is complete.
 
 ## Broken
-Current PR #18 still allows self-declared inference metadata to disagree with finding prose and permits cross-subject relabelling of canonical condition evidence. It must not merge in its current form.
+Nothing currently known on merged main. CP8-01 is proactive hardening of the ingestion/analysis boundary.
 
 ## Human action required
-None. This is GREEN local code/contracts/tests work.
+None. CP8-01 is GREEN local code/contracts/tests work.
 
 ## Next
-Builder: replace free-form inference assertion + self-declared basis with a closed provider-neutral structured proposition union. Each proposition variant fixes its subject/interpretation; provenance must resolve to a canonical node typed to the same subject; user-facing inference prose is deterministically rendered from the proposition rather than independently trusted. Remove global cross-subject condition allow-list behavior. No lexical/topic heuristic. Add regressions for scheduling→vendor rejection, cross-subject relabelling rejection, compatible timeline scheduling PASS, and impossible/hard-failed descriptor/prose drift; preserve every prior CP7 trust regression. Then rerun exact-head install/lint/typecheck/tests/evals/build and hand to Independent QA.
+Builder: inspect existing ingestion limits/contracts, enforce deterministic 2–3 input count/type/size/text boundaries before analysis, add safe recoverable parser/analysis failure states, prove invalid input never invokes analysis or fabricates report content, preserve report ownership/payment and uncertainty/source-evidence contracts, and add deterministic regression coverage. Then run exact-head install/lint/typecheck/tests/evals/build and hand to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,8 +23,9 @@ Builder: replace free-form inference assertion + self-declared basis with a clos
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 structural inference-grounding reset routed to Builder
-- CP8–CP12: not started
+- CP7 evaluation quality system: complete
+- CP8 security/privacy/reliability: active — CP8-01 routed to Builder
+- CP9–CP12: not started
 
 ## Commercial milestone
 Target remains: a stranger can upload 2–3 real quotes, receive a useful free preview, pay CA$14.99, and receive a polished grounded report without fabricated findings.
