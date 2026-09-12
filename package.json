@@ -12,7 +12,7 @@
     "eval:trust": "vitest run tests/trust-eval.test.ts --reporter=verbose"
   },
   "dependencies": {
-    "next": "15.5.25",
+    "next": "16.3.5",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
@@ -22,10 +22,5 @@
     "@types/react-dom": "19.0.4",
     "typescript": "5.8.2",
     "vitest": "4.1.11"
-  },
-  "overrides": {
-    "next": {
-      "postcss": "8.5.23"
-    }
   }
 }
