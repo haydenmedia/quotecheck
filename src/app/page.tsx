@@ -1,9 +1,9 @@
+import { LaunchExampleReport } from "@/components/LaunchExampleReport";
 import { Report } from "@/components/Report";
 import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
 import { publicAccessMessage } from "@/lib/data-lifecycle";
 import {
   launchCategories,
-  launchExample,
   launchJourney,
   launchTrustPoints,
 } from "@/lib/launch-readiness";
@@ -89,6 +89,8 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
       </section>
 
+      <LaunchExampleReport />
+
       <section className="compare" id="compare" aria-labelledby="compare-title">
         <div className="section-heading">
           <div><p className="eyebrow">Start here</p><h2 id="compare-title">Add 2–3 quotes</h2></div>
@@ -101,14 +103,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <button className="analyze" type="button">Analyze sample quotes</button>
       </section>
 
-      <section className="example-intro" id="example-report" aria-labelledby="example-title">
-        <p className="eyebrow">{launchExample.eyebrow}</p>
-        <h2 id="example-title">{launchExample.title}</h2>
-        <p>{launchExample.body}</p>
-        <a href="#report">{launchExample.cta}</a>
-      </section>
-
-      <Report unlocked={unlocked} accessMessage={accessMessage} example />
+      <Report unlocked={unlocked} accessMessage={accessMessage} />
     </main>
   );
 }
