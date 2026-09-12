@@ -1,4 +1,6 @@
-export const WEB_APP_MANIFEST = {
+import type { MetadataRoute } from "next";
+
+export const WEB_APP_MANIFEST: MetadataRoute.Manifest = {
   name: "QuoteCheck",
   short_name: "QuoteCheck",
   description: "Compare 2–3 quotes and get a grounded second opinion before you commit.",
@@ -16,8 +18,8 @@ export const WEB_APP_MANIFEST = {
       purpose: "any",
     },
   ],
-} as const;
+};
 
-export function buildWebAppManifest() {
+export function buildWebAppManifest(): MetadataRoute.Manifest {
   return WEB_APP_MANIFEST;
 }
