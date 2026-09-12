@@ -24,6 +24,8 @@
     "vitest": "4.1.11"
   },
   "overrides": {
-    "postcss": "8.5.23"
+    "next": {
+      "postcss": "8.5.23"
+    }
   }
 }
