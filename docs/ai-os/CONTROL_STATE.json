@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 57,
+  "version": 58,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,14 +8,14 @@
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
-    "status": "VERIFICATION_FAILED",
+    "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 18,
-    "head_sha": "e15b82344ae204fc7c6943c2f7f5f0f1b8071e92",
-    "ci_run": 34664721064,
-    "reason": "PM resolved the repeated AC4 inference-grounding escalation with an architecture boundary: stop lexical/topic-overlap repairs. Builder is authorized only to introduce a minimal provider-neutral typed inference provenance/basis tied to canonical evidence so every material inferred proposition has compatible structured support. Same-topic evidence alone must fail (Vendor Acme -> unreliable; warranty value -> inadequate). No-basis inference fails; genuinely grounded structured inference passes. Preserve not_stated validation and all existing potential_risk structured-provenance regressions. Update DATA_CONTRACTS/AI_PIPELINE/EVAL_PLAN if the report contract changes. If this requires broad production-contract churn, stop and return to PM. Exact-head deterministic CI/build required. No paid/live eval or YELLOW/RED action authorized."
+    "head_sha": "8d388ab75b2759ed6b026ea7da8897ce493ba142",
+    "ci_run": 34670356594,
+    "reason": "PM architecture reset after repeated AC4 source-grounding escalation. Do not add another lexical/topic heuristic. The current typed inferenceBasis only proves provenance-node membership, not proposition support. Builder is authorized one bounded GREEN redesign of inference grounding so every material inference carries a provider-neutral structured proposition descriptor identifying the inferred subject/field (or equivalent canonical target) and interpretation class, plus exact canonical basis evidence. Deterministic evaluation must verify that the subject/target corresponds to the cited canonical node and that the interpretation is compatible with that provenance kind. Free-form qualitative judgments such as vendor reliability/inadequacy must not become grounded merely because a canonical condition/uncertainty/warning exists. Required regressions: scheduling condition -> vendor unreliable FAIL; scheduling condition -> proposition-compatible scheduling inference PASS; unrelated uncertainty -> qualitative vendor inference FAIL; genuinely field-compatible uncertainty inference PASS. Preserve not_stated validation and all prior potential-risk, invented-charge, arithmetic, uncertainty, exclusion/allowance/condition and no-material-concern regressions. Update DATA_CONTRACTS/AI_PIPELINE/EVAL_PLAN for the structured proposition contract. If this cannot be achieved without broad product-contract churn or deterministic prose-semantic heuristics, stop and return to PM. Exact-head deterministic CI/build required. No paid/live eval or YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
@@ -24,7 +24,7 @@
   "save_game": {
     "sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
     "verified_behavior": "CP6 provider-neutral report ownership/payment boundaries, server-derived entitlement, exact-report unlock, recoverable locked states and session-integrity repair independently QA-passed before merge; CP2-CP5 trust behavior remains preserved.",
-    "risks": "CP7 may minimally extend the report/eval contract for typed inference provenance. Paid/live model evaluation remains YELLOW and is not authorized; production provider/storage/payment/deployment changes remain RED.",
+    "risks": "CP7 now requires proposition-level structured inference grounding rather than lexical/topic matching. Paid/live model evaluation remains YELLOW and is not authorized; production provider/storage/payment/deployment changes remain RED.",
     "rollback": "Return product behavior to merged CP6 SHA 387b94a17270d3b660534f80deaa846bb818ca3f."
   },
   "human_gate": null
