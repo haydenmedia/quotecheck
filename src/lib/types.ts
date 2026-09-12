@@ -16,7 +16,9 @@ export type ReportSummaryValue<T> = SourcedValue<T>;
 export type ScopeSummaryValue = ReportSummaryValue<string>;
 export interface QuoteSummary { id: string; vendor: ReportSummaryValue<string>; total: ReportSummaryValue<number>; scopeIncluded: ScopeSummaryValue[]; scopeExcluded: ScopeSummaryValue[]; warranty: ReportSummaryValue<string>; timeline: ReportSummaryValue<string>; paymentTerms: ReportSummaryValue<string>; }
 export type InferenceBasisKind = "uncertainty" | "condition" | "warning";
-export interface InferenceBasis { kind: InferenceBasisKind; evidenceRefs: EvidenceRef[]; }
+export type InferenceSubject = "vendor" | "quote_date" | "expiry_date" | "project_description" | "subtotal" | "tax" | "fees" | "total" | "warranty" | "timeline" | "payment_terms" | "scope" | "allowance" | "line_item";
+export type InferenceInterpretation = "value_uncertain" | "needs_clarification" | "contingent" | "source_warning" | "arithmetic_inconsistency";
+export interface InferenceBasis { kind: InferenceBasisKind; subject: InferenceSubject; interpretation: InferenceInterpretation; evidenceRefs: EvidenceRef[]; }
 export interface Finding { id: string; type: FindingType; severity: Severity; title: string; plainLanguageExplanation: string; affectedQuoteIds: string[]; evidenceRefs: EvidenceRef[]; confidence: number; questionsToAsk: string[]; scopeStatus?: ScopeStatus; inferenceBasis?: InferenceBasis[]; }
 export interface ReportSection { id: string; title: string; findingIds: string[]; locked?: boolean; }
 export interface QuoteReport { category: QuoteCategory; quotes: QuoteSummary[]; findings: Finding[]; sections: ReportSection[]; overallGutCheck: string; confidenceLimitations: string[]; noMaterialConcern: boolean; }
