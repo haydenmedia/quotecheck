@@ -5,6 +5,8 @@ A quote record contains: id; source input ids; vendor identity as stated; quote 
 
 Every scalar extracted value is represented as a `SourcedValue<T>` with `value`, `certainty` (`stated`, `ambiguous`, `unreadable`, `not_stated`) and source `evidence`. Unknown/unreadable values remain unknown; they are never guessed. Explicit exclusions remain separate from absent fields. Arithmetic checks preserve original source amounts and emit `ARITHMETIC_MISMATCH` warnings rather than silently correcting totals.
 
+Conditions used as inference provenance may additionally be represented as `CanonicalCondition` nodes. A typed condition carries a closed `subject` plus the original sourced value/evidence. This binding is canonical: a timeline condition cannot later be relabelled as payment, fees, scope, vendor, or another subject merely because the wording is nearby or superficially related.
+
 ## Deterministic ingestion input
 `TextIngestionInput` supports `pasted_text` and `extracted_text_fixture`. Future PDF/image/multimodal extraction must implement the provider-neutral `ExtractionProvider` contract and return the same canonical `ExtractionResult`.
 
@@ -18,7 +20,16 @@ Allowed finding types: `explicit_fact`, `difference`, `not_stated`, `potential_r
 
 Any material finding that depends on a quoted fact must identify affected quote IDs and carry evidence refs resolving to the supplied source material. `not_stated` may legitimately have no evidence ref because it asserts absence from the supplied canonical data; it must not be converted into an exclusion or claimed charge. Potential risks and inferences remain qualified. `scopeStatus: excluded` is reserved for an explicit exclusion supported by source evidence and must never be inferred from omission; `scopeStatus: not_stated` represents genuine omission only.
 
-Inference findings use provider-neutral `inferenceBasis` entries. Every basis contains: a canonical provenance `kind` (`uncertainty`, `condition`, or `warning`); a structured proposition `subject` identifying the inferred canonical field/class; an `interpretation` class such as `value_uncertain`, `needs_clarification`, `contingent`, `source_warning`, or `arithmetic_inconsistency`; and exact evidence refs. Deterministic evaluation validates the subject and interpretation against the cited canonical provenance node. An uncertainty may only support the matching uncertain subject, scheduling/payment/scope-style conditions may only support compatible contingent subjects, and warning interpretations must match their warning class. Same-topic wording, field-name overlap, or the mere existence of a condition/warning is not sufficient grounding.
+### Structured inference proposition
+For CP7 trust evaluation, `InferenceProposition` is the canonical semantic assertion for an inference. It is a closed provider-neutral union. The proposition variant determines its subject and interpretation by construction; callers cannot independently choose a subject/interpretation pair and then attach unrelated provenance.
+
+The currently bounded variants are:
+- `warranty_needs_clarification`, grounded only by canonical ambiguous/unreadable warranty evidence.
+- `timeline_contingent`, grounded only by a canonical typed timeline condition.
+
+User-facing inference title/explanation is deterministic renderer output from the proposition. Free-form prose is not a second assertion channel: if supplied prose differs from the renderer output, evaluation fails. Proposition evidence must exactly match the finding evidence and resolve to canonical typed provenance for the same subject.
+
+Legacy `inferenceBasis` remains present only for compatibility with pre-reset CP7 fixtures and baseline checks. It does not independently authorize an inference under the structural verifier.
 
 ## Report
 Quote summaries; findings; sections; overall gut check; confidence/limitations; `noMaterialConcern`. Report rendering and future PDF export consume the same report object. Empty risk sections are valid when evidence does not justify a risk finding.
