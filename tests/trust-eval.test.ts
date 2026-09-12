@@ -82,4 +82,15 @@ describe("CP7 deterministic trust evaluation harness", () => {
     expect(byId.get("unsupported-inference-rejected")?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
     expect(byId.get("grounded-inference-accepted")?.actual).toBe("pass");
   });
+
+  it("verifies inference proposition compatibility, not just provenance existence", () => {
+    const suite = evaluateTrustSuite(trustFixturesV1);
+    const byId = new Map(suite.results.map(result => [result.caseId, result]));
+    expect(byId.get("condition-vendor-qualitative-rejected")?.actual).toBe("fail");
+    expect(byId.get("condition-vendor-qualitative-rejected")?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
+    expect(byId.get("condition-scheduling-inference-accepted")?.actual).toBe("pass");
+    expect(byId.get("unrelated-uncertainty-vendor-inference-rejected")?.actual).toBe("fail");
+    expect(byId.get("unrelated-uncertainty-vendor-inference-rejected")?.failures.map(f => f.code)).toContain("UNSUPPORTED_INFERENCE");
+    expect(byId.get("field-compatible-uncertainty-inference-accepted")?.actual).toBe("pass");
+  });
 });
