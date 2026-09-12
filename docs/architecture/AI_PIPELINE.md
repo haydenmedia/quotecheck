@@ -25,4 +25,6 @@ Extraction does not perform commercial risk reasoning. Reasoning does not silent
 ## CP3 reasoning boundary
 `ReasoningProvider.analyze()` accepts canonical Quote objects, the selected QuoteCategory, and a versioned domain context pack. The deterministic provider used by CI applies the same trust contract expected of future live providers: facts/differences depending on quoted content carry source evidence; explicit exclusions remain distinct from omissions; ambiguity/unreadable material is not upgraded to certainty; absence never proves an extra charge; risk/inference language is qualified; and an analysis may validly return `noMaterialConcern=true`.
 
+Inference findings may carry provider-neutral typed `inferenceBasis` provenance. Each basis must resolve to an affected quote's canonical uncertainty, condition, or extraction warning evidence. The trust evaluator deliberately does not treat same-topic wording or a shared field name as sufficient support for an inference.
+
 Domain packs contain considerations, questions, and trust notes. They are context, not mandatory checklists and not permission to manufacture findings.
