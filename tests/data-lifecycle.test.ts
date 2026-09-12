@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSafeAccessRedirect, publicAccessMessage } from "@/lib/data-lifecycle";
+import { buildSafeAccessRedirect, publicAccessMessage } from "../src/lib/data-lifecycle";
 
 describe("data lifecycle public boundary", () => {
   it("does not place report/session identifiers or source content into redirect URLs", () => {
