@@ -1,31 +1,31 @@
 {
   "project": "QuoteCheck",
-  "version": 60,
-  "active_checkpoint": "CP7",
+  "version": 61,
+  "active_checkpoint": "CP8",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 14,
-    "id": "CP7-01",
-    "title": "Deterministic trust evaluation harness",
+    "issue": 19,
+    "id": "CP8-01",
+    "title": "Upload and analysis safety boundaries",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
-    "pr": 18,
-    "head_sha": "0714e6f94aa4ce61c85a4b8db21c559cf6a61fb5",
-    "ci_run": 34672901390,
-    "reason": "PM architecture decision after repeated AC4 escalation: replace free-form inference prose plus self-declared InferenceBasis with a closed structured inference proposition as canonical truth. Builder must define a bounded provider-neutral proposition union whose variant determines subject and interpretation by construction; provenance references must resolve to canonical nodes already typed/bound to that same subject. User-facing inference title/explanation must be rendered deterministically from the structured proposition (or validated as renderer output), never accepted as an independent semantic assertion. Remove global cross-subject condition allow-list behavior and do not add lexical/topic/prose heuristics. Required deterministic regressions: scheduling condition cannot produce vendor-unreliable proposition; scheduling condition cannot be relabelled payment/total/fees/scope/etc unless its canonical typed node is that subject; compatible timeline scheduling inference passes; descriptor/prose drift is impossible or hard-fails; unsupported inference with unrelated provenance fails; preserve all prior CP7 fixtures including not_stated/excluded, mixed risk dimensions, uncertainty, arithmetic, fabricated charge/fact, contradictory evidence, and no-material-concern. Keep changes bounded to CP7 trust contracts/evaluator/fixtures/minimal type-rendering wiring. Exact PR-head install/lint/typecheck/tests/evals/build required before QA. No paid/live eval, YELLOW/RED action, production mutation, or scope expansion authorized."
+    "depends_on": "CP7-01 independently QA-passed at e2dd3df4e14b254a1bca7965c26a3cc17464e85f and merged via PR #18 at 1a2d416199ed90125f77f875464a2ad8656a406c",
+    "pr": null,
+    "head_sha": null,
+    "ci_run": null,
+    "reason": "First bounded CP8 slice: harden the existing 2-3 quote ingestion/analysis boundary without provider, payment, deployment, or production-storage changes. Enforce deterministic input count/type/size/text limits at the existing application boundary; reject malformed/unsupported/oversized inputs before analysis; ensure parser/analysis failures produce safe recoverable user states without leaking raw stack traces, secrets, provider internals, or fabricated report content; preserve extraction uncertainty/source evidence and existing golden journey. Add deterministic tests for boundary rejection, malformed content, recoverable failure, and no-analysis-on-invalid-input. Inspect existing limits/contracts before choosing values and document any new constants. Keep scope mobile-first and narrow. Exact PR-head install/lint/typecheck/tests/evals/build required before Independent QA. No paid/live eval, preview mutation, production deployment/storage/payment/provider mutation, secrets, or other YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
-  "last_completed": {"id": "CP6-01", "issue": 12, "pr": 13, "qa_verdict": "PASS", "merged_sha": "387b94a17270d3b660534f80deaa846bb818ca3f"},
+  "last_verified_main_sha": "1a2d416199ed90125f77f875464a2ad8656a406c",
+  "last_completed": {"id": "CP7-01", "issue": 14, "pr": 18, "qa_verdict": "PASS", "qa_head_sha": "e2dd3df4e14b254a1bca7965c26a3cc17464e85f", "ci_run": 34680701634, "merged_sha": "1a2d416199ed90125f77f875464a2ad8656a406c"},
   "save_game": {
-    "sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
-    "verified_behavior": "CP6 provider-neutral report ownership/payment boundaries, server-derived entitlement, exact-report unlock, recoverable locked states and session-integrity repair independently QA-passed before merge; CP2-CP5 trust behavior remains preserved.",
-    "risks": "CP7 inference grounding is under a bounded structural reset after repeated QA failures. PR #18 must not merge until Independent QA passes exact-head deterministic evidence. Paid/live model evaluation remains YELLOW and unauthorized; production provider/storage/payment/deployment changes remain RED.",
-    "rollback": "Return product behavior to merged CP6 SHA 387b94a17270d3b660534f80deaa846bb818ca3f."
+    "sha": "1a2d416199ed90125f77f875464a2ad8656a406c",
+    "verified_behavior": "CP0-CP7 are merged. CP7 deterministic trust evaluation independently QA-passed exact head e2dd3df4e14b254a1bca7965c26a3cc17464e85f with CI 34680701634; structural InferenceProposition is the sole inference authorization path and prior trust regressions remain covered.",
+    "risks": "CP8 now begins at the user-controlled ingestion/analysis boundary. Keep hardening deterministic and provider-neutral; do not introduce live provider/storage/payment/deployment mutations. Paid/live eval remains YELLOW and unauthorized; production actions remain RED.",
+    "rollback": "Return product behavior to merged CP7 SHA 1a2d416199ed90125f77f875464a2ad8656a406c."
   },
   "human_gate": null
 }
