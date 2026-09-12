@@ -4,9 +4,11 @@ Active checkpoint: **CP8 — Security, privacy and reliability**.
 
 Active work item: **CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, status `VERIFICATION_FAILED`, owner `Builder`, risk `GREEN`.
 
-Independent QA reviewed exact PR head `c40df2f96a7c80b99da1d885c9ad3ee1a3bb1fdf`. Exact-head CI run `34685725647` is green, but QA found two acceptance-level defects: malformed top-level `inputs` containers can throw outside the safe boundary, and extraction-provider output is not runtime-validated for canonical structure/source grounding before reasoning.
+Independent QA reviewed exact PR head `39710a48d3a5d04d9b2bbe927f3dd2bda120d517`. Exact-head CI run `34688273915` is green. The previous malformed top-level `inputs` defect is fixed. QA found one remaining AC6/AC7 defect: extraction evidence is runtime-validated for shape but is not resolved against the actual normalized source, so fabricated confident facts with fabricated-but-structurally-valid evidence can reach reasoning.
 
-Builder is authorized to repair only those defects and required deterministic regressions on the existing scoped PR. Null/non-array/malformed input containers must fail safely before provider invocation. Malformed canonical extraction output or confident values without required grounding must fail safely before reasoning; uncertainty/source evidence must never be upgraded or fabricated. Existing passing CP8-01 coverage, reportSessionId/ownership/payment boundaries, CP2-CP7 tests/evals, and narrow mobile-first scope must remain intact.
+Builder is authorized to repair only this source-grounding defect and required deterministic regressions on existing PR #20. Runtime validation must bind evidence to the supplied normalized input, including source identity and excerpt/locator resolution. Fabricated confident facts/evidence must fail safely before reasoning. Valid `stated`, `ambiguous`, and `unreadable` evidence must continue to pass. Preserve existing CP8 coverage, reportSessionId/ownership/payment boundaries, all CP2-CP7 tests/evals, and narrow mobile-first scope.
+
+This is failure cycle 2 on the CP8-01 grounding family. If Independent QA finds the same root issue a third time, stop and escalate precisely rather than continuing a patch loop.
 
 No human gate is active. No paid/live model evaluation or preview mutation is authorized; YELLOW actions require explicit PM evidence. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, customer communication, paid ads or other RED action is authorized.
 
