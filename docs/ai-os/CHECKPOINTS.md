@@ -16,6 +16,6 @@
 
 CP8 completed through three independently QA-passed bounded items: CP8-01 upload/analysis safety boundary, CP8-02 dependency vulnerability remediation, and CP8-03 data lifecycle/error-safety hardening.
 
-CP9 progress: CP9-01 private beta instrumentation contract and local event seam is the active bounded implementation item. No live analytics/vendor configuration is authorized in this item.
+CP9 progress: CP9-01 privacy-minimized versioned event contract and provider-neutral local/no-op seam is independently QA-passed and merged. CP9-02 local private-beta funnel summary and instrumentation completeness is the active bounded implementation item. No live analytics/vendor configuration is authorized.
 
 Commercial milestone: a stranger can upload 2–3 quotes, receive a useful free preview, unlock the complete analysis, and receive a polished grounded report without fabricated findings.
