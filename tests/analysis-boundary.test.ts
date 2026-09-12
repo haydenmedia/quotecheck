@@ -7,8 +7,10 @@ import {
 import { DeterministicTextExtractionProvider } from "../src/lib/ingestion";
 import type {
   CanonicalQuote,
+  ExtractionProvider,
   QuoteReport,
   ReasoningProvider,
+  SafeAnalysisRequest,
   TextIngestionInput,
 } from "../src/lib/types";
 
@@ -58,6 +60,30 @@ describe("analysis input boundary", () => {
   it("rejects fewer than two and more than three quotes", () => {
     expect(validateAnalysisInputs(validInputs.slice(0, 1))?.code).toBe("INVALID_QUOTE_COUNT");
     expect(validateAnalysisInputs([...validInputs, validInputs[0], validInputs[1]])?.code).toBe("INVALID_QUOTE_COUNT");
+  });
+
+  it("rejects malformed top-level input containers without invoking extraction or reasoning", async () => {
+    const extraction = { extract: vi.fn() } as unknown as ExtractionProvider;
+    const reasoning = reasoningSpy();
+
+    for (const malformedInputs of [null, { 0: validInputs[0], 1: validInputs[1], length: 2 }]) {
+      expect(validateAnalysisInputs(malformedInputs)?.code).toBe("MALFORMED_INPUT");
+      const request = {
+        reportSessionId: "report-container",
+        inputs: malformedInputs,
+        category: "automotive",
+      } as unknown as Parameters<typeof analyzeQuotesSafely>[0];
+
+      const result = await analyzeQuotesSafely(request, extraction, reasoning);
+      expect(result).toMatchObject({
+        ok: false,
+        reportSessionId: "report-container",
+        error: { code: "MALFORMED_INPUT", retryable: true },
+      });
+    }
+
+    expect(extraction.extract).not.toHaveBeenCalled();
+    expect(reasoning.analyze).not.toHaveBeenCalled();
   });
 
   it("rejects unsupported input kinds before extraction", async () => {
@@ -140,6 +166,57 @@ describe("analysis input boundary", () => {
       },
     });
     expect(JSON.stringify(result)).not.toMatch(/openai|secret-model|sk-do-not-leak|internal\.ts/i);
+    expect(reasoning.analyze).not.toHaveBeenCalled();
+  });
+
+  it("rejects malformed extraction results before reasoning", async () => {
+    const extraction = {
+      extract: vi.fn(async () => ({ quote: null, rawText: "bad", sourceInputId: "a" })),
+    } as unknown as ExtractionProvider;
+    const reasoning = reasoningSpy();
+
+    const result = await analyzeQuotesSafely(
+      { reportSessionId: "report-bad-extraction", inputs: validInputs, category: "automotive" },
+      extraction,
+      reasoning,
+    );
+
+    expect(result).toMatchObject({
+      ok: false,
+      reportSessionId: "report-bad-extraction",
+      error: { code: "ANALYSIS_FAILED", retryable: true },
+    });
+    expect(reasoning.analyze).not.toHaveBeenCalled();
+  });
+
+  it("rejects confident canonical values without source evidence before reasoning", async () => {
+    const deterministic = new DeterministicTextExtractionProvider();
+    const extraction: ExtractionProvider = {
+      extract: vi.fn(async (input) => {
+        const result = await deterministic.extract(input);
+        if (input.id === "a") {
+          result.quote.vendor = {
+            value: "Alpha Auto",
+            certainty: "stated",
+            evidence: [],
+          };
+        }
+        return result;
+      }),
+    };
+    const reasoning = reasoningSpy();
+
+    const result = await analyzeQuotesSafely(
+      { reportSessionId: "report-ungrounded", inputs: validInputs, category: "automotive" },
+      extraction,
+      reasoning,
+    );
+
+    expect(result).toMatchObject({
+      ok: false,
+      reportSessionId: "report-ungrounded",
+      error: { code: "ANALYSIS_FAILED", retryable: true },
+    });
     expect(reasoning.analyze).not.toHaveBeenCalled();
   });
 
