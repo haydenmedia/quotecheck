@@ -52,7 +52,7 @@ export function presentScopeValues(values: ScopeSummaryValue[]) {
 
 export function presentQuoteSummary(quote: QuoteSummary) {
   return {
-    ...quote,
+    id: quote.id,
     vendorDetail: presentQuoteValue(quote.vendor),
     totalDetail: presentTotalValue(quote.total),
     totalLabel: formatQuoteTotal(quote.total),
@@ -66,7 +66,12 @@ export function presentQuoteSummary(quote: QuoteSummary) {
 
 export function presentFinding(finding: Finding) {
   return {
-    ...finding,
+    id: finding.id,
+    type: finding.type,
+    severity: finding.severity,
+    title: finding.title,
+    questionsToAsk: [...finding.questionsToAsk],
+    scopeStatus: finding.scopeStatus,
     typeLabel: findingLabels[finding.type],
     body: trustSafeFindingText(finding),
     scopeStatusLabel: finding.scopeStatus ? scopeStatusLabels[finding.scopeStatus] : null,
@@ -84,12 +89,11 @@ export function visibleSections(report: QuoteReport, unlocked = false) {
 }
 
 /**
- * Builds the only report-shaped value the UI is allowed to render.
- * In preview mode, locked section metadata and findings are omitted entirely rather
- * than hidden with CSS. This keeps paid findings out of the preview DOM and out of
- * presentation state while preserving the exact same underlying report for unlock.
+ * The single presentation boundary for both interactive web and browser print/PDF.
+ * It derives only from the grounded QuoteReport and an access decision; it never
+ * re-runs extraction/reasoning and intentionally excludes runtime/session/payment/provider metadata.
  */
-export function reportSurface(report: QuoteReport, unlocked = false) {
+export function reportPresentationModel(report: QuoteReport, unlocked = false) {
   const allowedSections = report.sections.filter((section) => unlocked || !section.locked);
 
   return {
@@ -107,5 +111,13 @@ export function reportSurface(report: QuoteReport, unlocked = false) {
     })),
     confidenceLimitations: [...report.confidenceLimitations],
     noMaterialConcern: report.noMaterialConcern,
+    shareFraming: {
+      title: "QuoteCheck second opinion",
+      disclaimer: "A practical second opinion based on the supplied quotes — not a professional appraisal, legal opinion, engineering review, or guarantee of final cost.",
+      privacy: "This share/print view contains report findings and source evidence only; private runtime, payment, provider and session metadata are not part of the presentation model.",
+    },
   };
 }
+
+/** Backwards-compatible name used by the current report UI. */
+export const reportSurface = reportPresentationModel;
