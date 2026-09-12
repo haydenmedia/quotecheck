@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned as `VERIFICATION_FAILED`. PM has authorized one bounded GREEN completion of the grounding contract across all AC4 finding types.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned as `READY` under PM architecture reset v58. Builder is authorized one bounded GREEN redesign of inference grounding at the proposition level; further lexical/topic-overlap patches are explicitly disallowed.
 
 ## Just finished
-Independent QA confirmed the structured `potential_risk` work is no longer the only gap: ordinary `inference` can pass without supporting provenance, and `not_stated` can contradict a field explicitly present in canonical quote data. Exact-head CI was green, but semantic coverage remained incomplete.
+Independent QA reviewed PR #18 head `8d388ab75b2759ed6b026ea7da8897ce493ba142` with green exact-head CI `34670356594` and found that typed `inferenceBasis` still proves only canonical-node membership, not support for the inferred proposition. PM accepted the escalation and defined a new structural boundary rather than authorizing another heuristic patch.
 
 ## Broken
-The evaluator does not yet enforce equivalent source-grounding semantics for `inference` and canonical absence validation for `not_stated`.
+A canonical scheduling condition can currently be used as typed basis for an unrelated qualitative inference such as `Vendor Acme appears unreliable`. That means AC4 source grounding is still incomplete even though provenance-node identity is valid.
 
 ## Human action required
 None.
 
 ## Next
-Builder must extend structured canonical grounding without another lexical heuristic: stated warranty + contradictory `not_stated` must fail; genuine absence + correct `not_stated` must pass; unsupported inference without canonical provenance must fail; grounded inference must pass. Existing potential-risk, uncertainty, arithmetic, invented-charge, exclusion/allowance/condition and no-material-concern regressions must remain intact. If the production contract cannot support this cleanly, return to PM. Exact-head full deterministic CI/build is required before Independent QA handoff.
+Builder must make each material inference carry a provider-neutral structured proposition descriptor identifying its inferred subject/canonical target and interpretation class, tied to exact canonical basis evidence. Deterministic evaluation must reject unrelated target/proposition combinations and accept genuinely compatible ones. Required regressions include scheduling condition -> vendor unreliable FAIL; scheduling condition -> compatible scheduling inference PASS; unrelated uncertainty -> qualitative vendor inference FAIL; compatible field uncertainty inference PASS. Preserve all prior trust regressions and exact-head CI/build. Return to PM rather than broadening the contract or adding prose-semantic heuristics.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder must extend structured canonical grounding without another lexical heuri
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 bounded grounding completion authorized
+- CP7 evaluation quality system: active — CP7-01 proposition-level inference grounding reset authorized
 - CP8–CP12: not started
 
 ## Commercial milestone
