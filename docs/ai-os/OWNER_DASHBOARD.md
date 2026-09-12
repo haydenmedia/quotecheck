@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is Builder-owned as `READY` under PM architecture reset v58. Builder is authorized one bounded GREEN redesign of inference grounding at the proposition level; further lexical/topic-overlap patches are explicitly disallowed.
+**CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, is PM-owned as `VERIFICATION_FAILED`. Builder forward work is frozen while the repeated AC4 source-grounding failure is redesigned at the contract boundary.
 
 ## Just finished
-Independent QA reviewed PR #18 head `8d388ab75b2759ed6b026ea7da8897ce493ba142` with green exact-head CI `34670356594` and found that typed `inferenceBasis` still proves only canonical-node membership, not support for the inferred proposition. PM accepted the escalation and defined a new structural boundary rather than authorizing another heuristic patch.
+Independent QA reviewed PR #18 exact head `0714e6f94aa4ce61c85a4b8db21c559cf6a61fb5`; exact-head CI `34672901390` is green, but QA demonstrated that the structured proposition metadata can disagree with the actual inference prose and that condition provenance can be assigned an unrelated allow-listed subject.
 
 ## Broken
-A canonical scheduling condition can currently be used as typed basis for an unrelated qualitative inference such as `Vendor Acme appears unreliable`. That means AC4 source grounding is still incomplete even though provenance-node identity is valid.
+Inference grounding still has two coupled identity problems: (1) the evaluator trusts self-declared subject/interpretation metadata without proving that the rendered finding asserts that proposition; (2) a canonical condition can be relabelled as an unrelated subject. A scheduling condition can therefore accompany `Vendor Acme appears unreliable` while claiming a timeline/contingent basis.
 
 ## Human action required
-None.
+None. This is an internal architecture/quality gate; no owner approval is required yet.
 
 ## Next
-Builder must make each material inference carry a provider-neutral structured proposition descriptor identifying its inferred subject/canonical target and interpretation class, tied to exact canonical basis evidence. Deterministic evaluation must reject unrelated target/proposition combinations and accept genuinely compatible ones. Required regressions include scheduling condition -> vendor unreliable FAIL; scheduling condition -> compatible scheduling inference PASS; unrelated uncertainty -> qualitative vendor inference FAIL; compatible field uncertainty inference PASS. Preserve all prior trust regressions and exact-head CI/build. Return to PM rather than broadening the contract or adding prose-semantic heuristics.
+PM must define a bounded structural redesign before Builder resumes. Preferred direction: make a closed structured finding/proposition representation canonical and derive user-facing inference prose from it, so descriptor/prose mismatch is impossible by construction; bind every provenance node to its canonical subject rather than accepting a global subject allow-list. Required deterministic regressions: descriptor/prose mismatch cannot exist or fails; scheduling condition + unrelated subject FAIL; proposition-compatible scheduling inference PASS; all prior CP7 trust regressions remain. No lexical/topic heuristic patch and no paid/live evaluation.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -23,7 +23,7 @@ Builder must make each material inference carry a provider-neutral structured pr
 - CP4 comparison/report experience: complete
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
-- CP7 evaluation quality system: active — CP7-01 proposition-level inference grounding reset authorized
+- CP7 evaluation quality system: active — CP7-01 escalated; structural inference-grounding redesign required
 - CP8–CP12: not started
 
 ## Commercial milestone
