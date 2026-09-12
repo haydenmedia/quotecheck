@@ -3,14 +3,14 @@ import {
   ANALYSIS_INPUT_LIMITS,
   analyzeQuotesSafely,
   validateAnalysisInputs,
-} from "@/lib/analysis-boundary";
-import { DeterministicTextExtractionProvider } from "@/lib/ingestion";
+} from "../src/lib/analysis-boundary";
+import { DeterministicTextExtractionProvider } from "../src/lib/ingestion";
 import type {
   CanonicalQuote,
   QuoteReport,
   ReasoningProvider,
   TextIngestionInput,
-} from "@/lib/types";
+} from "../src/lib/types";
 
 const validInputs: TextIngestionInput[] = [
   {
