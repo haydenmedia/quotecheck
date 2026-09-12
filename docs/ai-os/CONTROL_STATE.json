@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 62,
+  "version": 63,
   "active_checkpoint": "CP8",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -13,9 +13,10 @@
     "risk": "GREEN",
     "depends_on": "CP7-01 independently QA-passed and merged",
     "pr": 20,
-    "head_sha": "c40df2f96a7c80b99da1d885c9ad3ee1a3bb1fdf",
-    "ci_run": 34685725647,
-    "reason": "Independent QA failed CP8-01 at the exact PR head despite green CI. Builder must make a bounded repair on PR #20: (1) runtime-validate the top-level inputs container before dereference/iteration so null/non-array/malformed containers return the same safe recoverable failure with zero extraction/reasoning calls; add deterministic regressions. (2) runtime-validate extraction-provider canonical output before reasoning so malformed canonical structures or confident values lacking required uncertainty/source evidence fail safely, reasoning is not invoked, and uncertainty/evidence is never upgraded or fabricated; add fixture/mock regressions. Preserve existing passing CP8-01 coverage, reportSessionId/ownership/payment boundaries, CP2-CP7 tests/evals, and narrow mobile-first scope. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new exact head to Independent QA. No paid/live eval or YELLOW/RED action authorized."
+    "head_sha": "39710a48d3a5d04d9b2bbe927f3dd2bda120d517",
+    "ci_run": 34688273915,
+    "failure_cycle": 2,
+    "reason": "Independent QA failed the repaired PR head despite green exact-head CI. The malformed top-level input defect is fixed. Remaining bounded repair: runtime extraction evidence validation must resolve against the actual normalized source input, not merely validate evidence shape. Source identity and excerpt/locator must bind to supplied quote content so fabricated confident facts/evidence cannot reach reasoning. Add deterministic regressions for fabricated confident facts/evidence and preserve valid stated/ambiguous/unreadable evidence, existing CP8 coverage, reportSessionId/ownership/payment boundaries, and all CP2-CP7 trust fixtures. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new exact head to Independent QA. This is failure cycle 2 on the CP8-01 grounding family; after a third repeated failure on the same root issue, stop and escalate rather than patch-loop. No paid/live eval or YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
@@ -24,7 +25,7 @@
   "save_game": {
     "sha": "1a2d416199ed90125f77f875464a2ad8656a406c",
     "verified_behavior": "CP0-CP7 merged; CP7 deterministic trust evaluation independently QA-passed.",
-    "risks": "CP8-01 PR #20 is not approved: malformed top-level input containers can escape the safe failure boundary, and extraction-provider output lacks runtime canonical grounding validation before reasoning.",
+    "risks": "CP8-01 PR #20 is not approved: extraction evidence can be structurally valid yet fabricated because runtime validation does not resolve it against the actual normalized source input.",
     "rollback": "Keep merged main at CP7 SHA 1a2d416199ed90125f77f875464a2ad8656a406c until CP8-01 independently passes."
   },
   "human_gate": null
