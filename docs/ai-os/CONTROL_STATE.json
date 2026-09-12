@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 67,
-  "active_checkpoint": "CP9",
+  "version": 68,
+  "active_checkpoint": "CP10",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 27,
-    "id": "CP9-02",
-    "title": "Local private-beta funnel summary and instrumentation completeness",
+    "issue": 30,
+    "id": "CP10-01",
+    "title": "Shareable grounded report + print/PDF foundation",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP9-01 independently QA-passed and merged",
+    "depends_on": "CP9-02 independently QA-passed and merged",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP9-01 independently QA-passed at PR #26 head 1a2bd05a2166cef0df1c66ecb93b8a00962d277d with exact-head CI 34701970372 and was squash-merged to main at 90eb1e54006cde2063bf85268bcfad5724d30309. CP9-02 is the next bounded GREEN slice: deterministic local funnel summarization and instrumentation completeness only; no live analytics, persistence, identity, or production telemetry is authorized."
+    "reason": "CP9-02 independently QA-passed at PR #29 head e2ddbc023146ff45a93ddbd077be44ac80adc709 with exact-head CI 34705155095 and was squash-merged to main at 8f946150f0af8360f339181c8c46dfefa6b38d97. CP10-01 is the next bounded GREEN slice: one grounded report presentation model plus browser print/PDF/share foundation; no external PDF service or production mutation."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "90eb1e54006cde2063bf85268bcfad5724d30309",
-  "last_completed": {"id": "CP9-01", "issue": 25, "pr": 26, "qa_verdict": "PASS", "qa_head_sha": "1a2bd05a2166cef0df1c66ecb93b8a00962d277d", "ci_run": 34701970372, "merged_sha": "90eb1e54006cde2063bf85268bcfad5724d30309"},
+  "last_verified_main_sha": "8f946150f0af8360f339181c8c46dfefa6b38d97",
+  "last_completed": {"id":"CP9-02","issue":27,"pr":29,"qa_verdict":"PASS","qa_head_sha":"e2ddbc023146ff45a93ddbd077be44ac80adc709","ci_run":34705155095,"merged_sha":"8f946150f0af8360f339181c8c46dfefa6b38d97"},
   "save_game": {
-    "sha": "90eb1e54006cde2063bf85268bcfad5724d30309",
-    "verified_behavior": "CP0-CP8 complete; CP9-01 privacy-minimized versioned event contract and provider-neutral no-op/local instrumentation seam independently QA-passed with exact-head CI.",
-    "risks": "CP9 remains local/in-memory only and cannot represent unique-user conversion or durable production telemetry. Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9.",
-    "rollback": "Return to CP9-01-complete SHA 90eb1e54006cde2063bf85268bcfad5724d30309 if CP9-02 causes regressions."
+    "sha": "8f946150f0af8360f339181c8c46dfefa6b38d97",
+    "verified_behavior": "CP0-CP9 complete; privacy-minimized local instrumentation and deterministic funnel summary independently QA-passed with exact-head CI.",
+    "risks": "CP9 metrics remain event-count diagnostics, not unique-user conversion. Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP10 must not fork report truth into a separate PDF analysis path.",
+    "rollback": "Return to CP9-complete SHA 8f946150f0af8360f339181c8c46dfefa6b38d97 if CP10 introduces report/access regressions."
   },
   "human_gate": null
 }
