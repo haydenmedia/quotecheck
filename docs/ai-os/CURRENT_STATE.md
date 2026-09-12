@@ -1,13 +1,13 @@
 # Current State
 
-Active checkpoint: **CP9 — Private beta instrumentation**.
+Active checkpoint: **CP11 — PWA/native packaging decision**.
 
-Active work item: **CP9-02 — Local private-beta funnel summary and instrumentation completeness**, Issue #27, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP11-01 — PWA installability baseline + native packaging decision**, Issue #33, status `READY`, owner `Builder`, risk `GREEN`.
 
-CP9-01 independently QA-passed exact PR head `1a2bd05a2166cef0df1c66ecb93b8a00962d277d`; exact-head CI run `34701970372` passed and PR #26 was squash-merged to `main` at `90eb1e54006cde2063bf85268bcfad5724d30309`. Issue #25 is closed.
+CP10-01 independently QA-passed exact PR head `945a14b3344e1abf2819b1f8d3969119a1d652d3`; exact-head CI run `34708248839` passed and PR #32 was merged to `main` at `5f29e731b03a9330518e295ca5ed46593ccb6a9d`. Issue #30 is closed and CP10 is complete.
 
-CP9-02 adds only deterministic local/in-memory summarization over the existing versioned privacy-minimized event contract and verifies event-path completeness for the six documented funnel metrics. Denominator-zero states must remain explicitly unknown/not-enough-data rather than fabricated percentages. It must not add live analytics, network transport, persistence, user/session identity, cookies/consent changes, or raw/private quote/report/payment/provider data.
+CP11-01 must make the packaging decision from actual repository evidence. The default remains mobile-first web/PWA unless native packaging is demonstrably required before the first commercial milestone. The bounded implementation may add standards-based installability metadata/assets, but must not create a separate iOS/Android codebase, add a heavy PWA framework, claim unimplemented offline behavior, or cache quote/report/payment/session data.
 
-Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and production build must pass. No human gate is active. No paid/live model evaluation, preview mutation, production deployment, live analytics configuration, live payment/provider configuration, production storage mutation, secrets, customer communication, paid ads or other YELLOW/RED action is authorized.
+Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and production build must pass. No human gate is active. No app-store submission, external native build service, push/background sync, paid/live model evaluation, preview/production deployment, live payment/provider/storage mutation, secrets, customer communication, paid ads or other YELLOW/RED action is authorized.
 
-CP9-01-complete SHA `90eb1e54006cde2063bf85268bcfad5724d30309` is the current save-game/rollback point.
+CP10-complete SHA `5f29e731b03a9330518e295ca5ed46593ccb6a9d` is the current product save-game/rollback point.
