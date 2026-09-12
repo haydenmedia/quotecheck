@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, is back with Builder after Independent QA `VERIFICATION_FAILED` at `39710a48d3a5d04d9b2bbe927f3dd2bda120d517`. Repair remains GREEN and tightly bounded.
+**CP8-02 — Dependency vulnerability remediation**, Issue #21, is READY for Builder. Scope is GREEN: reproduce current dependency advisories, minimally patch vulnerable dependencies, then prove the exact head with audit + full deterministic CI.
 
 ## Just finished
-Builder fixed the malformed top-level input-container defect and reached green exact-head CI run `34688273915` with 70/70 deterministic tests and 32/32 CP7 trust fixtures. Independent QA then found a remaining source-grounding hole before merge.
+**CP8-01 — Upload and analysis safety boundaries** independently QA-passed at `b38056560a2b31d513142721fb2999504adc9191` with exact-head CI run `34690753181` and was squash-merged to `main` at `798b3912feff7e5affe843cb467cbfda76e71172`. Issue #19 is closed.
 
 ## Broken
-PR #20 must not merge yet. Extraction evidence is checked for structure but is not proven to resolve to the actual supplied normalized quote. A provider can therefore fabricate a confident fact plus fabricated-but-well-shaped evidence and pass validation into reasoning.
+Dependency installation has reported critical/high vulnerabilities, including a published vulnerability affecting the pinned Next.js `15.2.4`. Builder must reproduce the exact current audit/advisories before changing versions; no blind `npm audit fix --force`.
 
 ## Human action required
-None. This is failure cycle 2 for the CP8-01 grounding family and remains a local GREEN code/test repair. A third repeated failure on the same root issue must stop and escalate rather than continue patching.
+None. CP8-02 is local dependency/test work and remains GREEN. No production deployment or live configuration is authorized.
 
 ## Next
-Builder: bind extraction evidence validation to the actual normalized input. Validate source identity and excerpt/locator resolution against supplied quote content so fabricated confident facts/evidence cannot reach reasoning. Add deterministic regressions for the QA counterexample while preserving valid `stated`, `ambiguous`, and `unreadable` evidence, existing CP8 coverage, report ownership/payment/session identity, and CP2-CP7 trust fixtures. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new PR head to Independent QA.
+Builder: start from current canonical CONTROL_STATE and Issue #21. Reproduce the clean-install/audit findings, apply the smallest maintained patched dependency updates, preserve all product/data/AI/payment/session contracts, and hand exact PR head plus audit, lint, typecheck, deterministic tests, CP7 trust eval and build evidence to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -24,7 +24,7 @@ Builder: bind extraction evidence validation to the actual normalized input. Val
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
 - CP7 evaluation quality system: complete
-- CP8 security/privacy/reliability: active — CP8-01 source-grounding repair routed to Builder
+- CP8 security/privacy/reliability: active — CP8-01 complete; CP8-02 dependency remediation READY
 - CP9–CP12: not started
 
 ## Commercial milestone
