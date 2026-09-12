@@ -1,4 +1,4 @@
-import type { QuoteCategory } from "@/lib/types";
+import type { QuoteCategory } from "./types";
 
 export interface DomainContextPack {
   id: string;
