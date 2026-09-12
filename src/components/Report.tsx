@@ -34,11 +34,9 @@ function TrustValue({ value }: { value: ValueView }) {
 
 export function Report({
   unlocked = false,
-  reportSessionId,
   accessMessage = null,
 }: {
   unlocked?: boolean;
-  reportSessionId: string;
   accessMessage?: string | null;
 }) {
   const surface = reportSurface(demoReport, unlocked);
@@ -130,7 +128,6 @@ export function Report({
             </ul>
           </div>
           <form action="/api/demo-unlock" method="post">
-            <input type="hidden" name="reportSessionId" value={reportSessionId} />
             <button className="unlock-button" type="submit" aria-label={`Unlock the full QuoteCheck report for ${demoUnlockCopy.price} one-time`}>
               Unlock full report — {demoUnlockCopy.price} {demoUnlockCopy.cadence}
             </button>
