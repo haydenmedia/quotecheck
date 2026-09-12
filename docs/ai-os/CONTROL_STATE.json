@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 68,
-  "active_checkpoint": "CP10",
+  "version": 69,
+  "active_checkpoint": "CP11",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 30,
-    "id": "CP10-01",
-    "title": "Shareable grounded report + print/PDF foundation",
+    "issue": 33,
+    "id": "CP11-01",
+    "title": "PWA installability baseline + native packaging decision",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP9-02 independently QA-passed and merged",
+    "depends_on": "CP10-01 independently QA-passed and merged",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP9-02 independently QA-passed at PR #29 head e2ddbc023146ff45a93ddbd077be44ac80adc709 with exact-head CI 34705155095 and was squash-merged to main at 8f946150f0af8360f339181c8c46dfefa6b38d97. CP10-01 is the next bounded GREEN slice: one grounded report presentation model plus browser print/PDF/share foundation; no external PDF service or production mutation."
+    "reason": "CP10-01 independently QA-passed at PR #32 head 945a14b3344e1abf2819b1f8d3969119a1d652d3 with exact-head CI 34708248839 and merged to main at 5f29e731b03a9330518e295ca5ed46593ccb6a9d. CP11-01 is the next bounded GREEN slice: standards-based PWA installability baseline plus an evidence-backed native packaging decision; no native project, service-worker data caching, deployment, or external build service is authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "8f946150f0af8360f339181c8c46dfefa6b38d97",
-  "last_completed": {"id":"CP9-02","issue":27,"pr":29,"qa_verdict":"PASS","qa_head_sha":"e2ddbc023146ff45a93ddbd077be44ac80adc709","ci_run":34705155095,"merged_sha":"8f946150f0af8360f339181c8c46dfefa6b38d97"},
+  "last_verified_main_sha": "5f29e731b03a9330518e295ca5ed46593ccb6a9d",
+  "last_completed": {"id":"CP10-01","issue":30,"pr":32,"qa_verdict":"PASS","qa_head_sha":"945a14b3344e1abf2819b1f8d3969119a1d652d3","ci_run":34708248839,"merged_sha":"5f29e731b03a9330518e295ca5ed46593ccb6a9d"},
   "save_game": {
-    "sha": "8f946150f0af8360f339181c8c46dfefa6b38d97",
-    "verified_behavior": "CP0-CP9 complete; privacy-minimized local instrumentation and deterministic funnel summary independently QA-passed with exact-head CI.",
-    "risks": "CP9 metrics remain event-count diagnostics, not unique-user conversion. Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP10 must not fork report truth into a separate PDF analysis path.",
-    "rollback": "Return to CP9-complete SHA 8f946150f0af8360f339181c8c46dfefa6b38d97 if CP10 introduces report/access regressions."
+    "sha": "5f29e731b03a9330518e295ca5ed46593ccb6a9d",
+    "verified_behavior": "CP0-CP10 complete; the mobile-first golden journey, grounded report, CA$14.99 access boundary, deterministic trust suite, privacy hardening, local beta instrumentation, and one-model web/print report presentation are independently QA-passed with exact-head CI.",
+    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP11 must not create a second native product brain, claim unimplemented offline behavior, or cache private quote/report/payment/session data.",
+    "rollback": "Return to CP10-complete SHA 5f29e731b03a9330518e295ca5ed46593ccb6a9d if CP11 introduces installability, trust, access, or privacy regressions."
   },
   "human_gate": null
 }
