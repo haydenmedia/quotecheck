@@ -31,9 +31,9 @@ describe("CP7 structural inference authorization", () => {
 
   it("rejects malformed structural proposition", () => {
     const test = fixture("condition-scheduling-inference-accepted");
-    const finding = test.report.findings[0] as typeof test.report.findings[0] & { inferenceProposition: unknown };
+    const finding = test.report.findings[0] as any;
     finding.inferenceProposition = { kind: "unknown_proposition", evidenceRefs: finding.evidenceRefs };
-    delete test.report.findings[0].inferenceBasis;
+    delete finding.inferenceBasis;
     const result = evaluateTrustCase(test);
     expect(result.actual).toBe("fail");
     expect(result.failures.map(failure => failure.code)).toContain("UNSUPPORTED_INFERENCE");
