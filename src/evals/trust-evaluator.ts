@@ -37,7 +37,7 @@ function supportedRiskConcerns(f:Finding,quoteById:Map<string,CanonicalQuote>){c
   for(const v of q.conditions){if(!evidenceOverlaps(v.evidence,refs))continue;for(const kind of concernKinds(sourcedText(v)))supported.add(kind);}
   for(const v of q.allowances)if(evidenceOverlaps(v.evidence,refs)){supported.add("allowance");supported.add("pricing_variability");}
   for(const v of q.exclusions)if(evidenceOverlaps(v.evidence,refs))supported.add("scope");
-  for(const v of q.uncertainties)if(evidenceOverlaps(v.evidence,refs))supported.add("uncertainty");
+  for(const v of q.uncertainties)if(evidenceOverlaps(v.evidence,refs)){supported.add("uncertainty");for(const kind of concernKinds(sourcedText(v)))supported.add(kind);}
 }return supported;}
 function riskConditionSupported(f:Finding,quoteById:Map<string,CanonicalQuote>){const claimKinds=concernKinds(`${f.title} ${f.plainLanguageExplanation}`);if(claimKinds.size===0)return false;const supported=supportedRiskConcerns(f,quoteById);return [...claimKinds].every(kind=>supported.has(kind));}
 
