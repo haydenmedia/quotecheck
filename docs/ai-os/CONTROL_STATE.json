@@ -1,23 +1,23 @@
 {
   "project": "QuoteCheck",
-  "version": 55,
+  "version": 56,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
-  "forward_work_authorized": false,
+  "forward_work_authorized": true,
   "active_work_item": {
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
     "status": "VERIFICATION_FAILED",
-    "owner": "PM",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 18,
     "head_sha": "db8a21e81399d765de2232c23607ce57afb01acf",
     "ci_run": 34661413007,
-    "reason": "Independent QA failed PR #18 at exact head db8a21e81399d765de2232c23607ce57afb01acf despite green exact-head CI run 34661413007. The deterministic evaluator still does not validate ordinary inference grounding and does not verify that a not_stated finding is actually absent from canonical data. Reproducible counterexamples from current evaluator control flow: a canonical stated 1-year warranty paired with a not_stated finding saying Warranty is not stated produces no failure; an arbitrary inference with no evidence also produces no failure. This violates AC4 and the eval plan's source-grounding / not-stated accuracy requirements. Required bounded regressions: stated field plus contradictory not_stated => fail; genuinely absent field plus correct not_stated => pass; unsupported inference without canonical provenance => fail; grounded inference => pass. Because repeated source-grounding failures have exceeded the protocol's three-cycle threshold, QA escalated to PM and disabled forward work pending a bounded repair decision. No paid/live eval, YELLOW/RED action or scope expansion occurred."
+    "reason": "PM resolved QA v55 escalation with one bounded GREEN completion of AC4 grounding semantics. Structured canonical grounding must cover not_stated and inference as well as existing explicit_fact/difference/potential_risk checks. Required regressions: stated warranty plus contradictory not_stated fails; genuine absence plus correct not_stated passes; unsupported inference without canonical provenance fails; grounded inference passes. Preserve all existing structured-provenance, uncertainty, arithmetic, invented-charge, exclusion/allowance/condition and no-material-concern regressions. Prefer schema/provenance semantics; no fixture-text special cases or lexical patching. If the production contract cannot represent this cleanly, return to PM. Exact-head full deterministic CI/build required before QA handoff. No paid/live eval or YELLOW/RED action authorized."
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
   "last_completed": {"id": "CP6-01", "issue": 12, "pr": 13, "qa_verdict": "PASS", "merged_sha": "387b94a17270d3b660534f80deaa846bb818ca3f"},
