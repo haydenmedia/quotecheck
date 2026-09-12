@@ -226,8 +226,10 @@ function riskConditionSupported(f: Finding, quoteById: Map<string, CanonicalQuot
   return [...claimKinds].every(kind => supported.has(kind));
 }
 function notStatedSupported(f: Finding, quoteById: Map<string, CanonicalQuote>) {
-  const claimAnchors = anchors(`${f.title} ${f.plainLanguageExplanation}`);
-  const targets = notStatedTargets.filter(target => claimAnchors.has(target.anchorIndex));
+  const titleTargets = notStatedTargets.filter(target => anchors(f.title).has(target.anchorIndex));
+  const targets = titleTargets.length > 0
+    ? titleTargets
+    : notStatedTargets.filter(target => anchors(f.plainLanguageExplanation.split(/[.;]/, 1)[0]).has(target.anchorIndex));
   if (targets.length === 0 || f.affectedQuoteIds.length === 0) return false;
   return f.affectedQuoteIds.every(quoteId => {
     const quote = quoteById.get(quoteId);
