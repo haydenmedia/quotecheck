@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { demoReport } from "../src/fixtures/report";
 import { launchCategories, launchExample, launchJourney, launchTrustPoints } from "../src/lib/launch-readiness";
@@ -42,5 +43,11 @@ describe("CP12 launch-readiness model", () => {
     const full = reportPresentationModel(demoReport, true);
     expect(preview.access).toBe("preview");
     expect(preview.sections.length).toBeLessThan(full.sections.length);
+  });
+
+  it("keeps the static-example label separate from the three mobile metric columns", () => {
+    const css = readFileSync("src/app/cp12.css", "utf8");
+    expect(css).toContain("@media(max-width:760px)");
+    expect(css).toContain(".hero-proof>.example-label{grid-column:1/-1");
   });
 });
