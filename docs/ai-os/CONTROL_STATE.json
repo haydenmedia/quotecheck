@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 65,
-  "active_checkpoint": "CP8",
+  "version": 66,
+  "active_checkpoint": "CP9",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 23,
-    "id": "CP8-03",
-    "title": "Data lifecycle and error-safety boundary",
+    "issue": 25,
+    "id": "CP9-01",
+    "title": "Private beta instrumentation contract and local event seam",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP8-02 independently QA-passed and merged",
+    "depends_on": "CP8-03 independently QA-passed and merged; CP8 complete",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP8-02 independently QA-passed at 1fc001fbbd1e8db2eaf692d9804dbc8af9e65913 with exact-head CI 34694041810 and was merged to main at f4cb768480d1f03556e42cb00fc92cd5406aa60c. Next bounded CP8 item is to inventory and harden quote/report data lifecycle and error exposure without adding persistence architecture. No paid/live eval or YELLOW/RED action authorized."
+    "reason": "CP8-03 independently QA-passed at 2d0faad9033fb49165f86f35940202ceb91ddc8c with exact-head CI 34699171052 and was squash-merged to main at 302e606be453c3f18db3615b31d5080bbd1ed592. CP8 is complete after upload/analysis safety, dependency remediation, and data-lifecycle/error hardening. CP9 begins with a provider-neutral, privacy-minimized local instrumentation seam only; no live analytics/vendor configuration is authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c",
-  "last_completed": {"id": "CP8-02", "issue": 21, "pr": 22, "qa_verdict": "PASS", "qa_head_sha": "1fc001fbbd1e8db2eaf692d9804dbc8af9e65913", "ci_run": 34694041810, "merged_sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c"},
+  "last_verified_main_sha": "302e606be453c3f18db3615b31d5080bbd1ed592",
+  "last_completed": {"id": "CP8-03", "issue": 23, "pr": 24, "qa_verdict": "PASS", "qa_head_sha": "2d0faad9033fb49165f86f35940202ceb91ddc8c", "ci_run": 34699171052, "merged_sha": "302e606be453c3f18db3615b31d5080bbd1ed592"},
   "save_game": {
-    "sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c",
-    "verified_behavior": "CP0-CP7 plus CP8-01 and CP8-02 merged; upload/analysis safety is independently QA-passed, dependency high/critical audit gate is green, deterministic tests and CP7 trust eval pass.",
-    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. Quote/report data lifecycle and accidental exposure surfaces have not yet received the bounded CP8-03 audit.",
-    "rollback": "Return to merged CP8-02 SHA f4cb768480d1f03556e42cb00fc92cd5406aa60c if CP8-03 causes regressions."
+    "sha": "302e606be453c3f18db3615b31d5080bbd1ed592",
+    "verified_behavior": "CP0-CP8 merged; upload/analysis boundaries, dependency high/critical gate, privacy/error lifecycle, deterministic tests, and CP7 trust eval are independently QA-passed.",
+    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. No live private-beta analytics/telemetry exists yet; CP9-01 intentionally remains local/no-op only.",
+    "rollback": "Return to CP8-complete SHA 302e606be453c3f18db3615b31d5080bbd1ed592 if CP9-01 causes regressions."
   },
   "human_gate": null
 }
