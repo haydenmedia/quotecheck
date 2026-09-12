@@ -10,7 +10,6 @@ import type {
   ExtractionProvider,
   QuoteReport,
   ReasoningProvider,
-  SafeAnalysisRequest,
   TextIngestionInput,
 } from "../src/lib/types";
 
