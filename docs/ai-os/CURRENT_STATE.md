@@ -1,13 +1,13 @@
 # Current State
 
-Active checkpoint: **CP11 — PWA/native packaging decision**.
+Active checkpoint: **CP12 — Launch/acquisition**.
 
-Active work item: **CP11-01 — PWA installability baseline + native packaging decision**, Issue #33, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP12-01 — Launch-readiness surface + acquisition foundation**, Issue #35, status `READY`, owner `Builder`, risk `GREEN`.
 
-CP10-01 independently QA-passed exact PR head `945a14b3344e1abf2819b1f8d3969119a1d652d3`; exact-head CI run `34708248839` passed and PR #32 was merged to `main` at `5f29e731b03a9330518e295ca5ed46593ccb6a9d`. Issue #30 is closed and CP10 is complete.
+CP11-01 independently QA-passed exact PR head `e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556`; exact-head CI run `34714040845` passed and PR #34 was squash-merged to `main` at `92177906b45fb402d0a95903241d659c2fad97c2`. Issue #33 is closed and CP11 is complete.
 
-CP11-01 must make the packaging decision from actual repository evidence. The default remains mobile-first web/PWA unless native packaging is demonstrably required before the first commercial milestone. The bounded implementation may add standards-based installability metadata/assets, but must not create a separate iOS/Android codebase, add a heavy PWA framework, claim unimplemented offline behavior, or cache quote/report/payment/session data.
+CP12-01 is deliberately pre-production. It should make QuoteCheck understandable and credible to a stranger on mobile, add a clearly labeled deterministic example path using existing report/presentation contracts where practical, and document acquisition measurement hypotheses using the CP9 event vocabulary. It must preserve the real 2–3 quote journey, grounded evidence/uncertainty semantics, valid no-material-concern outcome, and CA$14.99 one-time unlock boundary.
 
-Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and production build must pass. No human gate is active. No app-store submission, external native build service, push/background sync, paid/live model evaluation, preview/production deployment, live payment/provider/storage mutation, secrets, customer communication, paid ads or other YELLOW/RED action is authorized.
+Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and production build must pass. No human gate is active for this GREEN slice. Production deployment/live behavior, live Stripe configuration or charges, production DB/storage, secrets/DNS, customer communication and paid ads remain RED and require current owner approval; no paid model evaluation is authorized.
 
-CP10-complete SHA `5f29e731b03a9330518e295ca5ed46593ccb6a9d` is the current product save-game/rollback point.
+CP11-complete SHA `92177906b45fb402d0a95903241d659c2fad97c2` is the current product save-game/rollback point.
