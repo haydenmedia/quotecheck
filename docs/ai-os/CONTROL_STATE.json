@@ -1,30 +1,30 @@
 {
   "project": "QuoteCheck",
-  "version": 59,
+  "version": 60,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
-  "forward_work_authorized": false,
+  "forward_work_authorized": true,
   "active_work_item": {
     "issue": 14,
     "id": "CP7-01",
     "title": "Deterministic trust evaluation harness",
-    "status": "VERIFICATION_FAILED",
-    "owner": "PM",
+    "status": "READY",
+    "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 18,
     "head_sha": "0714e6f94aa4ce61c85a4b8db21c559cf6a61fb5",
     "ci_run": 34672901390,
-    "reason": "Independent QA failed AC4 again after the v58 proposition-contract reset. The structured InferenceBasis is self-declared and is not bound to the actual finding proposition; additionally condition provenance can be assigned unrelated allow-listed subjects. Concrete failure: scheduling condition evidence + basis timeline/contingent can accompany prose 'Vendor Acme appears unreliable' and pass. This source-grounding root family is beyond the three-cycle escalation threshold. Freeze Builder forward work. PM must redesign the trust contract so proposition identity is machine-verifiable without lexical/prose-semantic heuristics—prefer generating/rendering inference prose from a closed structured finding representation or otherwise making the structured proposition itself canonical, then validating exact canonical subject/provenance compatibility. Required regressions: descriptor/prose mismatch cannot exist or must FAIL; scheduling condition + unrelated subject FAIL; compatible scheduling inference PASS; preserve every prior CP7 regression. No paid/live eval or YELLOW/RED action authorized."
+    "reason": "PM architecture decision after repeated AC4 escalation: replace free-form inference prose plus self-declared InferenceBasis with a closed structured inference proposition as canonical truth. Builder must define a bounded provider-neutral proposition union whose variant determines subject and interpretation by construction; provenance references must resolve to canonical nodes already typed/bound to that same subject. User-facing inference title/explanation must be rendered deterministically from the structured proposition (or validated as renderer output), never accepted as an independent semantic assertion. Remove global cross-subject condition allow-list behavior and do not add lexical/topic/prose heuristics. Required deterministic regressions: scheduling condition cannot produce vendor-unreliable proposition; scheduling condition cannot be relabelled payment/total/fees/scope/etc unless its canonical typed node is that subject; compatible timeline scheduling inference passes; descriptor/prose drift is impossible or hard-fails; unsupported inference with unrelated provenance fails; preserve all prior CP7 fixtures including not_stated/excluded, mixed risk dimensions, uncertainty, arithmetic, fabricated charge/fact, contradictory evidence, and no-material-concern. Keep changes bounded to CP7 trust contracts/evaluator/fixtures/minimal type-rendering wiring. Exact PR-head install/lint/typecheck/tests/evals/build required before QA. No paid/live eval, YELLOW/RED action, production mutation, or scope expansion authorized."
   },
-  "mutation_owner": "PM",
+  "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
   "last_verified_main_sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
   "last_completed": {"id": "CP6-01", "issue": 12, "pr": 13, "qa_verdict": "PASS", "merged_sha": "387b94a17270d3b660534f80deaa846bb818ca3f"},
   "save_game": {
     "sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
     "verified_behavior": "CP6 provider-neutral report ownership/payment boundaries, server-derived entitlement, exact-report unlock, recoverable locked states and session-integrity repair independently QA-passed before merge; CP2-CP5 trust behavior remains preserved.",
-    "risks": "CP7 inference grounding remains unresolved after repeated redesigns. PR #18 must not merge until independent QA passes exact-head deterministic evidence. Paid/live model evaluation remains YELLOW and unauthorized; production provider/storage/payment/deployment changes remain RED.",
+    "risks": "CP7 inference grounding is under a bounded structural reset after repeated QA failures. PR #18 must not merge until Independent QA passes exact-head deterministic evidence. Paid/live model evaluation remains YELLOW and unauthorized; production provider/storage/payment/deployment changes remain RED.",
     "rollback": "Return product behavior to merged CP6 SHA 387b94a17270d3b660534f80deaa846bb818ca3f."
   },
   "human_gate": null
