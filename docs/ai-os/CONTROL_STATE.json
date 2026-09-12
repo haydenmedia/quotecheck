@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 56,
+  "version": 57,
   "active_checkpoint": "CP7",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -13,9 +13,9 @@
     "risk": "GREEN",
     "depends_on": "CP6-01 independently QA-passed and merged via PR #13 at 387b94a17270d3b660534f80deaa846bb818ca3f",
     "pr": 18,
-    "head_sha": "db8a21e81399d765de2232c23607ce57afb01acf",
-    "ci_run": 34661413007,
-    "reason": "PM resolved QA v55 escalation with one bounded GREEN completion of AC4 grounding semantics. Structured canonical grounding must cover not_stated and inference as well as existing explicit_fact/difference/potential_risk checks. Required regressions: stated warranty plus contradictory not_stated fails; genuine absence plus correct not_stated passes; unsupported inference without canonical provenance fails; grounded inference passes. Preserve all existing structured-provenance, uncertainty, arithmetic, invented-charge, exclusion/allowance/condition and no-material-concern regressions. Prefer schema/provenance semantics; no fixture-text special cases or lexical patching. If the production contract cannot represent this cleanly, return to PM. Exact-head full deterministic CI/build required before QA handoff. No paid/live eval or YELLOW/RED action authorized."
+    "head_sha": "e15b82344ae204fc7c6943c2f7f5f0f1b8071e92",
+    "ci_run": 34664721064,
+    "reason": "PM resolved the repeated AC4 inference-grounding escalation with an architecture boundary: stop lexical/topic-overlap repairs. Builder is authorized only to introduce a minimal provider-neutral typed inference provenance/basis tied to canonical evidence so every material inferred proposition has compatible structured support. Same-topic evidence alone must fail (Vendor Acme -> unreliable; warranty value -> inadequate). No-basis inference fails; genuinely grounded structured inference passes. Preserve not_stated validation and all existing potential_risk structured-provenance regressions. Update DATA_CONTRACTS/AI_PIPELINE/EVAL_PLAN if the report contract changes. If this requires broad production-contract churn, stop and return to PM. Exact-head deterministic CI/build required. No paid/live eval or YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
@@ -24,7 +24,7 @@
   "save_game": {
     "sha": "387b94a17270d3b660534f80deaa846bb818ca3f",
     "verified_behavior": "CP6 provider-neutral report ownership/payment boundaries, server-derived entitlement, exact-report unlock, recoverable locked states and session-integrity repair independently QA-passed before merge; CP2-CP5 trust behavior remains preserved.",
-    "risks": "CP7 changes quality/evaluation infrastructure only. Paid/live model evaluation remains YELLOW and is not authorized; production provider/storage/payment/deployment changes remain RED.",
+    "risks": "CP7 may minimally extend the report/eval contract for typed inference provenance. Paid/live model evaluation remains YELLOW and is not authorized; production provider/storage/payment/deployment changes remain RED.",
     "rollback": "Return product behavior to merged CP6 SHA 387b94a17270d3b660534f80deaa846bb818ca3f."
   },
   "human_gate": null
