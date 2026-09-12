@@ -1,15 +1,15 @@
 # Current State
 
-Active checkpoint: **CP7 — Evaluation quality system**.
+Active checkpoint: **CP8 — Security, privacy and reliability**.
 
-Active work item: **CP7-01 — Deterministic trust evaluation harness**, Issue #14 / PR #18, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP8-01 — Upload and analysis safety boundaries**, Issue #19, status `READY`, owner `Builder`, risk `GREEN`.
 
-Independent QA most recently reviewed exact PR #18 head `8d388ab75b2759ed6b026ea7da8897ce493ba142`. Exact-head CI run `34670356594` passed install, lint, typecheck, deterministic tests/evals and production build. QA still failed AC4 because typed `inferenceBasis` proves that cited evidence is a canonical uncertainty/condition/warning node but does not prove that the node supports the proposition being inferred. Repro: a scheduling-availability condition can currently ground the unrelated qualitative statement `Vendor Acme appears unreliable`.
+CP7-01 independently QA-passed PR #18 exact head `e2dd3df4e14b254a1bca7965c26a3cc17464e85f`. QA mapped AC1–AC12 and verified exact-head GitHub Actions run `34680701634` successful. PR #18 was subsequently merged to main at `1a2d416199ed90125f77f875464a2ad8656a406c`; CP7 is complete.
 
-The repeated source-grounding threshold has been escalated and resolved at the PM architecture level rather than by authorizing another heuristic patch. PM decision v58: material inferences must use proposition-level structured grounding. The report contract must identify the inferred subject/canonical target and an interpretation class, tied to exact canonical basis evidence. Deterministic QA must verify target/evidence correspondence and provenance-compatible interpretation. Lexical/topic-overlap grounding and arbitrary qualitative judgments licensed merely by a typed provenance node are not acceptable.
+CP8-01 is intentionally narrow: harden the existing 2–3 quote ingestion/analysis boundary against invalid counts, unsupported/oversized/malformed input, and unsafe downstream failure presentation. Invalid input must be rejected before analysis and must never generate fabricated extraction/report content. Parser/extraction/reasoning failures must be recoverable without exposing stack traces, secrets, provider/model internals, or sensitive implementation details. Existing report ownership/payment and canonical uncertainty/source-evidence behavior must remain intact.
 
-Builder is authorized one bounded GREEN implementation of this structural repair on PR #18. Required regressions: scheduling condition -> vendor-unreliable inference fails; the same condition -> compatible scheduling inference passes; unrelated uncertainty -> qualitative vendor inference fails; genuinely field-compatible uncertainty inference passes. All prior not-stated, potential-risk, invented-charge, arithmetic, hidden-uncertainty, exclusion/allowance/condition and no-material-concern regressions must remain passing. If this requires broad product-contract churn or prose-semantic heuristics, Builder must stop and return to PM.
+Builder must inspect existing limits/contracts before choosing constants, add deterministic regressions including proof that analysis is not invoked after boundary rejection, preserve all CP2–CP7 tests/evals, and provide exact-head install/lint/typecheck/tests/evals/build evidence before Independent QA.
 
-No human gate is active. No paid/live model evaluation is authorized; bounded paid eval remains YELLOW and requires explicit PM purpose, fixture set and budget. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, customer communication, paid ads or other RED action is authorized.
+No human gate is active. No paid/live model evaluation or preview mutation is authorized; YELLOW actions require explicit PM evidence. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, customer communication, paid ads or other RED action is authorized.
 
-CP6 merged SHA `387b94a17270d3b660534f80deaa846bb818ca3f` remains the verified save-game/rollback point.
+Merged CP7 SHA `1a2d416199ed90125f77f875464a2ad8656a406c` is the current save-game/rollback point.
