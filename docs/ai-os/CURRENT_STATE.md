@@ -2,14 +2,14 @@
 
 Active checkpoint: **CP8 — Security, privacy and reliability**.
 
-Active work item: **CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, status `VERIFICATION_FAILED`, owner `Builder`, risk `GREEN`.
+Active work item: **CP8-02 — Dependency vulnerability remediation**, Issue #21, status `READY`, owner `Builder`, risk `GREEN`.
 
-Independent QA reviewed exact PR head `39710a48d3a5d04d9b2bbe927f3dd2bda120d517`. Exact-head CI run `34688273915` is green. The previous malformed top-level `inputs` defect is fixed. QA found one remaining AC6/AC7 defect: extraction evidence is runtime-validated for shape but is not resolved against the actual normalized source, so fabricated confident facts with fabricated-but-structurally-valid evidence can reach reasoning.
+CP8-01 independently QA-passed exact PR head `b38056560a2b31d513142721fb2999504adc9191`. Exact-head CI run `34690753181` succeeded and PR #20 was squash-merged to `main` at `798b3912feff7e5affe843cb467cbfda76e71172`. Issue #19 is closed.
 
-Builder is authorized to repair only this source-grounding defect and required deterministic regressions on existing PR #20. Runtime validation must bind evidence to the supplied normalized input, including source identity and excerpt/locator resolution. Fabricated confident facts/evidence must fail safely before reasoning. Valid `stated`, `ambiguous`, and `unreadable` evidence must continue to pass. Preserve existing CP8 coverage, reportSessionId/ownership/payment boundaries, all CP2-CP7 tests/evals, and narrow mobile-first scope.
+The next bounded security item is dependency remediation. The repository currently pins Next.js `15.2.4`; prior clean-install evidence reported critical/high dependency vulnerabilities and a published Next.js vulnerability. Builder must first reproduce and record the exact current advisories/dependency paths, then apply the smallest maintained patched versions compatible with the existing React 19 app. Avoid unrelated dependency churn and do not use `npm audit fix --force` as a substitute for understanding the delta.
 
-This is failure cycle 2 on the CP8-01 grounding family. If Independent QA finds the same root issue a third time, stop and escalate precisely rather than continuing a patch loop.
+Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval fixtures and production build must pass. Critical/high known vulnerabilities attributable to the application dependency tree must be eliminated; any remaining lower-severity finding requires exact documentation and exposure rationale.
 
-No human gate is active. No paid/live model evaluation or preview mutation is authorized; YELLOW actions require explicit PM evidence. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, customer communication, paid ads or other RED action is authorized.
+No human gate is active. No paid/live model evaluation or preview mutation is authorized. No production deployment, live payment/provider configuration, production DB/storage mutation, secrets, customer communication, paid ads or other RED action is authorized.
 
-Merged CP7 SHA `1a2d416199ed90125f77f875464a2ad8656a406c` remains the save-game/rollback point until CP8-01 independently passes.
+Merged CP8-01 SHA `798b3912feff7e5affe843cb467cbfda76e71172` is the current save-game/rollback point.
