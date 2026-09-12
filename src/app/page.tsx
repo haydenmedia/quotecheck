@@ -1,6 +1,11 @@
 import { Report } from "@/components/Report";
 import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
 import { publicAccessMessage } from "@/lib/data-lifecycle";
+import {
+  PRIVATE_BETA_EVENT_VERSION,
+  noopPrivateBetaInstrumentation,
+  recordPrivateBetaEvent,
+} from "@/lib/private-beta-instrumentation";
 
 const categories = ["General", "Automotive", "Renovation", "Trades / Home Services"];
 
@@ -14,6 +19,11 @@ export default async function Home({ searchParams }: HomeProps) {
   const unlocked = record?.access === "unlocked";
   const access = typeof params.access === "string" ? params.access : null;
   const accessMessage = publicAccessMessage(access);
+
+  recordPrivateBetaEvent(noopPrivateBetaInstrumentation, {
+    version: PRIVATE_BETA_EVENT_VERSION,
+    name: unlocked ? "full_report_viewed" : "preview_viewed",
+  });
 
   return (
     <main>
