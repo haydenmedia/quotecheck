@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP8-01 — Upload and analysis safety boundaries**, Issue #19, is Builder-owned and `READY`. This is the first bounded GREEN security/privacy/reliability slice: validate user-controlled quote inputs before analysis and make downstream failures safe and recoverable without changing providers, payments, production storage, or deployment.
+**CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, is back with Builder after Independent QA `VERIFICATION_FAILED` at `c40df2f96a7c80b99da1d885c9ad3ee1a3bb1fdf`. Repair remains GREEN and tightly bounded.
 
 ## Just finished
-**CP7-01 — Deterministic trust evaluation harness** independently QA-passed PR #18 exact head `e2dd3df4e14b254a1bca7965c26a3cc17464e85f` with exact-head CI run `34680701634` successful, then merged to main at `1a2d416199ed90125f77f875464a2ad8656a406c`. CP7 is complete.
+Builder's first CP8-01 implementation reached green exact-head CI run `34685725647`, but Independent QA correctly found two acceptance-level boundary holes before merge.
 
 ## Broken
-Nothing currently known on merged main. CP8-01 is proactive hardening of the ingestion/analysis boundary.
+PR #20 must not merge yet. Runtime malformed top-level `inputs` containers can escape the declared safe failure boundary, and extraction-provider output is not runtime-validated for canonical structure/grounding before reasoning.
 
 ## Human action required
-None. CP8-01 is GREEN local code/contracts/tests work.
+None. Both defects are local code/test repairs within the authorized GREEN scope.
 
 ## Next
-Builder: inspect existing ingestion limits/contracts, enforce deterministic 2–3 input count/type/size/text boundaries before analysis, add safe recoverable parser/analysis failure states, prove invalid input never invokes analysis or fabricates report content, preserve report ownership/payment and uncertainty/source-evidence contracts, and add deterministic regression coverage. Then run exact-head install/lint/typecheck/tests/evals/build and hand to Independent QA.
+Builder: validate the top-level input container before any dereference/iteration and prove malformed/null/non-array containers cause zero extraction/reasoning calls. Add runtime canonical extraction-result validation before reasoning; malformed output or confident values without required grounding must fail safely and reasoning must not run. Preserve existing CP8 tests, report ownership/payment/session identity, CP2-CP7 trust coverage, and narrow MVP scope. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new PR head to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -24,7 +24,7 @@ Builder: inspect existing ingestion limits/contracts, enforce deterministic 2–
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
 - CP7 evaluation quality system: complete
-- CP8 security/privacy/reliability: active — CP8-01 routed to Builder
+- CP8 security/privacy/reliability: active — CP8-01 repair routed to Builder
 - CP9–CP12: not started
 
 ## Commercial milestone
