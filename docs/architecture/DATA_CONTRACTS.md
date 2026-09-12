@@ -18,6 +18,8 @@ Allowed finding types: `explicit_fact`, `difference`, `not_stated`, `potential_r
 
 Any material finding that depends on a quoted fact must identify affected quote IDs and carry evidence refs resolving to the supplied source material. `not_stated` may legitimately have no evidence ref because it asserts absence from the supplied canonical data; it must not be converted into an exclusion or claimed charge. Potential risks and inferences remain qualified. `scopeStatus: excluded` is reserved for an explicit exclusion supported by source evidence and must never be inferred from omission; `scopeStatus: not_stated` represents genuine omission only.
 
+Inference findings additionally use optional provider-neutral `inferenceBasis` entries in the report contract. Each basis has a typed canonical provenance kind (`uncertainty`, `condition`, or `warning`) and exact evidence refs. The deterministic trust evaluator only accepts an inference when its basis resolves to the corresponding canonical structure for an affected quote. Same-topic text overlap alone is not inference provenance.
+
 ## Report
 Quote summaries; findings; sections; overall gut check; confidence/limitations; `noMaterialConcern`. Report rendering and future PDF export consume the same report object. Empty risk sections are valid when evidence does not justify a risk finding.
 
