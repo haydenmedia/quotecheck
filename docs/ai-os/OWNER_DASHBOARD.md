@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, is back with Builder after Independent QA `VERIFICATION_FAILED` at `c40df2f96a7c80b99da1d885c9ad3ee1a3bb1fdf`. Repair remains GREEN and tightly bounded.
+**CP8-01 — Upload and analysis safety boundaries**, Issue #19 / PR #20, is back with Builder after Independent QA `VERIFICATION_FAILED` at `39710a48d3a5d04d9b2bbe927f3dd2bda120d517`. Repair remains GREEN and tightly bounded.
 
 ## Just finished
-Builder's first CP8-01 implementation reached green exact-head CI run `34685725647`, but Independent QA correctly found two acceptance-level boundary holes before merge.
+Builder fixed the malformed top-level input-container defect and reached green exact-head CI run `34688273915` with 70/70 deterministic tests and 32/32 CP7 trust fixtures. Independent QA then found a remaining source-grounding hole before merge.
 
 ## Broken
-PR #20 must not merge yet. Runtime malformed top-level `inputs` containers can escape the declared safe failure boundary, and extraction-provider output is not runtime-validated for canonical structure/grounding before reasoning.
+PR #20 must not merge yet. Extraction evidence is checked for structure but is not proven to resolve to the actual supplied normalized quote. A provider can therefore fabricate a confident fact plus fabricated-but-well-shaped evidence and pass validation into reasoning.
 
 ## Human action required
-None. Both defects are local code/test repairs within the authorized GREEN scope.
+None. This is failure cycle 2 for the CP8-01 grounding family and remains a local GREEN code/test repair. A third repeated failure on the same root issue must stop and escalate rather than continue patching.
 
 ## Next
-Builder: validate the top-level input container before any dereference/iteration and prove malformed/null/non-array containers cause zero extraction/reasoning calls. Add runtime canonical extraction-result validation before reasoning; malformed output or confident values without required grounding must fail safely and reasoning must not run. Preserve existing CP8 tests, report ownership/payment/session identity, CP2-CP7 trust coverage, and narrow MVP scope. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new PR head to Independent QA.
+Builder: bind extraction evidence validation to the actual normalized input. Validate source identity and excerpt/locator resolution against supplied quote content so fabricated confident facts/evidence cannot reach reasoning. Add deterministic regressions for the QA counterexample while preserving valid `stated`, `ambiguous`, and `unreadable` evidence, existing CP8 coverage, report ownership/payment/session identity, and CP2-CP7 trust fixtures. Re-run exact-head install/lint/typecheck/tests/evals/build and hand the new PR head to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -24,7 +24,7 @@ Builder: validate the top-level input container before any dereference/iteration
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
 - CP7 evaluation quality system: complete
-- CP8 security/privacy/reliability: active — CP8-01 repair routed to Builder
+- CP8 security/privacy/reliability: active — CP8-01 source-grounding repair routed to Builder
 - CP9–CP12: not started
 
 ## Commercial milestone
