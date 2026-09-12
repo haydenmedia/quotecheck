@@ -61,13 +61,17 @@ describe("analysis input boundary", () => {
   });
 
   it("rejects unsupported input kinds before extraction", async () => {
-    const extraction = { extract: vi.fn() };
+    const extraction = {
+      extract: vi.fn(async (_input: TextIngestionInput) => {
+        throw new Error("should not run");
+      }),
+    };
     const reasoning = reasoningSpy();
-    const inputs = structuredClone(validInputs) as unknown as Array<TextIngestionInput & { kind: string }>;
+    const inputs = structuredClone(validInputs) as unknown as Array<Record<string, unknown>>;
     inputs[0].kind = "application/pdf";
 
     const result = await analyzeQuotesSafely(
-      { reportSessionId: "report-1", inputs: inputs as TextIngestionInput[], category: "automotive" },
+      { reportSessionId: "report-1", inputs: inputs as unknown as TextIngestionInput[], category: "automotive" },
       extraction,
       reasoning,
     );
@@ -91,7 +95,11 @@ describe("analysis input boundary", () => {
   });
 
   it("rejects malformed and duplicate inputs without invoking analysis", async () => {
-    const extraction = { extract: vi.fn() };
+    const extraction = {
+      extract: vi.fn(async (_input: TextIngestionInput) => {
+        throw new Error("should not run");
+      }),
+    };
     const reasoning = reasoningSpy();
     const malformed = [{ ...validInputs[0], text: "   " }, validInputs[1]];
     const duplicate = [validInputs[0], { ...validInputs[1], id: validInputs[0].id }];
@@ -110,7 +118,7 @@ describe("analysis input boundary", () => {
 
   it("returns a recoverable generic failure without leaking provider internals or substituting report identity", async () => {
     const extraction = {
-      extract: vi.fn(async () => {
+      extract: vi.fn(async (_input: TextIngestionInput) => {
         throw new Error("provider=openai model=secret-model OPENAI_API_KEY=sk-do-not-leak stack=/srv/internal.ts");
       }),
     };
