@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP8-02 — Dependency vulnerability remediation**, Issue #21, is READY for Builder. Scope is GREEN: reproduce current dependency advisories, minimally patch vulnerable dependencies, then prove the exact head with audit + full deterministic CI.
+**CP9-01 — Private beta instrumentation contract and local event seam**, Issue #25, is READY for Builder. Scope is GREEN: define privacy-minimized funnel events and a provider-neutral local/no-op instrumentation seam with deterministic tests. No live analytics vendor or production telemetry.
 
 ## Just finished
-**CP8-01 — Upload and analysis safety boundaries** independently QA-passed at `b38056560a2b31d513142721fb2999504adc9191` with exact-head CI run `34690753181` and was squash-merged to `main` at `798b3912feff7e5affe843cb467cbfda76e71172`. Issue #19 is closed.
+**CP8-03 — Data lifecycle and error-safety boundary** independently QA-passed at `2d0faad9033fb49165f86f35940202ceb91ddc8c` with exact-head CI `34699171052` and was squash-merged to `main` at `302e606be453c3f18db3615b31d5080bbd1ed592`. Issue #23 is closed. CP8 is complete.
 
 ## Broken
-Dependency installation has reported critical/high vulnerabilities, including a published vulnerability affecting the pinned Next.js `15.2.4`. Builder must reproduce the exact current audit/advisories before changing versions; no blind `npm audit fix --force`.
+Nothing currently blocking forward work. Two moderate test-only Vitest/@vitest-mocker findings remain documented under `GHSA-82fw-gwwq-j7x9`; no critical/high dependency findings remain in the gated application tree.
 
 ## Human action required
-None. CP8-02 is local dependency/test work and remains GREEN. No production deployment or live configuration is authorized.
+None. CP9-01 is local code/docs/tests only. No production telemetry, external analytics configuration, payment/provider mutation, or other YELLOW/RED action is authorized.
 
 ## Next
-Builder: start from current canonical CONTROL_STATE and Issue #21. Reproduce the clean-install/audit findings, apply the smallest maintained patched dependency updates, preserve all product/data/AI/payment/session contracts, and hand exact PR head plus audit, lint, typecheck, deterministic tests, CP7 trust eval and build evidence to Independent QA.
+Builder: implement Issue #25 on a scoped branch/PR. Keep event payloads privacy-minimized, instrument only the existing golden journey, add deterministic schema/redaction/path tests, and hand exact PR head plus audit/lint/typecheck/tests/CP7 trust eval/build evidence to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -24,8 +24,9 @@ Builder: start from current canonical CONTROL_STATE and Issue #21. Reproduce the
 - CP5 free preview/paywall: complete
 - CP6 payments/persistence/ownership: complete
 - CP7 evaluation quality system: complete
-- CP8 security/privacy/reliability: active — CP8-01 complete; CP8-02 dependency remediation READY
-- CP9–CP12: not started
+- CP8 security/privacy/reliability: complete
+- CP9 private beta instrumentation: active — CP9-01 READY
+- CP10–CP12: not started
 
 ## Commercial milestone
 Target remains: a stranger can upload 2–3 real quotes, receive a useful free preview, pay CA$14.99, and receive a polished grounded report without fabricated findings.
