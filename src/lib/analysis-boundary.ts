@@ -52,7 +52,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isAcceptedKind(value: unknown): value is TextIngestionInput["kind"] {
-  return typeof value === "string" && ANALYSIS_INPUT_LIMITS.acceptedKinds.includes(value as TextIngestionInput["kind"]);
+  return typeof value === "string"
+    && ANALYSIS_INPUT_LIMITS.acceptedKinds.includes(value as TextIngestionInput["kind"]);
 }
 
 export function validateAnalysisInputs(inputs: unknown): AnalysisBoundaryError | null {
@@ -77,60 +78,160 @@ export function validateAnalysisInputs(inputs: unknown): AnalysisBoundaryError |
 
   for (const candidate of inputs) {
     if (!isRecord(candidate)) {
-      return { code: "MALFORMED_INPUT", message: "One of the quotes could not be read. Replace it and try again.", retryable: true };
+      return {
+        code: "MALFORMED_INPUT",
+        message: "One of the quotes could not be read. Replace it and try again.",
+        retryable: true,
+      };
     }
 
     const input = candidate as Partial<TextIngestionInput> & { kind?: unknown };
     if (!isAcceptedKind(input.kind)) {
-      return { code: "UNSUPPORTED_INPUT_TYPE", message: "One of the quote inputs is not supported yet.", retryable: true };
+      return {
+        code: "UNSUPPORTED_INPUT_TYPE",
+        message: "One of the quote inputs is not supported yet.",
+        retryable: true,
+      };
     }
-    if (typeof input.id !== "string" || !input.id.trim() || typeof input.label !== "string" || !input.label.trim() || typeof input.text !== "string" || !input.text.trim()) {
-      return { code: "MALFORMED_INPUT", message: "One of the quotes could not be read. Replace it and try again.", retryable: true };
+    if (
+      typeof input.id !== "string"
+      || !input.id.trim()
+      || typeof input.label !== "string"
+      || !input.label.trim()
+      || typeof input.text !== "string"
+      || !input.text.trim()
+    ) {
+      return {
+        code: "MALFORMED_INPUT",
+        message: "One of the quotes could not be read. Replace it and try again.",
+        retryable: true,
+      };
     }
     if (ids.has(input.id)) {
-      return { code: "MALFORMED_INPUT", message: "Each quote must be a separate input. Replace the duplicate and try again.", retryable: true };
+      return {
+        code: "MALFORMED_INPUT",
+        message: "Each quote must be a separate input. Replace the duplicate and try again.",
+        retryable: true,
+      };
     }
     ids.add(input.id);
 
     if (input.text.length > ANALYSIS_INPUT_LIMITS.maxTextCharactersPerQuote) {
-      return { code: "OVERSIZED_INPUT", message: "One of the quotes is too large to analyze safely. Use a shorter version and try again.", retryable: true };
+      return {
+        code: "OVERSIZED_INPUT",
+        message: "One of the quotes is too large to analyze safely. Use a shorter version and try again.",
+        retryable: true,
+      };
     }
     totalCharacters += input.text.length;
   }
 
   if (totalCharacters > ANALYSIS_INPUT_LIMITS.maxTextCharactersTotal) {
-    return { code: "OVERSIZED_INPUT", message: "The combined quote inputs are too large to analyze safely. Use shorter versions and try again.", retryable: true };
+    return {
+      code: "OVERSIZED_INPUT",
+      message: "The combined quote inputs are too large to analyze safely. Use shorter versions and try again.",
+      retryable: true,
+    };
   }
 
   return null;
 }
 
 const CERTAINTIES = new Set(["stated", "ambiguous", "unreadable", "not_stated"]);
-const CONDITION_SUBJECTS = new Set(["project_description", "total", "fees", "timeline", "payment_terms", "scope", "allowance"]);
+const CONDITION_SUBJECTS = new Set([
+  "project_description",
+  "total",
+  "fees",
+  "timeline",
+  "payment_terms",
+  "scope",
+  "allowance",
+]);
 const WARNING_CODES = new Set(["ARITHMETIC_MISMATCH", "AMBIGUOUS_FIELD", "UNREADABLE_FIELD"]);
 
-function validEvidence(value: unknown, quoteId: string, sourceInputId: string): boolean {
+function excerptResolvesToInput(excerpt: string, locator: Record<string, unknown> | undefined, input: TextIngestionInput): boolean {
+  const trimmedExcerpt = excerpt.trim();
+  if (!trimmedExcerpt) return false;
+
+  if (locator?.page !== undefined) {
+    if (!Number.isInteger(locator.page) || (locator.page as number) < 1 || locator.page !== input.page) return false;
+  }
+
+  let resolvedByLocator = false;
+  if (locator?.line !== undefined) {
+    if (!Number.isInteger(locator.line) || (locator.line as number) < 1) return false;
+    const sourceLine = input.text.split(/\r?\n/)[(locator.line as number) - 1];
+    if (sourceLine === undefined || sourceLine.trim() !== trimmedExcerpt) return false;
+    resolvedByLocator = true;
+  }
+
+  const hasStart = locator?.start !== undefined;
+  const hasEnd = locator?.end !== undefined;
+  if (hasStart !== hasEnd) return false;
+  if (hasStart && hasEnd) {
+    const start = locator?.start as number;
+    const end = locator?.end as number;
+    if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > input.text.length) return false;
+    if (input.text.slice(start, end).trim() !== trimmedExcerpt) return false;
+    resolvedByLocator = true;
+  }
+
+  if (resolvedByLocator) return true;
+  return input.text.includes(trimmedExcerpt)
+    || input.text.split(/\r?\n/).some((line) => line.trim() === trimmedExcerpt);
+}
+
+function normalizedEvidenceText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/\[(?:ambiguous|unreadable)\]/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function evidenceSupportsValue(excerpt: string, value: unknown, expectedValue: "string" | "number"): boolean {
+  if (expectedValue === "string") {
+    if (typeof value !== "string" || !value.trim()) return false;
+    return normalizedEvidenceText(excerpt).includes(normalizedEvidenceText(value));
+  }
+
+  if (typeof value !== "number" || !Number.isFinite(value)) return false;
+  const numericTokens = excerpt.replace(/,/g, "").match(/-?\d+(?:\.\d+)?/g) ?? [];
+  return numericTokens.some((token) => Number(token) === value);
+}
+
+function validEvidence(value: unknown, quoteId: string, input: TextIngestionInput): boolean {
   if (!isRecord(value)) return false;
   if (value.quoteId !== quoteId) return false;
-  if (value.sourceInputId !== sourceInputId) return false;
-  if (typeof value.sourceLabel !== "string" || !value.sourceLabel.trim()) return false;
+  if (value.sourceInputId !== input.id) return false;
+  if (value.sourceLabel !== input.label) return false;
   if (typeof value.excerpt !== "string" || !value.excerpt.trim()) return false;
-  if (typeof value.confidence !== "number" || !Number.isFinite(value.confidence) || value.confidence < 0 || value.confidence > 1) return false;
+  if (
+    typeof value.confidence !== "number"
+    || !Number.isFinite(value.confidence)
+    || value.confidence < 0
+    || value.confidence > 1
+  ) return false;
   if (value.locator !== undefined && !isRecord(value.locator)) return false;
-  return true;
+  return excerptResolvesToInput(value.excerpt, value.locator as Record<string, unknown> | undefined, input);
 }
 
 function validSourcedValue(
   value: unknown,
   quoteId: string,
-  sourceInputId: string,
+  input: TextIngestionInput,
   expectedValue: "string" | "number",
 ): boolean {
-  if (!isRecord(value) || typeof value.certainty !== "string" || !CERTAINTIES.has(value.certainty) || !Array.isArray(value.evidence)) {
+  if (
+    !isRecord(value)
+    || typeof value.certainty !== "string"
+    || !CERTAINTIES.has(value.certainty)
+    || !Array.isArray(value.evidence)
+  ) {
     return false;
   }
 
-  if (!value.evidence.every((ref) => validEvidence(ref, quoteId, sourceInputId))) return false;
+  if (!value.evidence.every((ref) => validEvidence(ref, quoteId, input))) return false;
 
   if (value.certainty === "not_stated") {
     return value.value === null && value.evidence.length === 0;
@@ -143,79 +244,97 @@ function validSourcedValue(
   if (value.evidence.length === 0) return false;
   if (value.value === null) return value.certainty === "ambiguous";
   if (typeof value.value !== expectedValue) return false;
-  return expectedValue !== "number" || Number.isFinite(value.value as number);
+  if (expectedValue === "number" && !Number.isFinite(value.value as number)) return false;
+
+  return value.evidence.some((ref) => isRecord(ref)
+    && typeof ref.excerpt === "string"
+    && evidenceSupportsValue(ref.excerpt, value.value, expectedValue));
 }
 
-function validSourcedList(
-  value: unknown,
-  quoteId: string,
-  sourceInputId: string,
-): boolean {
-  return Array.isArray(value) && value.every((entry) => validSourcedValue(entry, quoteId, sourceInputId, "string"));
+function validSourcedList(value: unknown, quoteId: string, input: TextIngestionInput): boolean {
+  return Array.isArray(value)
+    && value.every((entry) => validSourcedValue(entry, quoteId, input, "string"));
 }
 
-function validLineItems(value: unknown, quoteId: string, sourceInputId: string): boolean {
+function validLineItems(value: unknown, quoteId: string, input: TextIngestionInput): boolean {
   if (!Array.isArray(value)) return false;
   return value.every((item) => {
     if (!isRecord(item) || typeof item.id !== "string" || !item.id.trim()) return false;
-    return validSourcedValue(item.description, quoteId, sourceInputId, "string")
-      && validSourcedValue(item.quantity, quoteId, sourceInputId, "number")
-      && validSourcedValue(item.unit, quoteId, sourceInputId, "string")
-      && validSourcedValue(item.labour, quoteId, sourceInputId, "number")
-      && validSourcedValue(item.materials, quoteId, sourceInputId, "number")
-      && validSourcedValue(item.price, quoteId, sourceInputId, "number");
+    return validSourcedValue(item.description, quoteId, input, "string")
+      && validSourcedValue(item.quantity, quoteId, input, "number")
+      && validSourcedValue(item.unit, quoteId, input, "string")
+      && validSourcedValue(item.labour, quoteId, input, "number")
+      && validSourcedValue(item.materials, quoteId, input, "number")
+      && validSourcedValue(item.price, quoteId, input, "number");
   });
 }
 
-function validWarnings(value: unknown, quoteId: string, sourceInputId: string): boolean {
+function validWarnings(value: unknown, quoteId: string, input: TextIngestionInput): boolean {
   if (!Array.isArray(value)) return false;
   return value.every((warning) => {
     if (!isRecord(warning) || typeof warning.code !== "string" || !WARNING_CODES.has(warning.code)) return false;
-    if (typeof warning.message !== "string" || !warning.message.trim() || !Array.isArray(warning.evidence) || warning.evidence.length === 0) return false;
-    return warning.evidence.every((ref) => validEvidence(ref, quoteId, sourceInputId));
+    if (
+      typeof warning.message !== "string"
+      || !warning.message.trim()
+      || !Array.isArray(warning.evidence)
+      || warning.evidence.length === 0
+    ) return false;
+    return warning.evidence.every((ref) => validEvidence(ref, quoteId, input));
   });
 }
 
-function validTypedConditions(value: unknown, quoteId: string, sourceInputId: string): boolean {
+function validTypedConditions(value: unknown, quoteId: string, input: TextIngestionInput): boolean {
   if (value === undefined) return true;
   if (!Array.isArray(value)) return false;
   return value.every((condition) => isRecord(condition)
     && typeof condition.subject === "string"
     && CONDITION_SUBJECTS.has(condition.subject)
-    && validSourcedValue(condition.value, quoteId, sourceInputId, "string"));
+    && validSourcedValue(condition.value, quoteId, input, "string"));
 }
 
 function validExtractionResult(result: unknown, input: TextIngestionInput): boolean {
-  if (!isRecord(result) || result.sourceInputId !== input.id || typeof result.rawText !== "string" || !isRecord(result.quote)) {
+  if (
+    !isRecord(result)
+    || result.sourceInputId !== input.id
+    || result.rawText !== input.text
+    || !isRecord(result.quote)
+  ) {
     return false;
   }
 
   const quote = result.quote;
-  if (typeof quote.id !== "string" || !quote.id.trim() || !Array.isArray(quote.sourceInputIds) || !quote.sourceInputIds.includes(input.id)) {
+  if (
+    typeof quote.id !== "string"
+    || !quote.id.trim()
+    || !Array.isArray(quote.sourceInputIds)
+    || !quote.sourceInputIds.includes(input.id)
+  ) {
     return false;
   }
   const quoteId = quote.id;
 
-  if (!validSourcedValue(quote.vendor, quoteId, input.id, "string")
-    || !validSourcedValue(quote.quoteDate, quoteId, input.id, "string")
-    || !validSourcedValue(quote.expiryDate, quoteId, input.id, "string")
-    || !validSourcedValue(quote.projectDescription, quoteId, input.id, "string")
-    || !validLineItems(quote.lineItems, quoteId, input.id)
+  if (
+    !validSourcedValue(quote.vendor, quoteId, input, "string")
+    || !validSourcedValue(quote.quoteDate, quoteId, input, "string")
+    || !validSourcedValue(quote.expiryDate, quoteId, input, "string")
+    || !validSourcedValue(quote.projectDescription, quoteId, input, "string")
+    || !validLineItems(quote.lineItems, quoteId, input)
     || !isRecord(quote.money)
-    || !validSourcedValue(quote.money.subtotal, quoteId, input.id, "number")
-    || !validSourcedValue(quote.money.tax, quoteId, input.id, "number")
-    || !validSourcedValue(quote.money.fees, quoteId, input.id, "number")
-    || !validSourcedValue(quote.money.total, quoteId, input.id, "number")
-    || !validSourcedList(quote.allowances, quoteId, input.id)
-    || !validSourcedList(quote.inclusions, quoteId, input.id)
-    || !validSourcedList(quote.exclusions, quoteId, input.id)
-    || !validSourcedValue(quote.warranty, quoteId, input.id, "string")
-    || !validSourcedValue(quote.timeline, quoteId, input.id, "string")
-    || !validSourcedValue(quote.paymentTerms, quoteId, input.id, "string")
-    || !validSourcedList(quote.conditions, quoteId, input.id)
-    || !validTypedConditions(quote.typedConditions, quoteId, input.id)
-    || !validSourcedList(quote.uncertainties, quoteId, input.id)
-    || !validWarnings(quote.warnings, quoteId, input.id)) {
+    || !validSourcedValue(quote.money.subtotal, quoteId, input, "number")
+    || !validSourcedValue(quote.money.tax, quoteId, input, "number")
+    || !validSourcedValue(quote.money.fees, quoteId, input, "number")
+    || !validSourcedValue(quote.money.total, quoteId, input, "number")
+    || !validSourcedList(quote.allowances, quoteId, input)
+    || !validSourcedList(quote.inclusions, quoteId, input)
+    || !validSourcedList(quote.exclusions, quoteId, input)
+    || !validSourcedValue(quote.warranty, quoteId, input, "string")
+    || !validSourcedValue(quote.timeline, quoteId, input, "string")
+    || !validSourcedValue(quote.paymentTerms, quoteId, input, "string")
+    || !validSourcedList(quote.conditions, quoteId, input)
+    || !validTypedConditions(quote.typedConditions, quoteId, input)
+    || !validSourcedList(quote.uncertainties, quoteId, input)
+    || !validWarnings(quote.warnings, quoteId, input)
+  ) {
     return false;
   }
 
@@ -229,7 +348,12 @@ export async function analyzeQuotesSafely(
 ): Promise<SafeAnalysisResult> {
   const validationError = validateAnalysisInputs(request.inputs);
   if (validationError) {
-    return failure(request.reportSessionId, validationError.code, validationError.message, validationError.retryable);
+    return failure(
+      request.reportSessionId,
+      validationError.code,
+      validationError.message,
+      validationError.retryable,
+    );
   }
 
   try {
