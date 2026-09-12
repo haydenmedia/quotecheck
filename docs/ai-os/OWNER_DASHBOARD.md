@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP10-01 — Shareable grounded report + print/PDF foundation**, Issue #30, is READY for Builder. Scope is GREEN: one presentation model derived from the existing grounded report plus a polished unlocked report that prints cleanly to PDF through the browser. No external PDF service or second analysis path.
+**CP11-01 — PWA installability baseline + native packaging decision**, Issue #33, is READY for Builder. Scope is GREEN: add only a standards-based installability baseline justified by the current Next.js app and document whether native wrapping should wait until after the first commercial milestone. No native codebase, service-worker caching of private data, external build service, or deployment.
 
 ## Just finished
-**CP9-02 — Local private-beta funnel summary and instrumentation completeness** independently QA-passed at `e2ddbc023146ff45a93ddbd077be44ac80adc709` with exact-head CI `34705155095` and was squash-merged to `main` at `8f946150f0af8360f339181c8c46dfefa6b38d97`. Issue #27 is closed. CP9 is complete.
+**CP10-01 — Shareable grounded report + print/PDF foundation** independently QA-passed at `945a14b3344e1abf2819b1f8d3969119a1d652d3` with exact-head CI `34708248839` and was merged to `main` at `5f29e731b03a9330518e295ca5ed46593ccb6a9d`. Issue #30 is closed. CP10 is complete.
 
 ## Broken
-Nothing currently blocking forward work. CP9 metrics intentionally remain event-count diagnostics rather than unique-user conversion data. Two moderate test-only Vitest/@vitest-mocker findings remain documented under `GHSA-82fw-gwwq-j7x9`.
+Nothing currently blocking forward work. Two moderate test-only Vitest/@vitest-mocker findings remain documented under `GHSA-82fw-gwwq-j7x9`. QuoteCheck does not currently claim offline capability or native-app packaging.
 
 ## Human action required
-None. CP10-01 is local code/docs/tests only. No external PDF provider, payment/storage/provider mutation, paid evaluation, production deployment, or other YELLOW/RED action is authorized.
+None. CP11-01 is local code/docs/tests only. No app-store submission, external native build service, push/background sync, production deployment, live payment/storage/provider mutation, paid evaluation, or other YELLOW/RED action is authorized.
 
 ## Next
-Builder: implement Issue #30 on a scoped branch/PR. Reuse one grounded report presentation model for web/print, preserve unlock and trust boundaries, add print-safe layout/redaction/access tests, then hand exact PR head plus audit/lint/typecheck/tests/CP7 trust eval/build evidence to Independent QA.
+Builder: implement Issue #33 on a scoped branch/PR. Audit the actual mobile/web architecture, add minimal installability metadata/assets without a heavy framework, explicitly avoid unverified offline/data caching claims, document the web/PWA-versus-native decision, preserve all trust/access/privacy behavior, and hand exact PR head plus audit/lint/typecheck/tests/CP7 trust eval/build evidence to Independent QA.
 
 ## Checkpoint progress
 - CP0 project OS: complete
@@ -26,8 +26,9 @@ Builder: implement Issue #30 on a scoped branch/PR. Reuse one grounded report pr
 - CP7 evaluation quality system: complete
 - CP8 security/privacy/reliability: complete
 - CP9 private beta instrumentation: complete
-- CP10 shareable/PDF report: active — CP10-01 READY
-- CP11–CP12: not started
+- CP10 shareable/PDF report: complete
+- CP11 PWA/native packaging decision: active — CP11-01 READY
+- CP12 launch/acquisition: not started
 
 ## Commercial milestone
 Target remains: a stranger can upload 2–3 real quotes, receive a useful free preview, pay CA$14.99, and receive a polished grounded report without fabricated findings.
