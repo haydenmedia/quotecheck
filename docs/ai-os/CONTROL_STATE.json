@@ -1,32 +1,32 @@
 {
   "project": "QuoteCheck",
-  "version": 64,
+  "version": 65,
   "active_checkpoint": "CP8",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 21,
-    "id": "CP8-02",
-    "title": "Dependency vulnerability remediation",
+    "issue": 23,
+    "id": "CP8-03",
+    "title": "Data lifecycle and error-safety boundary",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP8-01 independently QA-passed and merged",
+    "depends_on": "CP8-02 independently QA-passed and merged",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP8-01 independently QA-passed at b38056560a2b31d513142721fb2999504adc9191 with exact-head CI 34690753181 and was squash-merged to main at 798b3912feff7e5affe843cb467cbfda76e71172. Next highest-value bounded CP8 item is dependency vulnerability remediation: reproduce current audit findings, minimally upgrade vulnerable dependencies (notably pinned Next.js 15.2.4), preserve product/contracts, and hand exact-head audit/CI evidence to Independent QA. No paid/live eval or YELLOW/RED action authorized."
+    "reason": "CP8-02 independently QA-passed at 1fc001fbbd1e8db2eaf692d9804dbc8af9e65913 with exact-head CI 34694041810 and was merged to main at f4cb768480d1f03556e42cb00fc92cd5406aa60c. Next bounded CP8 item is to inventory and harden quote/report data lifecycle and error exposure without adding persistence architecture. No paid/live eval or YELLOW/RED action authorized."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "798b3912feff7e5affe843cb467cbfda76e71172",
-  "last_completed": {"id": "CP8-01", "issue": 19, "pr": 20, "qa_verdict": "PASS", "qa_head_sha": "b38056560a2b31d513142721fb2999504adc9191", "ci_run": 34690753181, "merged_sha": "798b3912feff7e5affe843cb467cbfda76e71172"},
+  "last_verified_main_sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c",
+  "last_completed": {"id": "CP8-02", "issue": 21, "pr": 22, "qa_verdict": "PASS", "qa_head_sha": "1fc001fbbd1e8db2eaf692d9804dbc8af9e65913", "ci_run": 34694041810, "merged_sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c"},
   "save_game": {
-    "sha": "798b3912feff7e5affe843cb467cbfda76e71172",
-    "verified_behavior": "CP0-CP7 plus CP8-01 merged; upload/analysis boundary independently QA-passed with runtime source-grounding validation and green exact-head CI.",
-    "risks": "Dependency audit has reported critical/high findings and pinned Next.js 15.2.4 is known vulnerable; exact advisories must be reproduced by Builder before remediation.",
-    "rollback": "Return to merged CP8-01 SHA 798b3912feff7e5affe843cb467cbfda76e71172 if dependency remediation causes regressions."
+    "sha": "f4cb768480d1f03556e42cb00fc92cd5406aa60c",
+    "verified_behavior": "CP0-CP7 plus CP8-01 and CP8-02 merged; upload/analysis safety is independently QA-passed, dependency high/critical audit gate is green, deterministic tests and CP7 trust eval pass.",
+    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. Quote/report data lifecycle and accidental exposure surfaces have not yet received the bounded CP8-03 audit.",
+    "rollback": "Return to merged CP8-02 SHA f4cb768480d1f03556e42cb00fc92cd5406aa60c if CP8-03 causes regressions."
   },
   "human_gate": null
 }
