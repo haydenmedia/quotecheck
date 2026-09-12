@@ -1,13 +1,17 @@
+import { LaunchExampleReport } from "@/components/LaunchExampleReport";
 import { Report } from "@/components/Report";
 import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
 import { publicAccessMessage } from "@/lib/data-lifecycle";
+import {
+  launchCategories,
+  launchJourney,
+  launchTrustPoints,
+} from "@/lib/launch-readiness";
 import {
   PRIVATE_BETA_EVENT_VERSION,
   noopPrivateBetaInstrumentation,
   recordPrivateBetaEvent,
 } from "@/lib/private-beta-instrumentation";
-
-const categories = ["General", "Automotive", "Renovation", "Trades / Home Services"];
 
 type HomeProps = {
   searchParams: Promise<{ access?: string | string[] }>;
@@ -28,20 +32,77 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <main>
       <header className="hero">
-        <nav><a className="brand" href="#top">QuoteCheck</a><span>Second opinion for expensive decisions</span></nav>
+        <nav aria-label="Primary navigation">
+          <a className="brand" href="#top">QuoteCheck</a>
+          <a className="nav-link" href="#how-it-works">How it works</a>
+        </nav>
         <div className="hero-grid" id="top">
-          <div><p className="eyebrow">Before you choose the cheapest quote</p><h1>See what the price tag leaves out.</h1><p className="lede">Compare 2–3 quotes side by side, surface unclear scope and potential cost risks, and get the questions worth asking before you commit.</p><a className="primary" href="#compare">Compare my quotes</a><p className="fineprint">A practical gut check, not a professional appraisal or legal opinion.</p></div>
-          <div className="hero-proof"><div><span>3</span><p>quotes compared</p></div><div><span>11</span><p>meaningful differences</p></div><div><span>6</span><p>questions worth asking</p></div></div>
+          <div>
+            <p className="eyebrow">A second opinion before you commit</p>
+            <h1>Compare the quotes, not just the totals.</h1>
+            <p className="lede">QuoteCheck compares 2–3 quotes side by side, keeps uncertainty visible, surfaces meaningful differences and potential risks, and gives you the questions worth asking before you choose.</p>
+            <div className="hero-actions">
+              <a className="primary" href="#compare">Compare my quotes</a>
+              <a className="secondary-link" href="#example-report">See a static example</a>
+            </div>
+            <p className="fineprint">A practical second opinion based on the supplied quotes — not a professional appraisal, legal opinion, engineering review, or guarantee of final cost.</p>
+          </div>
+          <aside className="hero-proof" aria-label="Static example summary">
+            <p className="example-label">In the static example</p>
+            <div><span>3</span><p>quotes compared</p></div>
+            <div><span>11</span><p>grounded findings</p></div>
+            <div><span>6</span><p>questions to ask</p></div>
+          </aside>
         </div>
       </header>
-      <section className="compare" id="compare">
-        <div className="section-heading"><div><p className="eyebrow">Start here</p><h2>Add 2–3 quotes</h2></div><p>PDF, screenshot, photo or pasted text. This scaffold uses fixture data only.</p></div>
-        <div className="upload-grid">
-          {[1,2,3].map((number) => <button className="upload" type="button" key={number}><span>+</span><strong>Quote {number}</strong><small>{number < 3 ? "Required for comparison" : "Optional third quote"}</small></button>)}
+
+      <section className="launch-section" id="how-it-works" aria-labelledby="journey-title">
+        <div className="launch-heading">
+          <p className="eyebrow">How QuoteCheck works</p>
+          <h2 id="journey-title">From quotes to a clearer decision</h2>
+          <p>You can see whether the analysis is useful before paying. The one-time unlock reveals the remaining grounded findings from the same completed report.</p>
         </div>
-        <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{categories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
+        <ol className="journey-grid">
+          {launchJourney.map((item) => (
+            <li key={item.step}>
+              <span aria-hidden="true">{item.step}</span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="trust-section" aria-labelledby="trust-title">
+        <div className="launch-heading">
+          <p className="eyebrow">Grounded by design</p>
+          <h2 id="trust-title">What the report will — and will not — claim</h2>
+          <p>QuoteCheck is designed to preserve what the quote actually says, including when the right answer is uncertain, not stated, or simply uneventful.</p>
+        </div>
+        <div className="trust-grid">
+          {launchTrustPoints.map((item) => (
+            <article key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <LaunchExampleReport />
+
+      <section className="compare" id="compare" aria-labelledby="compare-title">
+        <div className="section-heading">
+          <div><p className="eyebrow">Start here</p><h2 id="compare-title">Add 2–3 quotes</h2></div>
+          <p>PDF, screenshot, photo or pasted text. This checkpoint still uses deterministic fixture data only; the controls below do not submit a real customer quote.</p>
+        </div>
+        <div className="upload-grid" aria-label="Quote input placeholders">
+          {[1,2,3].map((number) => <button className="upload" type="button" key={number}><span aria-hidden="true">+</span><strong>Quote {number}</strong><small>{number < 3 ? "Required for comparison" : "Optional third quote"}</small></button>)}
+        </div>
+        <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{launchCategories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
         <button className="analyze" type="button">Analyze sample quotes</button>
       </section>
+
       <Report unlocked={unlocked} accessMessage={accessMessage} />
     </main>
   );
