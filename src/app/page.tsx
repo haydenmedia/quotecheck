@@ -1,12 +1,9 @@
 import { LaunchExampleReport } from "@/components/LaunchExampleReport";
 import { QuoteIntake } from "@/components/QuoteIntake";
 import { Report } from "@/components/Report";
-import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
+import { getGeneratedReport } from "@/lib/generated-report-access";
 import { publicAccessMessage } from "@/lib/data-lifecycle";
-import {
-  launchJourney,
-  launchTrustPoints,
-} from "@/lib/launch-readiness";
+import { launchJourney, launchTrustPoints } from "@/lib/launch-readiness";
 import {
   PRIVATE_BETA_EVENT_VERSION,
   noopPrivateBetaInstrumentation,
@@ -14,20 +11,26 @@ import {
 } from "@/lib/private-beta-instrumentation";
 
 type HomeProps = {
-  searchParams: Promise<{ access?: string | string[] }>;
+  searchParams: Promise<{
+    access?: string | string[];
+    reportSessionId?: string | string[];
+  }>;
 };
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
-  const record = await demoReportStore.get(DEMO_REPORT_SESSION_ID);
+  const reportSessionId = typeof params.reportSessionId === "string" ? params.reportSessionId : null;
+  const record = await getGeneratedReport(reportSessionId);
   const unlocked = record?.access === "unlocked";
   const access = typeof params.access === "string" ? params.access : null;
-  const accessMessage = publicAccessMessage(access);
+  const accessMessage = publicAccessMessage(reportSessionId && !record ? "unknown-session" : access);
 
-  recordPrivateBetaEvent(noopPrivateBetaInstrumentation, {
-    version: PRIVATE_BETA_EVENT_VERSION,
-    name: unlocked ? "full_report_viewed" : "preview_viewed",
-  });
+  if (record) {
+    recordPrivateBetaEvent(noopPrivateBetaInstrumentation, {
+      version: PRIVATE_BETA_EVENT_VERSION,
+      name: unlocked ? "full_report_viewed" : "preview_viewed",
+    });
+  }
 
   return (
     <main>
@@ -64,11 +67,7 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
         <ol className="journey-grid">
           {launchJourney.map((item) => (
-            <li key={item.step}>
-              <span aria-hidden="true">{item.step}</span>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </li>
+            <li key={item.step}><span aria-hidden="true">{item.step}</span><h3>{item.title}</h3><p>{item.body}</p></li>
           ))}
         </ol>
       </section>
@@ -80,18 +79,21 @@ export default async function Home({ searchParams }: HomeProps) {
           <p>QuoteCheck is designed to preserve what the quote actually says, including when the right answer is uncertain, not stated, or simply uneventful.</p>
         </div>
         <div className="trust-grid">
-          {launchTrustPoints.map((item) => (
-            <article key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
+          {launchTrustPoints.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}
         </div>
       </section>
 
       <LaunchExampleReport />
       <QuoteIntake />
-      <Report unlocked={unlocked} accessMessage={accessMessage} />
+      {reportSessionId && !record ? <p className="access-message" role="alert">{accessMessage}</p> : null}
+      {record && reportSessionId ? (
+        <Report
+          report={record.report}
+          reportSessionId={reportSessionId}
+          unlocked={unlocked}
+          accessMessage={accessMessage}
+        />
+      ) : null}
     </main>
   );
 }
