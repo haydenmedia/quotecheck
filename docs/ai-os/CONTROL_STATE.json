@@ -1,32 +1,40 @@
 {
   "project": "QuoteCheck",
-  "version": 72,
+  "version": 73,
   "active_checkpoint": "CP13",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 38,
-    "id": "CP13-01",
-    "title": "Real quote intake UI + client state",
-    "status": "CHANGES_REQUESTED",
+    "issue": 41,
+    "id": "CP13-02",
+    "title": "Real PDF/image/text extraction adapters",
+    "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP12-01 independently QA-passed and merged; owner testing exposed inert quote controls and fixture-only journey",
-    "pr": 39,
-    "head_sha": "b893e03ca03a366046fd70f9fa13d41da5cb84ce",
-    "ci_run": 34732829362,
-    "failure_cycle": 1,
-    "reason": "Independent QA found one blocking AC1/AC6 defect: Analyze enables for any two populated slots, but Quote 1 and Quote 2 are specifically required and Quote 3 is optional. Builder must require slots 1 AND 2 and add deterministic regressions for 1+3=false, 2+3=false, 1+2=true, 1+2+3=true, then rerun exact-head CI and return to QA."
+    "depends_on": "CP13-01 independently QA-passed and squash-merged to main as 2744e53bf1d5eaac8257905fdb1480c6b17e972f",
+    "pr": null,
+    "head_sha": null,
+    "ci_run": null,
+    "failure_cycle": 0,
+    "reason": "CP13-01 real intake is complete. Next highest-value bounded slice is converting exact selected pasted-text/PDF/image sources into canonical extraction inputs/results without fixture substitution. Paid/live model evaluation is not authorized; if image OCR requires it, Builder must stop at the provider seam and return a YELLOW proposal."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "Owner can personally select/upload 2-3 real quotes, receive a useful preview, unlock a complete report, and receive grounded analysis derived from those exact inputs without fabricated findings",
-  "last_verified_main_sha": "a3a72d57a41a6153e80f3ad1d83ab2c430320991",
-  "last_completed": {"id":"CP12-01","issue":35,"pr":37,"qa_verdict":"PASS","qa_head_sha":"b356772c012b7fe11c6a545407d182b43d9af4e6","ci_run":34719729149,"merged_sha":"a3a72d57a41a6153e80f3ad1d83ab2c430320991"},
+  "last_verified_main_sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f",
+  "last_completed": {
+    "id": "CP13-01",
+    "issue": 38,
+    "pr": 39,
+    "qa_verdict": "PASS",
+    "qa_head_sha": "484d78747b0ef81e9a4fa91870ba8ce97d1e2d6a",
+    "ci_run": 34735211370,
+    "merged_sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f"
+  },
   "save_game": {
-    "sha": "a3a72d57a41a6153e80f3ad1d83ab2c430320991",
-    "verified_behavior": "CP0-CP12 implementation is merged and prior deterministic QA gates passed, including launch education, grounded report/trust contracts, CA$14.99 mock access boundary, print/PDF and PWA metadata. Owner testing subsequently established that real quote intake/end-to-end analysis is not implemented.",
-    "risks": "The launch surface currently overstates practical readiness because Quote controls are inert on main and the page remains fixture-only. CP13 must not hide this with demo substitution. CP13-01 PR #39 is not mergeable by policy until the required-slot QA defect is corrected and independently reverified. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
-    "rollback": "Return to CP12 merged SHA a3a72d57a41a6153e80f3ad1d83ab2c430320991 if CP13 introduces journey, trust, access, privacy or presentation regressions."
+    "sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f",
+    "verified_behavior": "CP0-CP12 remain merged. CP13-01 now provides genuine mobile-first Quote 1/2/3 file or pasted-text selection, safe selected-state display, replace/remove, required Quote 1+2 gating, optional Quote 3, and an honest boundary preventing fixture/demo analysis substitution.",
+    "risks": "Real PDF/image extraction, real analysis/API wiring, generated report/session binding and final end-to-end owner acceptance remain incomplete. Image OCR may require a provider decision; no paid/live evaluation is authorized in CP13-02. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
+    "rollback": "Return to CP13-01 merged SHA 2744e53bf1d5eaac8257905fdb1480c6b17e972f if later CP13 work introduces journey, trust, access, privacy or presentation regressions."
   },
   "human_gate": {
     "type": "OWNER_ACCEPTANCE",
