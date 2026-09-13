@@ -1,32 +1,36 @@
 {
   "project": "QuoteCheck",
-  "version": 70,
-  "active_checkpoint": "CP12",
+  "version": 71,
+  "active_checkpoint": "CP13",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 35,
-    "id": "CP12-01",
-    "title": "Launch-readiness surface + acquisition foundation",
+    "issue": 38,
+    "id": "CP13-01",
+    "title": "Real quote intake UI + client state",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP11-01 independently QA-passed and merged",
+    "depends_on": "CP12-01 independently QA-passed and merged; owner testing exposed inert quote controls and fixture-only journey",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP11-01 independently QA-passed at PR #34 head e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556 with exact-head CI 34714040845 and squash-merged to main at 92177906b45fb402d0a95903241d659c2fad97c2. CP12-01 is the next bounded GREEN slice: make the first-visit/product education surface launch-ready, add a deterministic example path and acquisition measurement hypotheses, while preserving trust/access semantics and performing no deployment, customer outreach, ads, live payment/storage/provider mutation, or other YELLOW/RED action."
+    "reason": "Owner acceptance testing proved the commercial milestone was not actually complete: Quote 1/2/3 are inert placeholders and real PDF/image inputs are not wired. CP13 closes the real-user journey gap. CP13-01 is the smallest bounded GREEN slice: genuine file/pasted-text selection state with remove/replace, 2-input gating, mobile/accessibility coverage, and explicit prevention of fixture substitution."
   },
   "mutation_owner": "Builder",
-  "commercial_milestone": "A stranger can upload 2-3 quotes, receive a useful preview, unlock a complete report, and receive grounded analysis without fabricated findings",
-  "last_verified_main_sha": "92177906b45fb402d0a95903241d659c2fad97c2",
-  "last_completed": {"id":"CP11-01","issue":33,"pr":34,"qa_verdict":"PASS","qa_head_sha":"e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556","ci_run":34714040845,"merged_sha":"92177906b45fb402d0a95903241d659c2fad97c2"},
+  "commercial_milestone": "Owner can personally select/upload 2-3 real quotes, receive a useful preview, unlock a complete report, and receive grounded analysis derived from those exact inputs without fabricated findings",
+  "last_verified_main_sha": "a3a72d57a41a6153e80f3ad1d83ab2c430320991",
+  "last_completed": {"id":"CP12-01","issue":35,"pr":37,"qa_verdict":"PASS","qa_head_sha":"b356772c012b7fe11c6a545407d182b43d9af4e6","ci_run":34719729149,"merged_sha":"a3a72d57a41a6153e80f3ad1d83ab2c430320991"},
   "save_game": {
-    "sha": "92177906b45fb402d0a95903241d659c2fad97c2",
-    "verified_behavior": "CP0-CP11 complete; mobile-first golden journey, grounded analysis/report, CA$14.99 access boundary, trust/eval/privacy hardening, local beta instrumentation, browser print/PDF, and minimal PWA installability are independently QA-passed with exact-head CI.",
-    "risks": "Two moderate test-only Vitest/@vitest-mocker findings remain documented under GHSA-82fw-gwwq-j7x9. CP12 must not turn launch preparation into unsupported marketing claims, production mutation, paid acquisition, customer communication, or scope expansion.",
-    "rollback": "Return to CP11-complete SHA 92177906b45fb402d0a95903241d659c2fad97c2 if CP12 introduces journey, trust, access, privacy, or presentation regressions."
+    "sha": "a3a72d57a41a6153e80f3ad1d83ab2c430320991",
+    "verified_behavior": "CP0-CP12 implementation is merged and prior deterministic QA gates passed, including launch education, grounded report/trust contracts, CA$14.99 mock access boundary, print/PDF and PWA metadata. Owner testing subsequently established that real quote intake/end-to-end analysis is not implemented.",
+    "risks": "The launch surface currently overstates practical readiness because Quote controls are inert and the page remains fixture-only. CP13 must not hide this with demo substitution. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
+    "rollback": "Return to CP12 merged SHA a3a72d57a41a6153e80f3ad1d83ab2c430320991 if CP13 introduces journey, trust, access, privacy or presentation regressions."
   },
-  "human_gate": null
+  "human_gate": {
+    "type": "OWNER_ACCEPTANCE",
+    "when": "After CP13 real intake, extraction, analysis wiring, generated report binding and end-to-end regression independently QA-pass",
+    "required": "Owner personally selects/uploads at least two real quotes, clicks Analyze, and confirms the resulting grounded report is based on those exact inputs before CP13/commercial milestone may be marked complete."
+  }
 }
