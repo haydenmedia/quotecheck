@@ -1,26 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generatedPaymentGateway, generatedReportStore } from "@/lib/generated-report-access";
+import {
+  GENERATED_REPORT_SESSION_COOKIE,
+  generatedPaymentGateway,
+  generatedReportStore,
+} from "@/lib/generated-report-access";
 import { beginOneTimeCheckout, confirmOneTimeCheckout } from "@/lib/report-access";
 
 function reportRedirect(
   requestUrl: string,
-  reportSessionId: string,
   access: "unlocked" | "locked" | "unknown-session",
   hash: "report" | "full-report",
 ) {
   const destination = new URL("/", requestUrl);
-  destination.searchParams.set("reportSessionId", reportSessionId);
   destination.searchParams.set("access", access);
   destination.hash = hash;
   return destination;
 }
 
 export async function POST(request: NextRequest) {
-  const form = await request.formData();
-  const reportSessionId = form.get("reportSessionId");
-
-  if (typeof reportSessionId !== "string" || !reportSessionId.trim()) {
-    return NextResponse.redirect(new URL("/#compare", request.url), 303);
+  const reportSessionId = request.cookies.get(GENERATED_REPORT_SESSION_COOKIE)?.value ?? null;
+  if (!reportSessionId) {
+    return NextResponse.redirect(reportRedirect(request.url, "unknown-session", "report"), 303);
   }
 
   try {
@@ -31,10 +31,7 @@ export async function POST(request: NextRequest) {
     );
 
     if (!checkout) {
-      return NextResponse.redirect(
-        reportRedirect(request.url, reportSessionId, "unknown-session", "report"),
-        303,
-      );
+      return NextResponse.redirect(reportRedirect(request.url, "unknown-session", "report"), 303);
     }
 
     const record = await confirmOneTimeCheckout(
@@ -46,18 +43,10 @@ export async function POST(request: NextRequest) {
     const unlocked = record?.access === "unlocked";
 
     return NextResponse.redirect(
-      reportRedirect(
-        request.url,
-        reportSessionId,
-        unlocked ? "unlocked" : "locked",
-        unlocked ? "full-report" : "report",
-      ),
+      reportRedirect(request.url, unlocked ? "unlocked" : "locked", unlocked ? "full-report" : "report"),
       303,
     );
   } catch {
-    return NextResponse.redirect(
-      reportRedirect(request.url, reportSessionId, "locked", "report"),
-      303,
-    );
+    return NextResponse.redirect(reportRedirect(request.url, "locked", "report"), 303);
   }
 }
