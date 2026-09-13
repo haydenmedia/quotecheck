@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import {
+  bindSuccessfulGeneratedAnalysis,
+  GENERATED_REPORT_SESSION_COOKIE,
+} from "@/lib/generated-report-access";
 import { analyzeRealQuoteSelections } from "@/lib/real-analysis";
 import {
   createFileSelection,
@@ -66,5 +70,16 @@ export async function POST(request: Request) {
   }
 
   const result = await analyzeRealQuoteSelections(selections, category);
-  return NextResponse.json(result, { status: result.ok ? 200 : 422 });
+  const response = NextResponse.json(result, { status: result.ok ? 200 : 422 });
+
+  await bindSuccessfulGeneratedAnalysis(result, (reportSessionId) => {
+    response.cookies.set(GENERATED_REPORT_SESSION_COOKIE, reportSessionId, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+  });
+
+  return response;
 }
