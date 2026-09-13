@@ -1,28 +1,29 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP13-05 — End-to-end real-quote regression and owner-acceptance handoff**, Issue #47, is **READY for Builder**. CP13-04 has independently QA-passed and is merged. The final engineering slice must prove the complete real-input journey deterministically before the owner gate opens.
+**CP13 — Real Quote End-to-End Journey** is at **OWNER ACCEPTANCE REQUIRED**. Engineering and Independent QA are complete. CP13-05 PR #48 independently QA-passed at exact head `e9dc52af4cd701c7eae5b0d0eb53122d30252ed4` and was squash-merged to `main` as `9a91bc14362c29d7260940ba6bf327bf69853085`.
 
 ## Just finished
-CP13-04 PR #46 independently QA-passed at head `bbc15ed1ac92adc5785f9886c2da873dcdd815a9`; exact-head CI `34754384771` passed the full gate, and the PR was squash-merged to main as `9031c8db05932bf73fe7d6d3f662ef1339c97ae4`. Generated reports now remain bound to their server-scoped session through preview and unlock without demo fallback.
+CP13-05 closed the final deterministic engineering/QA slice: genuine local PDF/text journey regression across intake -> extraction -> grounded analysis -> generated report/session -> same-session preview/unlock, plus safe image-provider-required failure coverage. Issue #47 is closed completed and PR #48 is merged.
 
-## Broken
-No known merge blocker on verified main. The remaining product gap is proof of the complete journey. Image/screenshot/photo extraction still requires an authorized provider for genuine OCR; in the current GREEN scope the image path must fail explicitly and safely rather than fabricate extraction.
+## Broken / limitations
+No known engineering or QA blocker on verified main. Image/screenshot/photo selection is implemented, but genuine image OCR still requires an authorized provider; without one the path intentionally fails explicitly rather than fabricating extraction. This does not permit CP13 completion because the checkpoint's final gate is owner acceptance.
 
 ## Human action required
-None yet. Do not test the owner gate until CP13-05 independently QA-passes. After that, owner acceptance becomes mandatory: personally select/upload at least two real quotes, click Analyze, and verify the report reflects those exact inputs. Production deployment/live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
+**NOW — owner acceptance.** Personally open a QA-passed build, select/upload at least two real text-based PDF quotes or paste two real quote texts, click **Analyze my quotes**, and verify recognizable facts/findings/evidence come from those exact sources. Confirm preview/unlock remains the same report and no unsupported fact/fee appears. Record explicit **ACCEPT** or **REJECT**. The detailed checklist is `docs/product/CP13_OWNER_ACCEPTANCE.md`.
 
 ## Next
-Builder: implement Issue #47 on a scoped branch/PR. Add deterministic end-to-end/regression coverage using genuine local PDF/text inputs and fixture/mock AI/provider outputs across intake -> extraction -> grounded analysis -> generated session -> preview/unlock, including source identity, trust invariants, safe image-provider failure, no demo fallback, and practical mobile/accessibility journey coverage. Run the full exact-head gate and hand the exact SHA/CI evidence to Independent QA. Do not add a paid/live provider or mutate a preview/production environment without authorization.
+No Builder or QA work should be invented while the owner gate is pending. If owner reports **ACCEPT**, PM may close CP13 and mark the commercial milestone complete. If owner reports **REJECT**, PM must convert the exact observed failure into one bounded Builder-owned CP13 remediation item and keep the checkpoint active.
 
 ## Checkpoint progress
-- CP0–CP12: implementation checkpoints complete, but commercial milestone not complete after owner test
-- CP13 real quote end-to-end journey: active
+- CP0–CP12: implementation checkpoints complete; commercial milestone was reopened by owner testing
+- CP13 real quote end-to-end journey: ACTIVE — OWNER ACCEPTANCE REQUIRED
   - CP13-01 intake UI/state: QA-passed and merged
   - CP13-02 extraction adapters: QA-passed and merged
   - CP13-03 real analysis/API wiring: QA-passed and merged
   - CP13-04 generated preview/full-report binding: QA-passed and merged
-  - CP13-05 end-to-end regression + owner acceptance handoff: READY
+  - CP13-05 end-to-end regression + owner handoff: QA-passed and merged
+  - Final owner acceptance: PENDING
 
 ## Commercial milestone
-Not complete. After CP13-05 independently passes, completion still requires the owner to personally select/upload at least two real quotes, receive a useful preview, unlock the complete report, and confirm the grounded analysis was generated from those exact inputs without fabricated findings.
+Not complete until explicit owner **ACCEPT** after personally testing at least two real quotes end to end. Production deployment/live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED and require current owner approval.
