@@ -2,13 +2,12 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { demoReport } from "../src/fixtures/report";
 import { getGeneratedReport, saveGeneratedReport } from "../src/lib/generated-report-access";
+import type { QuoteReport } from "../src/lib/types";
 
 describe("CP13-04 generated report binding", () => {
   it("stores the exact generated report under its returned session and isolates sessions", async () => {
-    const reportA = structuredClone(demoReport);
-    reportA.id = "generated-a";
-    const reportB = structuredClone(demoReport);
-    reportB.id = "generated-b";
+    const reportA: QuoteReport = { ...structuredClone(demoReport), id: "generated-a" };
+    const reportB: QuoteReport = { ...structuredClone(demoReport), id: "generated-b" };
 
     await saveGeneratedReport("cp13-session-a", reportA);
     await saveGeneratedReport("cp13-session-b", reportB);
