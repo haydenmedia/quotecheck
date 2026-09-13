@@ -24,7 +24,7 @@ function selectedFile(name: string, type: string, contents: Uint8Array): QuoteSe
     type,
     size: contents.byteLength,
     async arrayBuffer() {
-      return contents.buffer.slice(contents.byteOffset, contents.byteOffset + contents.byteLength);
+      return Uint8Array.from(contents).buffer;
     },
   };
 }
@@ -69,7 +69,7 @@ describe("CP13 real source extraction", () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
 
-    expect(result.input.kind).toBe("extracted_text");
+    expect(result.input.kind).toBe("extracted_text_fixture");
     expect(result.input.text).toContain("Vendor: File Only Roofing");
     expect(result.input.text).toContain("Excluded: Disposal");
     expect(result.input.text).not.toContain("North Star");
@@ -131,7 +131,7 @@ describe("CP13 real source extraction", () => {
     expect(extracted.ok).toBe(true);
     if (!extracted.ok) return;
     expect(extracted.input.text).toContain("Camera Source");
-    expect(extracted.input.kind).toBe("extracted_text");
+    expect(extracted.input.kind).toBe("extracted_text_fixture");
     expect(extracted.source.extractionMethod).toBe("image_provider");
   });
 
