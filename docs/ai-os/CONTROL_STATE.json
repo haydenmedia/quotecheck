@@ -1,40 +1,40 @@
 {
   "project": "QuoteCheck",
-  "version": 73,
+  "version": 74,
   "active_checkpoint": "CP13",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 41,
-    "id": "CP13-02",
-    "title": "Real PDF/image/text extraction adapters",
+    "issue": 45,
+    "id": "CP13-04",
+    "title": "Bind generated real report/session to preview and full report UI",
     "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP13-01 independently QA-passed and squash-merged to main as 2744e53bf1d5eaac8257905fdb1480c6b17e972f",
+    "depends_on": "CP13-03 independently QA-passed at bce59da4a369980639f4dcca935ef85b4a8f5d5e and squash-merged to main as 6dac13147f05904580e1db7d085413f965e5e43b",
     "pr": null,
     "head_sha": null,
     "ci_run": null,
     "failure_cycle": 0,
-    "reason": "CP13-01 real intake is complete. Next highest-value bounded slice is converting exact selected pasted-text/PDF/image sources into canonical extraction inputs/results without fixture substitution. Paid/live model evaluation is not authorized; if image OCR requires it, Builder must stop at the provider seam and return a YELLOW proposal."
+    "reason": "Real selected sources now reach the grounded analysis boundary and return a fresh generated report/session. The next highest-value bounded slice is binding that exact result to the customer-facing preview/full-report experience with same-session access continuity and no demo fallback."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "Owner can personally select/upload 2-3 real quotes, receive a useful preview, unlock a complete report, and receive grounded analysis derived from those exact inputs without fabricated findings",
-  "last_verified_main_sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f",
+  "last_verified_main_sha": "6dac13147f05904580e1db7d085413f965e5e43b",
   "last_completed": {
-    "id": "CP13-01",
-    "issue": 38,
-    "pr": 39,
+    "id": "CP13-03",
+    "issue": 43,
+    "pr": 44,
     "qa_verdict": "PASS",
-    "qa_head_sha": "484d78747b0ef81e9a4fa91870ba8ce97d1e2d6a",
-    "ci_run": 34735211370,
-    "merged_sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f"
+    "qa_head_sha": "bce59da4a369980639f4dcca935ef85b4a8f5d5e",
+    "ci_run": 34747677495,
+    "merged_sha": "6dac13147f05904580e1db7d085413f965e5e43b"
   },
   "save_game": {
-    "sha": "2744e53bf1d5eaac8257905fdb1480c6b17e972f",
-    "verified_behavior": "CP0-CP12 remain merged. CP13-01 now provides genuine mobile-first Quote 1/2/3 file or pasted-text selection, safe selected-state display, replace/remove, required Quote 1+2 gating, optional Quote 3, and an honest boundary preventing fixture/demo analysis substitution.",
-    "risks": "Real PDF/image extraction, real analysis/API wiring, generated report/session binding and final end-to-end owner acceptance remain incomplete. Image OCR may require a provider decision; no paid/live evaluation is authorized in CP13-02. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
-    "rollback": "Return to CP13-01 merged SHA 2744e53bf1d5eaac8257905fdb1480c6b17e972f if later CP13 work introduces journey, trust, access, privacy or presentation regressions."
+    "sha": "6dac13147f05904580e1db7d085413f965e5e43b",
+    "verified_behavior": "CP0-CP12 remain merged. CP13-01 provides genuine mobile-first Quote 1/2/3 file or pasted-text selection with replace/remove and Quote 1+2 gating. CP13-02 consumes exact pasted text/PDF bytes through real extraction adapters and stops image input at an explicit provider boundary when OCR is unavailable. CP13-03 sends exact selected sources/category through /api/analyze, source extraction, canonical evidence validation and grounded reasoning, returning a fresh generated report/session without demo substitution.",
+    "risks": "Generated report/session is not yet bound into the customer-facing preview/full report. Image OCR remains provider-required without an authorized provider. Default runtime analysis remains deterministic. Transitional extracted_text_fixture naming remains technical debt. Final end-to-end regression and owner acceptance remain incomplete. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
+    "rollback": "Return to CP13-03 merged SHA 6dac13147f05904580e1db7d085413f965e5e43b if later CP13 work introduces journey, trust, access, privacy or presentation regressions."
   },
   "human_gate": {
     "type": "OWNER_ACCEPTANCE",
