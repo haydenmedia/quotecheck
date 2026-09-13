@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   GENERATED_REPORT_SESSION_COOKIE,
-  generatedPaymentGateway,
-  generatedReportStore,
+  unlockGeneratedReportSession,
 } from "@/lib/generated-report-access";
-import { beginOneTimeCheckout, confirmOneTimeCheckout } from "@/lib/report-access";
 
 function reportRedirect(
   requestUrl: string,
@@ -24,24 +22,12 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const checkout = await beginOneTimeCheckout(
-      generatedReportStore,
-      generatedPaymentGateway,
-      reportSessionId,
-    );
-
-    if (!checkout) {
+    const record = await unlockGeneratedReportSession(reportSessionId);
+    if (!record) {
       return NextResponse.redirect(reportRedirect(request.url, "unknown-session", "report"), 303);
     }
 
-    const record = await confirmOneTimeCheckout(
-      generatedReportStore,
-      generatedPaymentGateway,
-      reportSessionId,
-      checkout.checkoutId,
-    );
-    const unlocked = record?.access === "unlocked";
-
+    const unlocked = record.access === "unlocked";
     return NextResponse.redirect(
       reportRedirect(request.url, unlocked ? "unlocked" : "locked", unlocked ? "full-report" : "report"),
       303,
