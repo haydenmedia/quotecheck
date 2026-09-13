@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { saveGeneratedReport } from "@/lib/generated-report-access";
+import {
+  GENERATED_REPORT_SESSION_COOKIE,
+  saveGeneratedReport,
+} from "@/lib/generated-report-access";
 import { analyzeRealQuoteSelections } from "@/lib/real-analysis";
 import {
   createFileSelection,
@@ -67,8 +70,17 @@ export async function POST(request: Request) {
   }
 
   const result = await analyzeRealQuoteSelections(selections, category);
+  const response = NextResponse.json(result, { status: result.ok ? 200 : 422 });
+
   if (result.ok) {
     await saveGeneratedReport(result.reportSessionId, result.report);
+    response.cookies.set(GENERATED_REPORT_SESSION_COOKIE, result.reportSessionId, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
   }
-  return NextResponse.json(result, { status: result.ok ? 200 : 422 });
+
+  return response;
 }
