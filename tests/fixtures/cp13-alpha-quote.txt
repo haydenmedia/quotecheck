@@ -1,0 +1,10 @@
+Vendor: Cedar Ridge Renovations
+Subtotal: $8,000
+Tax: $400
+Fees: $0
+Total: $8,400
+Included: Demolition and cleanup
+Excluded: Permit fees
+Warranty: 2 years
+Timeline: 4 weeks
+Payment terms: 40% deposit, balance on completion
