@@ -12,7 +12,7 @@ export interface ExtractionWarning { code: "ARITHMETIC_MISMATCH" | "AMBIGUOUS_FI
 export type CanonicalConditionSubject = "project_description" | "total" | "fees" | "timeline" | "payment_terms" | "scope" | "allowance";
 export interface CanonicalCondition { subject: CanonicalConditionSubject; value: SourcedValue<string>; }
 export interface CanonicalQuote { id: string; sourceInputIds: string[]; vendor: SourcedValue<string>; quoteDate: SourcedValue<string>; expiryDate: SourcedValue<string>; projectDescription: SourcedValue<string>; lineItems: QuoteLineItem[]; money: QuoteMoneySummary; allowances: SourcedValue<string>[]; inclusions: SourcedValue<string>[]; exclusions: SourcedValue<string>[]; warranty: SourcedValue<string>; timeline: SourcedValue<string>; paymentTerms: SourcedValue<string>; conditions: SourcedValue<string>[]; typedConditions?: CanonicalCondition[]; uncertainties: SourcedValue<string>[]; warnings: ExtractionWarning[]; }
-export interface TextIngestionInput { id: string; label: string; kind: "pasted_text" | "extracted_text_fixture"; text: string; page?: number; }
+export interface TextIngestionInput { id: string; label: string; kind: "pasted_text" | "extracted_text" | "extracted_text_fixture"; text: string; page?: number; }
 export interface ExtractionResult { quote: CanonicalQuote; rawText: string; sourceInputId: string; }
 export type ReportSummaryValue<T> = SourcedValue<T>;
 export type ScopeSummaryValue = ReportSummaryValue<string>;
