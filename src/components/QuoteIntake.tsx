@@ -8,23 +8,32 @@ import {
   canAnalyzeRealQuotes,
   createFileSelection,
   createTextSelection,
+  orderedQuoteSelections,
   removeQuoteSelection,
   setQuoteSelection,
   type QuoteSelections,
   type QuoteSlotId,
 } from "@/lib/quote-intake";
+import type { QuoteCategory } from "@/lib/types";
 import styles from "./QuoteIntake.module.css";
 
 const ACCEPT_ATTRIBUTE = [...ACCEPTED_QUOTE_FILE_TYPES, ".jpg", ".jpeg"].join(",");
+const CATEGORY_VALUES: QuoteCategory[] = ["general", "automotive", "renovation", "trades"];
 
 type SlotDrafts = Partial<Record<QuoteSlotId, string>>;
 type SlotErrors = Partial<Record<QuoteSlotId, string>>;
+
+type AnalysisResponse =
+  | { ok: true; reportSessionId: string }
+  | { ok: false; error?: { message?: string; slotId?: QuoteSlotId } };
 
 export function QuoteIntake() {
   const [selections, setSelections] = useState<QuoteSelections>({});
   const [drafts, setDrafts] = useState<SlotDrafts>({});
   const [errors, setErrors] = useState<SlotErrors>({});
   const [status, setStatus] = useState<string>("");
+  const [category, setCategory] = useState<QuoteCategory>("renovation");
+  const [pending, setPending] = useState(false);
   const fileRefs = useRef<Partial<Record<QuoteSlotId, HTMLInputElement | null>>>({});
 
   function clearSlotMessage(slotId: QuoteSlotId) {
@@ -64,9 +73,44 @@ export function QuoteIntake() {
     if (input) input.value = "";
   }
 
-  function analyze() {
-    if (!canAnalyzeRealQuotes(selections)) return;
-    setStatus("Your real quote selections are ready. Analysis wiring is not available in this slice yet, so QuoteCheck will not substitute sample or fixture results.");
+  async function analyze() {
+    if (!canAnalyzeRealQuotes(selections) || pending) return;
+
+    setPending(true);
+    setStatus("Analyzing your selected quotes…");
+    setErrors({});
+
+    try {
+      const form = new FormData();
+      form.set("category", category);
+
+      for (const selection of orderedQuoteSelections(selections)) {
+        form.set(`slot-${selection.slotId}-kind`, selection.kind);
+        if (selection.kind === "pasted_text") {
+          form.set(`slot-${selection.slotId}-text`, selection.text);
+        } else {
+          form.set(`slot-${selection.slotId}-file`, selection.file as File, selection.name);
+        }
+      }
+
+      const response = await fetch("/api/analyze", { method: "POST", body: form });
+      const result = await response.json() as AnalysisResponse;
+
+      if (!response.ok || !result.ok) {
+        const message = result.ok ? "QuoteCheck could not finish this comparison." : result.error?.message ?? "QuoteCheck could not finish this comparison.";
+        if (!result.ok && result.error?.slotId) {
+          setErrors((current) => ({ ...current, [result.error!.slotId!]: message }));
+        }
+        setStatus(message);
+        return;
+      }
+
+      setStatus(`Analysis completed from your selected quotes. Report session ${result.reportSessionId} is ready for the report-view binding step.`);
+    } catch {
+      setStatus("QuoteCheck could not reach the analysis service. Your selections are unchanged; try again.");
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -96,6 +140,7 @@ export function QuoteIntake() {
                     aria-label={`Choose file for Quote ${slotId}`}
                     type="file"
                     accept={ACCEPT_ATTRIBUTE}
+                    disabled={pending}
                     onChange={(event) => chooseFile(slotId, event.currentTarget.files?.[0])}
                   />
                 </label>
@@ -106,14 +151,15 @@ export function QuoteIntake() {
                 className={styles.textArea}
                 id={`quote-text-${slotId}`}
                 value={drafts[slotId] ?? ""}
+                disabled={pending}
                 onChange={(event) => setDrafts((current) => ({ ...current, [slotId]: event.target.value }))}
                 placeholder="Paste the quote exactly as provided"
               />
               <div className={styles.textActions}>
-                <button className={styles.button} type="button" onClick={() => savePastedText(slotId)}>
+                <button className={styles.button} type="button" disabled={pending} onClick={() => savePastedText(slotId)}>
                   {selection?.kind === "pasted_text" ? "Replace with pasted text" : "Use pasted text"}
                 </button>
-                {selection ? <button className={styles.button} type="button" onClick={() => remove(slotId)}>Remove</button> : null}
+                {selection ? <button className={styles.button} type="button" disabled={pending} onClick={() => remove(slotId)}>Remove</button> : null}
               </div>
 
               {selection ? (
@@ -130,23 +176,32 @@ export function QuoteIntake() {
         })}
       </div>
 
-      <fieldset>
+      <fieldset disabled={pending}>
         <legend>What kind of quotes are these?</legend>
         <div className="category-grid">
-          {launchCategories.map((category, index) => (
-            <label key={category}>
-              <input defaultChecked={index === 2} name="category" type="radio" />
-              <span>{category}</span>
-            </label>
-          ))}
+          {launchCategories.map((label, index) => {
+            const value = CATEGORY_VALUES[index];
+            return (
+              <label key={label}>
+                <input
+                  checked={category === value}
+                  name="category"
+                  type="radio"
+                  value={value}
+                  onChange={() => setCategory(value)}
+                />
+                <span>{label}</span>
+              </label>
+            );
+          })}
         </div>
       </fieldset>
 
-      <button className={styles.analyze} type="button" disabled={!canAnalyzeRealQuotes(selections)} onClick={analyze}>
-        Analyze my quotes
+      <button className={styles.analyze} type="button" disabled={!canAnalyzeRealQuotes(selections) || pending} onClick={analyze}>
+        {pending ? "Analyzing…" : "Analyze my quotes"}
       </button>
-      <p className={styles.note}>Analysis remains intentionally blocked until the next CP13 slice connects these exact selections to extraction and reasoning. The example report elsewhere on this page is static and is not generated from your selections.</p>
-      {status ? <p className={styles.status} role="status">{status}</p> : null}
+      <p className={styles.note}>Your selected sources are sent through QuoteCheck&apos;s extraction, evidence-validation and grounded reasoning path. The static example elsewhere on this page remains separate from your analysis.</p>
+      {status ? <p className={styles.status} role="status" aria-live="polite">{status}</p> : null}
     </section>
   );
 }
