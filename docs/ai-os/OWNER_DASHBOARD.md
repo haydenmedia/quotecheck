@@ -1,28 +1,28 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP13-01 — Real quote intake UI + client state**, Issue #38 / PR #39, is back with Builder as **CHANGES_REQUESTED** after Independent QA. The implementation made the quote controls real, but Analyze currently accepts any two populated slots. The contract requires Quote 1 **and** Quote 2; Quote 3 is optional.
+**CP13-04 — Generated real report/session binding**, Issue #45 / PR #46, is back with Builder as **CHANGES_REQUESTED** after Independent QA. The implementation direction is sound: generated analysis is stored under its returned session and the customer report resolves that generated record instead of the demo report. QA found two bounded verification/accessibility blockers before it can merge.
 
 ## Just finished
-Builder produced CP13-01 PR #39 at head `b893e03ca03a366046fd70f9fa13d41da5cb84ce`; CI `34732829362` passed clean install, high/critical audit, lint, typecheck, deterministic tests, CP7 trust eval and production build. Independent QA correctly rejected that head because the tests missed the required-slot combination defect.
+Builder produced CP13-04 PR #46 at head `1df52b3120aef72c4ce33dd44f406a7ba202339d`; CI `34752358411` passed install, high/critical audit, lint, typecheck, 118 deterministic tests, trust evaluation and production build. Independent QA inspected the actual head and rejected it because critical session/failure behavior is not behaviorally tested and the Report rewrite removed existing accessibility relationships.
 
 ## Broken
-CP13-01 is not merge-ready: Quote 1 + Quote 3 or Quote 2 + Quote 3 can incorrectly enable Analyze. This is failure cycle 1, not an escalation. Main remains at the prior verified CP12 state and the overall real-user journey remains incomplete.
+PR #46 is not merge-ready. First, its new regression suite relies too heavily on source-string assertions and does not behaviorally prove exact-session creation, failure-without-completed-report, unknown-session handling, and same-session unlock continuity. Second, `Report.tsx` regressed existing `aria-label`/`aria-labelledby` semantics. This is failure cycle 1, not an escalation. Verified main remains at the CP13-03 save-game behavior; the PM state-doc reconciliation commit does not make unverified product code canonical.
 
 ## Human action required
-None now. Final CP13 owner acceptance remains reserved until intake, extraction, real analysis wiring, generated report binding and end-to-end regression independently pass. Production deployment/live behavior, live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
+None now. Final CP13 owner acceptance remains reserved until generated report binding and CP13-05 end-to-end regression independently pass. Image OCR still requires a provider decision before images can be truly analyzed, but no paid/live provider decision is being requested during this GREEN correction. Production deployment/live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
 
 ## Next
-Builder: on PR #39, change Analyze eligibility to require slots 1 AND 2 specifically. Add deterministic regressions proving 1+3=false, 2+3=false, 1+2=true and 1+2+3=true. Rerun the complete exact-head CI gate and hand the new head to Independent QA. Do not expand scope into extraction or live AI in this correction.
+Builder: stay on PR #46. Add behavior-level deterministic tests for exact generated-session success, provider/analysis failure with no completed report, missing/unknown session, and unlock of the exact same record; restore the removed report accessibility relationships; rerun the full exact-head gate; hand the new SHA to Independent QA. Do not start CP13-05 or broaden provider/payment/storage scope.
 
 ## Checkpoint progress
 - CP0–CP12: implementation checkpoints complete, but commercial milestone not complete after owner test
 - CP13 real quote end-to-end journey: active
-  - CP13-01 intake UI/state: CHANGES_REQUESTED (failure cycle 1)
-  - CP13-02 extraction adapters: queued
-  - CP13-03 real analysis/API wiring: queued
-  - CP13-04 generated preview/full-report binding: queued
+  - CP13-01 intake UI/state: QA-passed and merged
+  - CP13-02 extraction adapters: QA-passed and merged
+  - CP13-03 real analysis/API wiring: QA-passed and merged
+  - CP13-04 generated preview/full-report binding: CHANGES_REQUESTED (failure cycle 1)
   - CP13-05 end-to-end regression + owner acceptance: queued
 
 ## Commercial milestone
-Not complete. Completion requires the owner to personally select/upload 2–3 real quotes, receive a useful preview, unlock the complete report, and confirm the grounded analysis was generated from those exact inputs without fabricated findings.
+Not complete. Completion requires the owner to personally select/upload at least two real quotes, receive a useful preview, unlock the complete report, and confirm the grounded analysis was generated from those exact inputs without fabricated findings.
