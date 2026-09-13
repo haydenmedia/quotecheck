@@ -9,12 +9,20 @@ export const ACCEPTED_QUOTE_FILE_TYPES = [
 
 const ACCEPTED_EXTENSIONS = [".pdf", ".png", ".jpg", ".jpeg"] as const;
 
+export interface QuoteSelectedFile {
+  name: string;
+  type: string;
+  size: number;
+  arrayBuffer(): Promise<ArrayBuffer>;
+}
+
 export type QuoteFileSelection = {
   kind: "file";
   slotId: QuoteSlotId;
   name: string;
   mimeType: string;
   size: number;
+  file: QuoteSelectedFile;
 };
 
 export type QuoteTextSelection = {
@@ -26,14 +34,14 @@ export type QuoteTextSelection = {
 export type QuoteSelection = QuoteFileSelection | QuoteTextSelection;
 export type QuoteSelections = Partial<Record<QuoteSlotId, QuoteSelection>>;
 
-export function isAcceptedQuoteFile(file: Pick<File, "name" | "type">): boolean {
+export function isAcceptedQuoteFile(file: Pick<QuoteSelectedFile, "name" | "type">): boolean {
   const mime = file.type.toLowerCase();
   const name = file.name.toLowerCase();
   return ACCEPTED_QUOTE_FILE_TYPES.includes(mime as (typeof ACCEPTED_QUOTE_FILE_TYPES)[number])
     || ACCEPTED_EXTENSIONS.some((extension) => name.endsWith(extension));
 }
 
-export function createFileSelection(slotId: QuoteSlotId, file: Pick<File, "name" | "type" | "size">): QuoteFileSelection | null {
+export function createFileSelection(slotId: QuoteSlotId, file: QuoteSelectedFile): QuoteFileSelection | null {
   if (!isAcceptedQuoteFile(file)) return null;
   return {
     kind: "file",
@@ -41,6 +49,7 @@ export function createFileSelection(slotId: QuoteSlotId, file: Pick<File, "name"
     name: file.name,
     mimeType: file.type || "application/octet-stream",
     size: file.size,
+    file,
   };
 }
 

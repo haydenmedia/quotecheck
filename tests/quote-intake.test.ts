@@ -9,11 +9,20 @@ import {
   orderedQuoteSelections,
   removeQuoteSelection,
   setQuoteSelection,
+  type QuoteSelectedFile,
   type QuoteSelections,
 } from "../src/lib/quote-intake";
 
-function file(name: string, type: string, size = 1234) {
-  return { name, type, size } as Pick<File, "name" | "type" | "size">;
+function file(name: string, type: string, size = 1234): QuoteSelectedFile {
+  const bytes = new Uint8Array(size);
+  return {
+    name,
+    type,
+    size,
+    async arrayBuffer() {
+      return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+    },
+  };
 }
 
 describe("CP13 real quote intake state", () => {
@@ -32,15 +41,18 @@ describe("CP13 real quote intake state", () => {
     expect(createTextSelection(1, "  \n\t ")).toBeNull();
   });
 
-  it("preserves slot identity/order across selection, replacement and optional third quote", () => {
+  it("preserves slot identity/order and exact file source across selection and replacement", async () => {
     let selections: QuoteSelections = {};
     const quote2 = createTextSelection(2, "Quote two")!;
-    const quote1 = createFileSelection(1, file("one.pdf", "application/pdf"))!;
+    const quote1File = file("one.pdf", "application/pdf");
+    const quote1 = createFileSelection(1, quote1File)!;
     const quote3 = createTextSelection(3, "Quote three")!;
     selections = setQuoteSelection(selections, quote2);
     selections = setQuoteSelection(selections, quote1);
     selections = setQuoteSelection(selections, quote3);
     expect(orderedQuoteSelections(selections).map((selection) => selection.slotId)).toEqual([1, 2, 3]);
+    expect(quote1.file).toBe(quote1File);
+    expect((await quote1.file.arrayBuffer()).byteLength).toBe(1234);
 
     const replacement = createTextSelection(1, "replacement one")!;
     selections = setQuoteSelection(selections, replacement);
