@@ -1,9 +1,9 @@
 import { LaunchExampleReport } from "@/components/LaunchExampleReport";
+import { QuoteIntake } from "@/components/QuoteIntake";
 import { Report } from "@/components/Report";
 import { demoReportStore, DEMO_REPORT_SESSION_ID } from "@/lib/demo-access";
 import { publicAccessMessage } from "@/lib/data-lifecycle";
 import {
-  launchCategories,
   launchJourney,
   launchTrustPoints,
 } from "@/lib/launch-readiness";
@@ -90,19 +90,7 @@ export default async function Home({ searchParams }: HomeProps) {
       </section>
 
       <LaunchExampleReport />
-
-      <section className="compare" id="compare" aria-labelledby="compare-title">
-        <div className="section-heading">
-          <div><p className="eyebrow">Start here</p><h2 id="compare-title">Add 2–3 quotes</h2></div>
-          <p>PDF, screenshot, photo or pasted text. This checkpoint still uses deterministic fixture data only; the controls below do not submit a real customer quote.</p>
-        </div>
-        <div className="upload-grid" aria-label="Quote input placeholders">
-          {[1,2,3].map((number) => <button className="upload" type="button" key={number}><span aria-hidden="true">+</span><strong>Quote {number}</strong><small>{number < 3 ? "Required for comparison" : "Optional third quote"}</small></button>)}
-        </div>
-        <fieldset><legend>What kind of quotes are these?</legend><div className="category-grid">{launchCategories.map((category, index) => <label key={category}><input defaultChecked={index === 2} name="category" type="radio" /><span>{category}</span></label>)}</div></fieldset>
-        <button className="analyze" type="button">Analyze sample quotes</button>
-      </section>
-
+      <QuoteIntake />
       <Report unlocked={unlocked} accessMessage={accessMessage} />
     </main>
   );
