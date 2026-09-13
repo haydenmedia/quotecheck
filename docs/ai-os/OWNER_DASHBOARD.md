@@ -1,24 +1,24 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP13-01 — Real quote intake UI + client state**, Issue #38, is READY for Builder. CP13 was opened because direct owner testing found the Quote 1/2/3 controls were inert and the current journey remained fixture-only. CP13-01 is GREEN and replaces those placeholders with genuine PDF/image/pasted-text selection state, remove/replace controls, safe two-input gating and deterministic regression coverage.
+**CP13-01 — Real quote intake UI + client state**, Issue #38 / PR #39, is back with Builder as **CHANGES_REQUESTED** after Independent QA. The implementation made the quote controls real, but Analyze currently accepts any two populated slots. The contract requires Quote 1 **and** Quote 2; Quote 3 is optional.
 
 ## Just finished
-**CP12-01 — Launch-readiness surface + acquisition foundation** independently QA-passed at PR #37 head `b356772c012b7fe11c6a545407d182b43d9af4e6`, CI `34719729149`, and was squash-merged to `main` at `a3a72d57a41a6153e80f3ad1d83ab2c430320991`. Subsequent owner testing established that this did not complete the commercial milestone because real intake was not wired.
+Builder produced CP13-01 PR #39 at head `b893e03ca03a366046fd70f9fa13d41da5cb84ce`; CI `34732829362` passed clean install, high/critical audit, lint, typecheck, deterministic tests, CP7 trust eval and production build. Independent QA correctly rejected that head because the tests missed the required-slot combination defect.
 
 ## Broken
-The real-user journey is incomplete: current Quote controls are inert placeholders and actual PDF/image inputs do not yet reach extraction/analysis. Fixture/demo behavior must never masquerade as analysis of a selected real quote.
+CP13-01 is not merge-ready: Quote 1 + Quote 3 or Quote 2 + Quote 3 can incorrectly enable Analyze. This is failure cycle 1, not an escalation. Main remains at the prior verified CP12 state and the overall real-user journey remains incomplete.
 
 ## Human action required
-None now. A human gate is reserved for the end of CP13: after intake, extraction, analysis wiring, generated report binding and independent QA pass, the owner must personally analyze at least two real quotes and confirm the report is based on those exact inputs. Production deployment/live behavior, live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
+None now. Final CP13 owner acceptance remains reserved until intake, extraction, real analysis wiring, generated report binding and end-to-end regression independently pass. Production deployment/live behavior, live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
 
 ## Next
-Builder: implement Issue #38 on a scoped branch/PR. Do not implement binary extraction or live AI in this slice. Make quote selection real and honest, preserve slot identity/order, support PDF/PNG/JPEG presentation types plus pasted text, expose remove/replace, gate Analyze until two valid inputs, and ensure no selected real input can fall through to the demo report. Hand exact PR head plus clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and build evidence to Independent QA.
+Builder: on PR #39, change Analyze eligibility to require slots 1 AND 2 specifically. Add deterministic regressions proving 1+3=false, 2+3=false, 1+2=true and 1+2+3=true. Rerun the complete exact-head CI gate and hand the new head to Independent QA. Do not expand scope into extraction or live AI in this correction.
 
 ## Checkpoint progress
 - CP0–CP12: implementation checkpoints complete, but commercial milestone not complete after owner test
 - CP13 real quote end-to-end journey: active
-  - CP13-01 intake UI/state: READY
+  - CP13-01 intake UI/state: CHANGES_REQUESTED (failure cycle 1)
   - CP13-02 extraction adapters: queued
   - CP13-03 real analysis/API wiring: queued
   - CP13-04 generated preview/full-report binding: queued
