@@ -105,7 +105,7 @@ export function QuoteIntake() {
         return;
       }
 
-      window.location.assign(`/?reportSessionId=${encodeURIComponent(result.reportSessionId)}#report`);
+      window.location.assign("/#report");
     } catch {
       setStatus("QuoteCheck could not reach the analysis service. Your selections are unchanged; try again.");
     } finally {
@@ -116,90 +116,26 @@ export function QuoteIntake() {
   return (
     <section className={styles.section} id="compare" aria-labelledby="compare-title">
       <div className={styles.heading}>
-        <div>
-          <p className="eyebrow">Start here</p>
-          <h2 id="compare-title">Add 2–3 real quotes</h2>
-        </div>
+        <div><p className="eyebrow">Start here</p><h2 id="compare-title">Add 2–3 real quotes</h2></div>
         <p>Choose a PDF, screenshot/photo, or paste quote text. Quotes 1 and 2 are required; Quote 3 is optional.</p>
       </div>
-
       <div className={styles.grid} aria-label="Quote inputs">
         {QUOTE_SLOT_IDS.map((slotId) => {
           const selection = selections[slotId];
           const required = slotId < 3;
-          return (
-            <article className={styles.slot} key={slotId}>
-              <h3>Quote {slotId}</h3>
-              <p>{required ? "Required for comparison" : "Optional third quote"}</p>
-
-              <div className={styles.actions}>
-                <label className={styles.fileLabel}>
-                  {selection?.kind === "file" ? "Replace file" : "Choose file"}
-                  <input
-                    ref={(node) => { fileRefs.current[slotId] = node; }}
-                    aria-label={`Choose file for Quote ${slotId}`}
-                    type="file"
-                    accept={ACCEPT_ATTRIBUTE}
-                    disabled={pending}
-                    onChange={(event) => chooseFile(slotId, event.currentTarget.files?.[0])}
-                  />
-                </label>
-              </div>
-
-              <label htmlFor={`quote-text-${slotId}`}>Or paste quote text</label>
-              <textarea
-                className={styles.textArea}
-                id={`quote-text-${slotId}`}
-                value={drafts[slotId] ?? ""}
-                disabled={pending}
-                onChange={(event) => setDrafts((current) => ({ ...current, [slotId]: event.target.value }))}
-                placeholder="Paste the quote exactly as provided"
-              />
-              <div className={styles.textActions}>
-                <button className={styles.button} type="button" disabled={pending} onClick={() => savePastedText(slotId)}>
-                  {selection?.kind === "pasted_text" ? "Replace with pasted text" : "Use pasted text"}
-                </button>
-                {selection ? <button className={styles.button} type="button" disabled={pending} onClick={() => remove(slotId)}>Remove</button> : null}
-              </div>
-
-              {selection ? (
-                <div className={styles.selected} role="status">
-                  <strong>Selected</strong>
-                  {selection.kind === "file"
-                    ? <span>{selection.name} · {selection.mimeType || "file"}</span>
-                    : <span>Pasted text · {selection.text.length} characters</span>}
-                </div>
-              ) : null}
-              {errors[slotId] ? <p className={styles.error} role="alert">{errors[slotId]}</p> : null}
-            </article>
-          );
+          return <article className={styles.slot} key={slotId}>
+            <h3>Quote {slotId}</h3><p>{required ? "Required for comparison" : "Optional third quote"}</p>
+            <div className={styles.actions}><label className={styles.fileLabel}>{selection?.kind === "file" ? "Replace file" : "Choose file"}<input ref={(node) => { fileRefs.current[slotId] = node; }} aria-label={`Choose file for Quote ${slotId}`} type="file" accept={ACCEPT_ATTRIBUTE} disabled={pending} onChange={(event) => chooseFile(slotId, event.currentTarget.files?.[0])} /></label></div>
+            <label htmlFor={`quote-text-${slotId}`}>Or paste quote text</label>
+            <textarea className={styles.textArea} id={`quote-text-${slotId}`} value={drafts[slotId] ?? ""} disabled={pending} onChange={(event) => setDrafts((current) => ({ ...current, [slotId]: event.target.value }))} placeholder="Paste the quote exactly as provided" />
+            <div className={styles.textActions}><button className={styles.button} type="button" disabled={pending} onClick={() => savePastedText(slotId)}>{selection?.kind === "pasted_text" ? "Replace with pasted text" : "Use pasted text"}</button>{selection ? <button className={styles.button} type="button" disabled={pending} onClick={() => remove(slotId)}>Remove</button> : null}</div>
+            {selection ? <div className={styles.selected} role="status"><strong>Selected</strong>{selection.kind === "file" ? <span>{selection.name} · {selection.mimeType || "file"}</span> : <span>Pasted text · {selection.text.length} characters</span>}</div> : null}
+            {errors[slotId] ? <p className={styles.error} role="alert">{errors[slotId]}</p> : null}
+          </article>;
         })}
       </div>
-
-      <fieldset disabled={pending}>
-        <legend>What kind of quotes are these?</legend>
-        <div className="category-grid">
-          {launchCategories.map((label, index) => {
-            const value = CATEGORY_VALUES[index];
-            return (
-              <label key={label}>
-                <input
-                  checked={category === value}
-                  name="category"
-                  type="radio"
-                  value={value}
-                  onChange={() => setCategory(value)}
-                />
-                <span>{label}</span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      <button className={styles.analyze} type="button" disabled={!canAnalyzeRealQuotes(selections) || pending} onClick={analyze}>
-        {pending ? "Analyzing…" : "Analyze my quotes"}
-      </button>
+      <fieldset disabled={pending}><legend>What kind of quotes are these?</legend><div className="category-grid">{launchCategories.map((label, index) => { const value = CATEGORY_VALUES[index]; return <label key={label}><input checked={category === value} name="category" type="radio" value={value} onChange={() => setCategory(value)} /><span>{label}</span></label>; })}</div></fieldset>
+      <button className={styles.analyze} type="button" disabled={!canAnalyzeRealQuotes(selections) || pending} onClick={analyze}>{pending ? "Analyzing…" : "Analyze my quotes"}</button>
       <p className={styles.note}>Your selected sources are sent through QuoteCheck&apos;s extraction, evidence-validation and grounded reasoning path. The static example elsewhere on this page remains separate from your analysis.</p>
       {status ? <p className={styles.status} role="status" aria-live="polite">{status}</p> : null}
     </section>
