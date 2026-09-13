@@ -22,7 +22,6 @@ describe("CP6 durable report ownership and payment boundaries", () => {
   it("defines exactly one provider-neutral CA$14.99 one-time checkout", async () => {
     const { store, gateway } = setup();
     const checkout = await beginOneTimeCheckout(store, gateway, "report-1");
-
     expect(REPORT_UNLOCK_AMOUNT_CENTS).toBe(1499);
     expect(REPORT_UNLOCK_CURRENCY).toBe("CAD");
     expect(checkout?.state).toBe("succeeded");
@@ -32,7 +31,6 @@ describe("CP6 durable report ownership and payment boundaries", () => {
     const { store, gateway } = setup("failed");
     const checkout = await beginOneTimeCheckout(store, gateway, "report-1");
     const after = await confirmOneTimeCheckout(store, gateway, "report-1", checkout!.checkoutId);
-
     expect(after?.access).toBe("locked");
     expect(after?.paymentState).toBe("failed");
   });
@@ -41,7 +39,6 @@ describe("CP6 durable report ownership and payment boundaries", () => {
     const { store, gateway } = setup(state);
     const checkout = await beginOneTimeCheckout(store, gateway, "report-1");
     const after = await confirmOneTimeCheckout(store, gateway, "report-1", checkout!.checkoutId);
-
     expect(after?.access).toBe("locked");
     expect(after?.paymentState).toBe(state);
     expect(after?.report).toEqual(demoReport);
@@ -49,28 +46,27 @@ describe("CP6 durable report ownership and payment boundaries", () => {
 
   it("treats missing sessions and unknown checkout ids as locked rather than manufacturing entitlement", async () => {
     const { store, gateway } = setup();
-
     expect(await beginOneTimeCheckout(store, gateway, "missing")).toBeNull();
     expect(await confirmOneTimeCheckout(store, gateway, "missing", "anything")).toBeNull();
-
     const afterUnknown = await confirmOneTimeCheckout(store, gateway, "report-1", "unknown-checkout");
     expect(afterUnknown?.access).toBe("locked");
     expect(afterUnknown?.paymentState).toBe("unknown");
   });
 
-  it("keeps the demo report identity server-scoped instead of exposing it through page query state", () => {
+  it("keeps generated report identity server-scoped instead of exposing it through page query state or report markup", () => {
     const pageSource = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
     const reportSource = readFileSync(new URL("../src/components/Report.tsx", import.meta.url), "utf8");
 
-    expect(pageSource).toContain("demoReportStore.get(DEMO_REPORT_SESSION_ID)");
+    expect(pageSource).toContain("cookieStore.get(GENERATED_REPORT_SESSION_COOKIE)?.value");
+    expect(pageSource).toContain("getGeneratedReport(reportSessionId)");
+    expect(pageSource).not.toContain("params.reportSessionId");
     expect(pageSource).not.toContain("params.session");
     expect(reportSource).not.toContain('name="reportSessionId"');
     expect(reportSource).not.toContain("reportSessionId:");
   });
 
-  it("uses the server-scoped demo session for checkout without accepting a posted session id", () => {
+  it("keeps the legacy static demo checkout server-scoped for the education example", () => {
     const routeSource = readFileSync(new URL("../src/app/api/demo-unlock/route.ts", import.meta.url), "utf8");
-
     expect(routeSource).toContain("DEMO_REPORT_SESSION_ID");
     expect(routeSource).toContain("beginOneTimeCheckout(");
     expect(routeSource).not.toContain("request.formData()");
@@ -85,7 +81,6 @@ describe("CP6 durable report ownership and payment boundaries", () => {
     const first = await confirmOneTimeCheckout(store, gateway, "report-1", checkout!.checkoutId, "2026-09-11T00:00:00.000Z");
     const second = await confirmOneTimeCheckout(store, gateway, "report-1", checkout!.checkoutId, "2026-09-12T00:00:00.000Z");
     const repeatedBegin = await beginOneTimeCheckout(store, gateway, "report-1");
-
     expect(first?.access).toBe("unlocked");
     expect(first?.report).toEqual(before?.report);
     expect(second).toEqual(first);
