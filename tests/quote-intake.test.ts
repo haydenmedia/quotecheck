@@ -50,15 +50,22 @@ describe("CP13 real quote intake state", () => {
     expect(orderedQuoteSelections(selections).map((selection) => selection.slotId)).toEqual([1, 2]);
   });
 
-  it("blocks Analyze until two valid real selections exist", () => {
-    let selections: QuoteSelections = {};
-    expect(canAnalyzeRealQuotes(selections)).toBe(false);
-    selections = setQuoteSelection(selections, createTextSelection(1, "one")!);
-    expect(canAnalyzeRealQuotes(selections)).toBe(false);
-    selections = setQuoteSelection(selections, createTextSelection(2, "two")!);
-    expect(canAnalyzeRealQuotes(selections)).toBe(true);
-    selections = removeQuoteSelection(selections, 1);
-    expect(canAnalyzeRealQuotes(selections)).toBe(false);
+  it("requires Quote 1 and Quote 2 before Analyze while keeping Quote 3 optional", () => {
+    const quote1 = createTextSelection(1, "one")!;
+    const quote2 = createTextSelection(2, "two")!;
+    const quote3 = createTextSelection(3, "three")!;
+
+    const oneAndThree = setQuoteSelection(setQuoteSelection({}, quote1), quote3);
+    expect(canAnalyzeRealQuotes(oneAndThree)).toBe(false);
+
+    const twoAndThree = setQuoteSelection(setQuoteSelection({}, quote2), quote3);
+    expect(canAnalyzeRealQuotes(twoAndThree)).toBe(false);
+
+    const oneAndTwo = setQuoteSelection(setQuoteSelection({}, quote1), quote2);
+    expect(canAnalyzeRealQuotes(oneAndTwo)).toBe(true);
+
+    const allThree = setQuoteSelection(oneAndTwo, quote3);
+    expect(canAnalyzeRealQuotes(allThree)).toBe(true);
   });
 
   it("renders genuine accessible file/text controls without fixture analysis substitution", () => {
