@@ -80,7 +80,7 @@ describe("CP13 real quote intake state", () => {
     expect(canAnalyzeRealQuotes(allThree)).toBe(true);
   });
 
-  it("renders genuine accessible file/text controls without fixture analysis substitution", () => {
+  it("renders genuine accessible controls and submits real selections without demo substitution", () => {
     const component = readFileSync("src/components/QuoteIntake.tsx", "utf8");
     const page = readFileSync("src/app/page.tsx", "utf8");
     const css = readFileSync("src/components/QuoteIntake.module.css", "utf8");
@@ -89,10 +89,13 @@ describe("CP13 real quote intake state", () => {
     expect(component).toContain("accept={ACCEPT_ATTRIBUTE}");
     expect(component).toContain("Remove");
     expect(component).toContain("Replace");
-    expect(component).toContain("disabled={!canAnalyzeRealQuotes(selections)}");
-    expect(component).toContain("will not substitute sample or fixture results");
+    expect(component).toContain("disabled={!canAnalyzeRealQuotes(selections) || pending}");
+    expect(component).toContain('fetch("/api/analyze", { method: "POST", body: form })');
+    expect(component).toContain("orderedQuoteSelections(selections)");
+    expect(component).toContain("The static example elsewhere on this page remains separate from your analysis.");
     expect(component).not.toContain("demoReportStore");
     expect(component).not.toContain("DEMO_REPORT_SESSION_ID");
+    expect(component).not.toContain("Analyze sample quotes");
     expect(page).toContain("<QuoteIntake />");
     expect(css).toContain("@media (max-width: 760px)");
     expect(css).toContain("min-height: 44px");
