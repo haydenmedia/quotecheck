@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  ACCEPTED_QUOTE_FILE_TYPES,
   canAnalyzeRealQuotes,
   createFileSelection,
   createTextSelection,
@@ -17,6 +18,7 @@ function file(name: string, type: string, size = 1234) {
 
 describe("CP13 real quote intake state", () => {
   it("accepts PDF/PNG/JPEG presentation formats and rejects unrelated files", () => {
+    expect(ACCEPTED_QUOTE_FILE_TYPES).toEqual(["application/pdf", "image/png", "image/jpeg"]);
     expect(isAcceptedQuoteFile(file("quote.pdf", "application/pdf"))).toBe(true);
     expect(isAcceptedQuoteFile(file("quote.png", "image/png"))).toBe(true);
     expect(isAcceptedQuoteFile(file("quote.jpg", "image/jpeg"))).toBe(true);
@@ -65,9 +67,7 @@ describe("CP13 real quote intake state", () => {
     const css = readFileSync("src/components/QuoteIntake.module.css", "utf8");
 
     expect(component).toContain('type="file"');
-    expect(component).toContain("application/pdf");
-    expect(component).toContain("image/png");
-    expect(component).toContain("image/jpeg");
+    expect(component).toContain("accept={ACCEPT_ATTRIBUTE}");
     expect(component).toContain("Remove");
     expect(component).toContain("Replace");
     expect(component).toContain("disabled={!canAnalyzeRealQuotes(selections)}");
