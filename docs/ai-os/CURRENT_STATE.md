@@ -1,13 +1,15 @@
 # Current State
 
-Active checkpoint: **CP12 — Launch/acquisition**.
+Active checkpoint: **CP13 — Real Quote End-to-End Journey**.
 
-Active work item: **CP12-01 — Launch-readiness surface + acquisition foundation**, Issue #35, status `READY`, owner `Builder`, risk `GREEN`.
+Active work item: **CP13-01 — Real quote intake UI + client state**, Issue #38, status `READY`, owner `Builder`, risk `GREEN`.
 
-CP11-01 independently QA-passed exact PR head `e8f5a5b0268ab7ed4ba7a695b459c3a6273dc556`; exact-head CI run `34714040845` passed and PR #34 was squash-merged to `main` at `92177906b45fb402d0a95903241d659c2fad97c2`. Issue #33 is closed and CP11 is complete.
+CP12-01 independently QA-passed at PR #37 exact head `b356772c012b7fe11c6a545407d182b43d9af4e6`, exact-head CI `34719729149`, and was squash-merged to `main` at `a3a72d57a41a6153e80f3ad1d83ab2c430320991`. Issue #35 is closed.
 
-CP12-01 is deliberately pre-production. It should make QuoteCheck understandable and credible to a stranger on mobile, add a clearly labeled deterministic example path using existing report/presentation contracts where practical, and document acquisition measurement hypotheses using the CP9 event vocabulary. It must preserve the real 2–3 quote journey, grounded evidence/uncertainty semantics, valid no-material-concern outcome, and CA$14.99 one-time unlock boundary.
+Owner testing after CP12 exposed a material product gap: the Quote 1/2/3 controls are inert placeholders and the current page remains fixture/demo driven. Therefore the commercial milestone is **not complete**. CP13 exists solely to close that real-user journey gap.
 
-Before QA handoff, exact PR-head clean install/audit, lint, typecheck, deterministic tests, CP7 trust eval and production build must pass. No human gate is active for this GREEN slice. Production deployment/live behavior, live Stripe configuration or charges, production DB/storage, secrets/DNS, customer communication and paid ads remain RED and require current owner approval; no paid model evaluation is authorized.
+CP13 end-state: a real user can supply 2–3 PDF/image/pasted-text quotes; selected inputs can be removed/replaced; real document content is extracted into the canonical uncertainty/evidence contract; those exact inputs pass through grounded analysis; preview/full report are generated from that analysis without fixture substitution; mobile/trust/access behavior remains intact. Final checkpoint completion requires explicit owner acceptance after personally testing two real quotes end-to-end.
 
-CP11-complete SHA `92177906b45fb402d0a95903241d659c2fad97c2` is the current product save-game/rollback point.
+CP13-01 is intentionally smaller: implement genuine file/pasted-text selection and deterministic slot state, visible selected-input state, remove/replace, safe 2-input gating, mobile/accessibility behavior, and tests proving real selections cannot silently trigger a fixture/demo report. Binary extraction and analysis wiring follow in later bounded items.
+
+No paid model evaluation is authorized. Production deployment/live behavior, live Stripe configuration/charges, production DB/storage, secrets/DNS, customer communication and paid ads remain RED and require current owner approval. CP12 merged SHA `a3a72d57a41a6153e80f3ad1d83ab2c430320991` is the current save-game/rollback point.
