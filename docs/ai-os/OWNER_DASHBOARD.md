@@ -1,19 +1,19 @@
 # QuoteCheck Owner Dashboard
 
 ## Working now
-**CP13-04 — Generated real report/session binding**, Issue #45 / PR #46, is back with Builder as **CHANGES_REQUESTED** after Independent QA. The implementation direction is sound: generated analysis is stored under its returned session and the customer report resolves that generated record instead of the demo report. QA found two bounded verification/accessibility blockers before it can merge.
+**CP13-05 — End-to-end real-quote regression and owner-acceptance handoff**, Issue #47, is **READY for Builder**. CP13-04 has independently QA-passed and is merged. The final engineering slice must prove the complete real-input journey deterministically before the owner gate opens.
 
 ## Just finished
-Builder produced CP13-04 PR #46 at head `1df52b3120aef72c4ce33dd44f406a7ba202339d`; CI `34752358411` passed install, high/critical audit, lint, typecheck, 118 deterministic tests, trust evaluation and production build. Independent QA inspected the actual head and rejected it because critical session/failure behavior is not behaviorally tested and the Report rewrite removed existing accessibility relationships.
+CP13-04 PR #46 independently QA-passed at head `bbc15ed1ac92adc5785f9886c2da873dcdd815a9`; exact-head CI `34754384771` passed the full gate, and the PR was squash-merged to main as `9031c8db05932bf73fe7d6d3f662ef1339c97ae4`. Generated reports now remain bound to their server-scoped session through preview and unlock without demo fallback.
 
 ## Broken
-PR #46 is not merge-ready. First, its new regression suite relies too heavily on source-string assertions and does not behaviorally prove exact-session creation, failure-without-completed-report, unknown-session handling, and same-session unlock continuity. Second, `Report.tsx` regressed existing `aria-label`/`aria-labelledby` semantics. This is failure cycle 1, not an escalation. Verified main remains at the CP13-03 save-game behavior; the PM state-doc reconciliation commit does not make unverified product code canonical.
+No known merge blocker on verified main. The remaining product gap is proof of the complete journey. Image/screenshot/photo extraction still requires an authorized provider for genuine OCR; in the current GREEN scope the image path must fail explicitly and safely rather than fabricate extraction.
 
 ## Human action required
-None now. Final CP13 owner acceptance remains reserved until generated report binding and CP13-05 end-to-end regression independently pass. Image OCR still requires a provider decision before images can be truly analyzed, but no paid/live provider decision is being requested during this GREEN correction. Production deployment/live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
+None yet. Do not test the owner gate until CP13-05 independently QA-passes. After that, owner acceptance becomes mandatory: personally select/upload at least two real quotes, click Analyze, and verify the report reflects those exact inputs. Production deployment/live Stripe/config/charges, production storage, secrets/DNS, customer communication and paid ads remain RED.
 
 ## Next
-Builder: stay on PR #46. Add behavior-level deterministic tests for exact generated-session success, provider/analysis failure with no completed report, missing/unknown session, and unlock of the exact same record; restore the removed report accessibility relationships; rerun the full exact-head gate; hand the new SHA to Independent QA. Do not start CP13-05 or broaden provider/payment/storage scope.
+Builder: implement Issue #47 on a scoped branch/PR. Add deterministic end-to-end/regression coverage using genuine local PDF/text inputs and fixture/mock AI/provider outputs across intake -> extraction -> grounded analysis -> generated session -> preview/unlock, including source identity, trust invariants, safe image-provider failure, no demo fallback, and practical mobile/accessibility journey coverage. Run the full exact-head gate and hand the exact SHA/CI evidence to Independent QA. Do not add a paid/live provider or mutate a preview/production environment without authorization.
 
 ## Checkpoint progress
 - CP0–CP12: implementation checkpoints complete, but commercial milestone not complete after owner test
@@ -21,8 +21,8 @@ Builder: stay on PR #46. Add behavior-level deterministic tests for exact genera
   - CP13-01 intake UI/state: QA-passed and merged
   - CP13-02 extraction adapters: QA-passed and merged
   - CP13-03 real analysis/API wiring: QA-passed and merged
-  - CP13-04 generated preview/full-report binding: CHANGES_REQUESTED (failure cycle 1)
-  - CP13-05 end-to-end regression + owner acceptance: queued
+  - CP13-04 generated preview/full-report binding: QA-passed and merged
+  - CP13-05 end-to-end regression + owner acceptance handoff: READY
 
 ## Commercial milestone
-Not complete. Completion requires the owner to personally select/upload at least two real quotes, receive a useful preview, unlock the complete report, and confirm the grounded analysis was generated from those exact inputs without fabricated findings.
+Not complete. After CP13-05 independently passes, completion still requires the owner to personally select/upload at least two real quotes, receive a useful preview, unlock the complete report, and confirm the grounded analysis was generated from those exact inputs without fabricated findings.
