@@ -6,14 +6,14 @@ import type { QuoteReport } from "../src/lib/types";
 
 describe("CP13-04 generated report binding", () => {
   it("stores the exact generated report under its returned session and isolates sessions", async () => {
-    const reportA: QuoteReport = { ...structuredClone(demoReport), id: "generated-a" };
-    const reportB: QuoteReport = { ...structuredClone(demoReport), id: "generated-b" };
+    const reportA: QuoteReport = { ...structuredClone(demoReport), overallGutCheck: "Generated report A" };
+    const reportB: QuoteReport = { ...structuredClone(demoReport), overallGutCheck: "Generated report B" };
 
     await saveGeneratedReport("cp13-session-a", reportA);
     await saveGeneratedReport("cp13-session-b", reportB);
 
-    expect((await getGeneratedReport("cp13-session-a"))?.report.id).toBe("generated-a");
-    expect((await getGeneratedReport("cp13-session-b"))?.report.id).toBe("generated-b");
+    expect((await getGeneratedReport("cp13-session-a"))?.report.overallGutCheck).toBe("Generated report A");
+    expect((await getGeneratedReport("cp13-session-b"))?.report.overallGutCheck).toBe("Generated report B");
     expect((await getGeneratedReport("cp13-session-a"))?.access).toBe("locked");
   });
 
