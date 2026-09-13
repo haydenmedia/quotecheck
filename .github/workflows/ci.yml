@@ -19,6 +19,21 @@ jobs:
         run: npm audit --audit-level=high
       - run: npm run lint
       - run: npm run typecheck
-      - run: npm test
+      - name: Run tests with diagnostic capture
+        shell: bash
+        run: |
+          set +e
+          npm test -- --reporter=verbose 2>&1 | tee test-output.txt
+          code=${PIPESTATUS[0]}
+          echo "$code" > test-exit-code.txt
+          exit "$code"
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cp13-test-diagnostics
+          path: |
+            test-output.txt
+            test-exit-code.txt
       - run: npm run eval:trust
       - run: npm run build
