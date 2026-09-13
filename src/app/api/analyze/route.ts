@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { saveGeneratedReport } from "@/lib/generated-report-access";
 import { analyzeRealQuoteSelections } from "@/lib/real-analysis";
 import {
   createFileSelection,
@@ -66,5 +67,8 @@ export async function POST(request: Request) {
   }
 
   const result = await analyzeRealQuoteSelections(selections, category);
+  if (result.ok) {
+    await saveGeneratedReport(result.reportSessionId, result.report);
+  }
   return NextResponse.json(result, { status: result.ok ? 200 : 422 });
 }
