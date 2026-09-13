@@ -105,7 +105,7 @@ export function QuoteIntake() {
         return;
       }
 
-      setStatus(`Analysis completed from your selected quotes. Report session ${result.reportSessionId} is ready for the report-view binding step.`);
+      window.location.assign(`/?reportSessionId=${encodeURIComponent(result.reportSessionId)}#report`);
     } catch {
       setStatus("QuoteCheck could not reach the analysis service. Your selections are unchanged; try again.");
     } finally {
