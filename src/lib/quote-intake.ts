@@ -67,5 +67,5 @@ export function orderedQuoteSelections(selections: QuoteSelections): QuoteSelect
 }
 
 export function canAnalyzeRealQuotes(selections: QuoteSelections): boolean {
-  return orderedQuoteSelections(selections).length >= 2;
+  return Boolean(selections[1] && selections[2]);
 }
