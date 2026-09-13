@@ -1,44 +1,44 @@
 {
   "project": "QuoteCheck",
-  "version": 75,
+  "version": 76,
   "active_checkpoint": "CP13",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
   "active_work_item": {
-    "issue": 45,
-    "id": "CP13-04",
-    "title": "Bind generated real report/session to preview and full report UI",
-    "status": "CHANGES_REQUESTED",
+    "issue": 47,
+    "id": "CP13-05",
+    "title": "End-to-end real-quote regression and owner-acceptance handoff",
+    "status": "READY",
     "owner": "Builder",
     "risk": "GREEN",
-    "depends_on": "CP13-03 independently QA-passed at bce59da4a369980639f4dcca935ef85b4a8f5d5e and squash-merged to main as 6dac13147f05904580e1db7d085413f965e5e43b",
-    "pr": 46,
-    "head_sha": "1df52b3120aef72c4ce33dd44f406a7ba202339d",
-    "ci_run": 34752358411,
-    "failure_cycle": 1,
-    "reason": "Independent QA found two bounded blockers at PR #46 head 1df52b3 despite green CI: required same-session/failure behavior is asserted mostly through source-string inspection rather than behavior-level deterministic tests, and Report.tsx regressed existing accessibility relationships. Builder must correct only these blockers on the scoped PR branch and return a new exact head to QA."
+    "depends_on": "CP13-04 independently QA-passed at bbc15ed1ac92adc5785f9886c2da873dcdd815a9 and squash-merged to main as 9031c8db05932bf73fe7d6d3f662ef1339c97ae4",
+    "pr": null,
+    "head_sha": null,
+    "ci_run": null,
+    "failure_cycle": 0,
+    "reason": "Canonical GitHub evidence shows CP13-04 is QA-passed and merged. Activate the final bounded engineering item: deterministic end-to-end regression across genuine local Quote 1 + Quote 2 inputs, extraction, grounded analysis, generated report/session continuity, trust invariants, safe image-provider failure, mobile/accessibility journey coverage, and owner-acceptance handoff."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "Owner can personally select/upload 2-3 real quotes, receive a useful preview, unlock a complete report, and receive grounded analysis derived from those exact inputs without fabricated findings",
-  "last_verified_main_sha": "6dac13147f05904580e1db7d085413f965e5e43b",
+  "last_verified_main_sha": "9031c8db05932bf73fe7d6d3f662ef1339c97ae4",
   "last_completed": {
-    "id": "CP13-03",
-    "issue": 43,
-    "pr": 44,
+    "id": "CP13-04",
+    "issue": 45,
+    "pr": 46,
     "qa_verdict": "PASS",
-    "qa_head_sha": "bce59da4a369980639f4dcca935ef85b4a8f5d5e",
-    "ci_run": 34747677495,
-    "merged_sha": "6dac13147f05904580e1db7d085413f965e5e43b"
+    "qa_head_sha": "bbc15ed1ac92adc5785f9886c2da873dcdd815a9",
+    "ci_run": 34754384771,
+    "merged_sha": "9031c8db05932bf73fe7d6d3f662ef1339c97ae4"
   },
   "save_game": {
-    "sha": "6dac13147f05904580e1db7d085413f965e5e43b",
-    "verified_behavior": "CP0-CP12 remain merged. CP13-01 provides genuine mobile-first Quote 1/2/3 file or pasted-text selection with replace/remove and Quote 1+2 gating. CP13-02 consumes exact pasted text/PDF bytes through real extraction adapters and stops image input at an explicit provider boundary when OCR is unavailable. CP13-03 sends exact selected sources/category through /api/analyze, source extraction, canonical evidence validation and grounded reasoning, returning a fresh generated report/session without demo substitution.",
-    "risks": "CP13-04 PR #46 has the correct real-report binding direction but is not QA-approved: behavior-level same-session/failure tests and restored accessibility semantics are required. Image OCR remains provider-required without an authorized provider. Default runtime analysis remains deterministic. Transitional extracted_text_fixture naming remains technical debt. Final end-to-end regression and owner acceptance remain incomplete. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
-    "rollback": "Return to CP13-03 merged SHA 6dac13147f05904580e1db7d085413f965e5e43b if later CP13 work introduces journey, trust, access, privacy or presentation regressions."
+    "sha": "9031c8db05932bf73fe7d6d3f662ef1339c97ae4",
+    "verified_behavior": "CP0-CP12 remain merged. CP13-01 provides genuine mobile-first Quote 1/2/3 file or pasted-text selection with replace/remove and Quote 1+2 gating. CP13-02 consumes exact pasted text/PDF bytes through real extraction adapters and stops image input at an explicit provider boundary when OCR is unavailable. CP13-03 sends exact selected sources/category through /api/analyze, source extraction, canonical evidence validation and grounded reasoning without demo substitution. CP13-04 binds the generated report to its server-scoped session and preserves same-session preview/unlock continuity without demo fallback.",
+    "risks": "CP13-05 end-to-end regression and owner acceptance remain incomplete. Image OCR remains provider-required without an authorized provider. Default runtime analysis remains deterministic. Transitional extracted_text_fixture naming remains technical debt. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
+    "rollback": "Return to CP13-04 merged SHA 9031c8db05932bf73fe7d6d3f662ef1339c97ae4 if CP13-05 introduces journey, trust, access, privacy or presentation regressions."
   },
   "human_gate": {
     "type": "OWNER_ACCEPTANCE",
-    "when": "After CP13 real intake, extraction, analysis wiring, generated report binding and end-to-end regression independently QA-pass",
+    "when": "After CP13-05 end-to-end regression independently QA-passes",
     "required": "Owner personally selects/uploads at least two real quotes, clicks Analyze, and confirms the resulting grounded report is based on those exact inputs before CP13/commercial milestone may be marked complete."
   }
 }
