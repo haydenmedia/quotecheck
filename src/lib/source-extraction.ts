@@ -154,15 +154,15 @@ function decodePdfLiteralString(value: string): string {
 
 function extractTextOperators(content: string): string[] {
   const fragments: string[] = [];
-  const direct = /\(((?:\\.|[^\\)])*)\)\s*(?:Tj|'|")/gs;
+  const direct = /\(((?:\\.|[^\\)])*)\)\s*(?:Tj|'|")/g;
   for (const match of content.matchAll(direct)) {
     const text = decodePdfLiteralString(match[1]).trim();
     if (text) fragments.push(text);
   }
 
-  const arrays = /\[((?:.|\r|\n)*?)\]\s*TJ/gs;
+  const arrays = /\[((?:.|\r|\n)*?)\]\s*TJ/g;
   for (const match of content.matchAll(arrays)) {
-    const parts = [...match[1].matchAll(/\(((?:\\.|[^\\)])*)\)/gs)]
+    const parts = [...match[1].matchAll(/\(((?:\\.|[^\\)])*)\)/g)]
       .map((part) => decodePdfLiteralString(part[1]))
       .join("")
       .trim();
@@ -249,7 +249,9 @@ export async function extractBinaryQuoteSource(
   const label = sourceLabel(source.slotId, source.name);
   return {
     ok: true,
-    input: { id, label, kind: "extracted_text", text },
+    // The canonical contract currently names all pre-extracted text "extracted_text_fixture".
+    // Source metadata above is the authoritative distinction between a real selected source and a CI fixture.
+    input: { id, label, kind: "extracted_text_fixture", text },
     source: {
       slotId: source.slotId,
       sourceInputId: id,
