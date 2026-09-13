@@ -6,6 +6,8 @@ import {
 } from "./report-access";
 import type { QuoteReport } from "./types";
 
+export const GENERATED_REPORT_SESSION_COOKIE = "quotecheck-report-session";
+
 const globalState = globalThis as typeof globalThis & {
   quoteCheckGeneratedReportStore?: InMemoryReportOwnershipStore;
   quoteCheckGeneratedPaymentGateway?: DeterministicPaymentGateway;
