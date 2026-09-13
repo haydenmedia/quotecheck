@@ -1,6 +1,6 @@
 {
   "project": "QuoteCheck",
-  "version": 71,
+  "version": 72,
   "active_checkpoint": "CP13",
   "checkpoint_status": "ACTIVE",
   "forward_work_authorized": true,
@@ -8,15 +8,15 @@
     "issue": 38,
     "id": "CP13-01",
     "title": "Real quote intake UI + client state",
-    "status": "READY",
+    "status": "CHANGES_REQUESTED",
     "owner": "Builder",
     "risk": "GREEN",
     "depends_on": "CP12-01 independently QA-passed and merged; owner testing exposed inert quote controls and fixture-only journey",
-    "pr": null,
-    "head_sha": null,
-    "ci_run": null,
-    "failure_cycle": 0,
-    "reason": "Owner acceptance testing proved the commercial milestone was not actually complete: Quote 1/2/3 are inert placeholders and real PDF/image inputs are not wired. CP13 closes the real-user journey gap. CP13-01 is the smallest bounded GREEN slice: genuine file/pasted-text selection state with remove/replace, 2-input gating, mobile/accessibility coverage, and explicit prevention of fixture substitution."
+    "pr": 39,
+    "head_sha": "b893e03ca03a366046fd70f9fa13d41da5cb84ce",
+    "ci_run": 34732829362,
+    "failure_cycle": 1,
+    "reason": "Independent QA found one blocking AC1/AC6 defect: Analyze enables for any two populated slots, but Quote 1 and Quote 2 are specifically required and Quote 3 is optional. Builder must require slots 1 AND 2 and add deterministic regressions for 1+3=false, 2+3=false, 1+2=true, 1+2+3=true, then rerun exact-head CI and return to QA."
   },
   "mutation_owner": "Builder",
   "commercial_milestone": "Owner can personally select/upload 2-3 real quotes, receive a useful preview, unlock a complete report, and receive grounded analysis derived from those exact inputs without fabricated findings",
@@ -25,7 +25,7 @@
   "save_game": {
     "sha": "a3a72d57a41a6153e80f3ad1d83ab2c430320991",
     "verified_behavior": "CP0-CP12 implementation is merged and prior deterministic QA gates passed, including launch education, grounded report/trust contracts, CA$14.99 mock access boundary, print/PDF and PWA metadata. Owner testing subsequently established that real quote intake/end-to-end analysis is not implemented.",
-    "risks": "The launch surface currently overstates practical readiness because Quote controls are inert and the page remains fixture-only. CP13 must not hide this with demo substitution. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
+    "risks": "The launch surface currently overstates practical readiness because Quote controls are inert on main and the page remains fixture-only. CP13 must not hide this with demo substitution. CP13-01 PR #39 is not mergeable by policy until the required-slot QA defect is corrected and independently reverified. Two moderate test-only Vitest/@vitest-mocker findings remain documented. Production deployment/live payments/storage/providers/secrets/DNS/customer communication/ads remain RED.",
     "rollback": "Return to CP12 merged SHA a3a72d57a41a6153e80f3ad1d83ab2c430320991 if CP13 introduces journey, trust, access, privacy or presentation regressions."
   },
   "human_gate": {
